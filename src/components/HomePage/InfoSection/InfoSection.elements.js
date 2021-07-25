@@ -56,6 +56,10 @@ font-family: VBI;
   font-weight: 700;
   letter-spacing: 1.4px;
   margin-bottom: 16px;
+
+  @media screen and (max-width: 768px){
+    font-size: 15px;
+  }
 `;
 
 export const Img = styled.img`
