@@ -13,16 +13,16 @@ function Aboutusdesc() {
         </div>
       </section>
       <div className="row mt-5">
-        <div className="col-sm-12 text-center text-justify">
+        <div className="col-sm-12 text-center text-justify ">
           <h1 className="heading">techfest'21</h1>
-          <p className="text-justify">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor
-            <br /> incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-            veniam, <br />
-            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-            commodo consequat.
-          </p>
+          <center>
+            <p className="text-justify w-75">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+              enim ad minim veniam, quis nostrud exercitation ullamco laboris
+              nisi ut aliquip ex ea commodo consequat.
+            </p>
+          </center>
         </div>
       </div>
     </div>
