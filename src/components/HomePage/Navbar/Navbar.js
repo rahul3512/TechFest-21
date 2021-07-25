@@ -41,7 +41,8 @@ const useStyles = makeStyles((theme) => ({
   },
 
   appBar: {
-    backgroundColor: 'transparent',
+    // backgroundColor: 'transparent',
+    backgroundColor: 'rgba(1, 0, 0, 0.3)',
     zIndex: 25,
     boxShadow: 'none',
     transition: theme.transitions.create(['margin', 'width'], {
