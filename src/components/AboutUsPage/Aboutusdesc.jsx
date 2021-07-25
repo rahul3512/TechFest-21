@@ -6,10 +6,10 @@ function Aboutusdesc() {
     <div>
       <section className="container d-flex justify-content-center">
         <div className="bord image-block">
-          <img className="image" src={slietlogo} alt="Logo" />
+          <img className="logoimage" src={slietlogo} alt="Logo" />
         </div>
         <div className="image-block margin">
-          <img className="image" src={techfestlogo} alt="Logo" />
+          <img className="logoimage" src={techfestlogo} alt="Logo" />
         </div>
       </section>
       <div className="row mt-5">

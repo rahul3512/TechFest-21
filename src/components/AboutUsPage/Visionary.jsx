@@ -13,37 +13,37 @@ function Visionary() {
       <div className="container">
         <div className="row mt-5">
           <div className="d-flex flex-wrap">
-            <div className="card text-center">
+            <div className="aboutus-card text-center">
               <div className="card-item">
-                <img className="image2" src={image} alt="hello" />
+                <img className="teacherimage" src={image} alt="hello" />
               </div>
               <h5 className="card-title">Prof. Vinay Kumar</h5>
               <p className="card-text">Director</p>
             </div>
-            <div className="card text-center">
+            <div className="aboutus-card text-center">
               <div className="card-item">
-                <img className="image2" src={image} alt="hello" />
+                <img className="teacherimage" src={image} alt="hello" />
               </div>
               <h5 className="card-title">Prof. Vinay Kumar</h5>
               <p className="card-text">Director</p>
             </div>
-            <div className="card text-center">
+            <div className="aboutus-card text-center">
               <div className="card-item">
-                <img className="image2" src={image} alt="hello" />
+                <img className="teacherimage" src={image} alt="hello" />
               </div>
               <h5 className="card-title">Prof. Vinay Kumar</h5>
               <p className="card-text">Director</p>
             </div>
-            <div className="card text-center">
+            <div className="aboutus-card text-center">
               <div className="card-item">
-                <img className="image2" src={image} alt="hello" />
+                <img className="teacherimage" src={image} alt="hello" />
               </div>
               <h5 className="card-title">Prof. Vinay Kumar</h5>
               <p className="card-text">Director</p>
             </div>
-            <div className="card text-center">
+            <div className="aboutus-card text-center">
               <div className="card-item">
-                <img className="image2" src={image} alt="hello" />
+                <img className="teacherimage" src={image} alt="hello" />
               </div>
               <h5 className="card-title">Prof. Vinay Kumar</h5>
               <p className="card-text">Director</p>

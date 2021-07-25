@@ -12,19 +12,14 @@ body {
   background: black;
 } */
 .aboutus-background {
-  background: url('../../assets/images/background.png') black;
+  background: url('../../assets/images/background.png'), black;
   background-repeat: no-repeat;
- 
+  background-size:cover;
   color: white;
 }
 
-#techfest-logo {
-  width: 18vw;
-  height: 4vh;
-  margin-left: 3vw;
-  margin-top: 2vh;
-}
-.image {
+
+.logoimage {
   width: 130px;
 }
 .bord {
@@ -34,7 +29,7 @@ body {
 .heading {
   font-family: "VipnagorgiallaRg-BoldItalic";
 }
-.card {
+.aboutus-card {
   background: transparent;
   margin-top: 12px;
   border: transparent;
@@ -57,13 +52,13 @@ body {
 .margin {
   padding-top: 15px;
 }
-.image2 {
+.teacherimage {
   width: 100%;
   padding: 12px;
   border-radius: 25px;
 }
 @media (min-width: 768px) {
-  .card {
+  .aboutus-card {
     width: 20%;
   }
   .background {
@@ -71,7 +66,7 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
   }
-  .image {
+  .logoimage {
     width: 180px;
   }
   .hr-text {
