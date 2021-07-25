@@ -61,7 +61,7 @@ body {
   .aboutus-card {
     width: 20%;
   }
-  .background {
+  .aboutus-background {
     background: url('../../assets/images/background.png'), black;
     background-repeat: no-repeat;
     background-size: cover;
