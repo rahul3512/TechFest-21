@@ -27,11 +27,14 @@ export const Container = styled.div`
 export const Button = styled.button`
 font-family: EXO;
   border-radius: 49px;
-  background: ${({ primary }) => (primary ? '#5de3f1' : '#0467FB')};
+  background: ${({ primary }) => (primary ? '#04FFF0' : '#102C66')};
+  
+  background: linear-gradient(97.53deg, #04FFF0 0.02%, #102C66 138.78%);
+
   white-space: nowrap;
   padding: ${({ big }) => (big ? '10px 27px' : '7px 10px')};
   color: #fff;
-  font-size: ${({ fontBig }) => (fontBig ? '13px' : '16px')};
+  font-size: ${({ fontBig }) => (fontBig ? '12px' : '15px')};
   outline: none;
   border: none;
   cursor: pointer;
@@ -44,8 +47,9 @@ font-family: EXO;
   }
 
   @media screen and (max-width: 960px) {
-    width: 45%;
-  }
+    width: 60%;
+  } 
+
 `;
 
 export default GlobalStyle;

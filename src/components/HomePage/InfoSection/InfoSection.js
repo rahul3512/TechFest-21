@@ -13,9 +13,11 @@ import {
   Img
 } from './InfoSection.elements';
 import imgf from '../../../assets/images/video.png'
+// import { MenuItem } from '@material-ui/core';
+
 function InfoSection({
   primary,
-  lightBg,
+  lightBg1,
   topLine,
   lightTopLine,
   lightText,
@@ -31,7 +33,7 @@ function InfoSection({
 }) {
   return (
     <>
-      <InfoSec lightBg={lightBg}>
+      <InfoSec lightBg={lightBg1}>
         <Container>
           <InfoRow imgStart={imgStart}>
             <InfoColumn>
@@ -39,16 +41,20 @@ function InfoSection({
                 <Heading lightText={lightText}>{headline}</Heading>
                 <TopLine lightTopLine={lightTopLine}>{topLine}</TopLine>
                 <Subtitle lightTextDesc={lightTextDesc}>{description}</Subtitle>
+
                 <Link to='/domain'>
-                  <Button big fontBig primary={primary}>
+                  <Button primary={primary}>
                     {buttonLabel}
                   </Button>
                 </Link>
-                <Link to='/about-us'>
-                  <Button big fontBig primary={primary}>
+
+
+                <Link to='/about-us' style={{ width: '0px', color: 'white', background: 'transparent' }}>
+                  <Button>
                     {buttonLabel1}
                   </Button>
                 </Link>
+
               </TextWrapper>
             </InfoColumn>
             <InfoColumn>
