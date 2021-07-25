@@ -115,7 +115,7 @@ const Nav = props => {
     {
       text: "Dashboard",
       icon: <DashboardIcon />,
-      onClick: () => history.push("/dashboard")
+      onClick: () => history.push("/user/dashboard")     // change /dashboard -->> /user/dashboard    (By Rahul)
     },
     {
       text: "Home",
