@@ -13,10 +13,11 @@ import {
   Img
 } from './InfoSection.elements';
 import imgf from '../../../assets/images/video.png'
-import { MenuItem } from '@material-ui/core';
+// import { MenuItem } from '@material-ui/core';
+
 function InfoSection({
   primary,
-  lightBg,
+  lightBg1,
   topLine,
   lightTopLine,
   lightText,
@@ -32,7 +33,7 @@ function InfoSection({
 }) {
   return (
     <>
-      <InfoSec lightBg={lightBg}>
+      <InfoSec lightBg={lightBg1}>
         <Container>
           <InfoRow imgStart={imgStart}>
             <InfoColumn>

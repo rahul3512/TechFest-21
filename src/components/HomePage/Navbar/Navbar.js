@@ -116,43 +116,67 @@ const Nav = props => {
     {
       text: "Dashboard",
       icon: <DashboardIcon />,
-      onClick: () => history.push("/dashboard")
+      onClick: () => {
+        handleDrawerClose()
+        history.push("/dashboard")
+      }
     },
     {
       text: "Home",
       icon: <HomeIcon />,
-      onClick: () => history.push("/")
+      onClick: () => {
+        handleDrawerClose()
+        history.push("/")
+      }
     },
     {
       text: "About Us",
       icon: <PeopleIcon />,
-      onClick: () => history.push("/about-us")
+      onClick: () => {
+        handleDrawerClose()
+        history.push("/about-us")
+      }
     },
 
     {
       text: "Domain",
       icon: <DomainIcon />,
-      onClick: () => history.push("/domain")
+      onClick: () => {
+        handleDrawerClose()
+        history.push("/domain")
+      }
     },
     {
       text: "Workshop",
       icon: <SupervisedUserCircleIcon />,
-      onClick: () => history.push("/workshop")
+      onClick: () => {
+        handleDrawerClose()
+        history.push("/workshop")
+      }
     },
     {
       text: "Sponsors",
       icon: <AttachMoneyIcon />,
-      onClick: () => history.push("/sponsors")
+      onClick: () => {
+        handleDrawerClose()
+        history.push("/sponsors")
+      }
     },
     {
       text: "PR Intern",
       icon: <PersonIcon />,
-      onClick: () => history.push("/pr-intern")
+      onClick: () => {
+        handleDrawerClose()
+        history.push("/pr-intern")
+      }
     },
     {
       text: "Contact Us",
       icon: <ContactMailIcon />,
-      onClick: () => history.push("/contact-us")
+      onClick: () => {
+        handleDrawerClose()
+        history.push("/contact-us")
+      }
     }
   ];
 
