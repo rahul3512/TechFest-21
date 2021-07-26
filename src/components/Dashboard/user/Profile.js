@@ -8,13 +8,16 @@ import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
-import { TextField, FormGroup, FormControlLabel, Button, Checkbox, Collapse, IconButton } from "@material-ui/core";
+import { TextField, FormControlLabel, Button, Checkbox, IconButton } from "@material-ui/core";
 import CloseIcon from '@material-ui/icons/Close';
-// import Alert from "@material-ui/lab/Alert";
 import { isAuthenticated } from "../../../auth/helper";
 import './assets/css/dashres.css';
 
+import { useAlert } from 'react-alert';
+
+
 const Profile = () => {
+    const alert = useAlert();
     const [values, setValues] = useState({
         name: "",
         lastName: "",
@@ -101,16 +104,12 @@ const Profile = () => {
         preload(user._id, token);
         setUserId(user._id);
     }, []);
-    const SuccessMessage = () => {
-        return (
-            <div
 
-                style={{ display: updated ? "" : "none", position: 'absolute', top: '10rem', left: '5rem' }}
-            >
 
-            </div>
-        );
-    }
+    
+
+
+    
     const errorMessage = () => (
         <div
             className="dashboard-dash-alert alert-danger mt-3"
@@ -171,11 +170,18 @@ const Profile = () => {
                         loading: false,
                     });
                 } else {
+                    alert.show("Profile Updated ! ", {
+                        timeout: '3000',
+                        type : 'success'
+                    } )
+                    
+                
                     setValues({
                         ...values,
                         loading: false,
                         error: "",
                         updated: true,
+                        
                     });
                 }
             })
@@ -250,6 +256,7 @@ const Profile = () => {
             right: '5px',
             top: '5px'
         }
+          
     }));
 
     const ProfileModal = () => {
@@ -512,7 +519,8 @@ const Profile = () => {
                             <Button
                                 variant="contained"
                                 color="primary"
-                                onClick={onSubmit}
+                                    onClick={onSubmit}
+                                    
                                 mx="auto"
                                 style={{ padding: "8px 20px", fontSize: "1.25rem" }}
                             >
@@ -525,12 +533,12 @@ const Profile = () => {
             </div>
         );
     }
-
-    const profileInformation = () => {
+    const ProfileInformation = () => {
+        
         return (
+
             <>
                 {ProfileModal()}
-
                 <div className="dashboard-dash-profile" id="profile">
                     <div className="dashboard-dash-profile-information">
                         <div className="dashboard-dash-section-heading">
@@ -632,12 +640,10 @@ const Profile = () => {
     return (
         <>
             {
-                profileInformation()
+                ProfileInformation()
                 // profileForm()
             }
-            {
-                SuccessMessage()
-            }
+            
         </>
     );
 };

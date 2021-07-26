@@ -18,6 +18,10 @@ import SignIn from './pages/SignIn';
 import PrivateRoute from './auth/helper/privateRoutes'
 import UserDashboard from './components/Dashboard/user/UserDashboard';
 
+import { Provider as AlertProvider } from 'react-alert';
+import AlertTemplate from 'react-alert-template-basic';
+
+
 function App() {
   return (
     <Router>
@@ -36,8 +40,10 @@ function App() {
         <Route path='/sign-up' component={SignUp} />
         <Route exact path='/' component={Home} />
 
+        <AlertProvider template={AlertTemplate}>
+          <PrivateRoute path="/user/dashboard" exact component={UserDashboard} />
+        </AlertProvider>
         
-        <PrivateRoute path="/user/dashboard" exact component={UserDashboard} />
 
       </Switch>
       <Footer />
