@@ -16,11 +16,17 @@ import ScrollToTop from './components/ScrollToTop';
 import { Navbar, Footer } from './components';
 import SignIn from './pages/SignIn';
 import PrivateRoute from './auth/helper/privateRoutes'
+import SuperAdminRoutes from './auth/helper/SuperAdminRoutes'
 import UserDashboard from './components/Dashboard/user/UserDashboard';
 
 import { Provider as AlertProvider } from 'react-alert';
 import AlertTemplate from 'react-alert-template-basic';
-
+import SuperAdminDashboard from './components/Dashboard/superAdmin/SuperAdminDashboard'
+import Coordinator from './components/Dashboard/superAdmin/Coordinator'
+import AddDomain from './components/Dashboard/superAdmin/AddDomain'
+import AddEvent from './components/Dashboard/superAdmin/AddEvent'
+import AddWorkshop from './components/Dashboard/superAdmin/AddWorkshop'
+import AddWorkshopSession from './components/Dashboard/superAdmin/AddWorkshopSession'
 
 function App() {
   return (
@@ -43,6 +49,14 @@ function App() {
         <AlertProvider template={AlertTemplate}>
           <PrivateRoute path="/user/dashboard" exact component={UserDashboard} />
         </AlertProvider>
+
+
+        <SuperAdminRoutes path="/superadmin/dashboard" exact component={SuperAdminDashboard} />
+        <SuperAdminRoutes path="/superadmin/coordinator" exact component={Coordinator} />
+        <SuperAdminRoutes path="/superadmin/adddomain" exact component={AddDomain} />
+        <SuperAdminRoutes path="/superadmin/addevent" exact component={AddEvent} />
+        <SuperAdminRoutes path="/superadmin/addworkshop" exact component={AddWorkshop} />
+        <SuperAdminRoutes path="/superadmin/addworkshopsession" exact component={AddWorkshopSession} />
       </Switch>
       <Footer />
     </Router>
