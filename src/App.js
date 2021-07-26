@@ -14,6 +14,7 @@ import ScrollToTop from './components/ScrollToTop';
 
 import { Navbar, Footer } from './components';
 import SignIn from './pages/SignIn';
+import DomainPopUp from './components/Domain/Modal';
 // import PrivateRoute from './auth/helper/privateRoutes'
 // import UserDashboard from './components/Dashboard/user/UserDashboard';
 
@@ -33,7 +34,7 @@ function App() {
         <Route exact path='/sponsors' component={Sponsor} />
         <Route exact path='/contact-us' component={ContactUs} />
         <Route path='/sign-up' component={SignUp} />
-        <Route exact path='/' component={Home} />
+        <Route exact path='/' component={Home}/>
         {/* <PrivateRoute path="/user/dashboard" exact component={UserDashboard} /> */}
       </Switch>
       <Footer />

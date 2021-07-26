@@ -189,10 +189,10 @@ class DomainPage extends Component {
                     {
 
                         this.state.precula ? this.state.workshops.map(item => {
-                            return (<ExploreEvents content={item} heading={this.state.currentDomain.domain.domainName} />)
+                            return (<ExploreEvents id={item._id} content={item} heading={this.state.currentDomain.domain.domainName} />)
                         }) :
                             this.state.currentDomain.events.map(item => {
-                                return (<ExploreEvents content={item} heading={this.state.currentDomain.domain.domainName} />)
+                                return (<ExploreEvents id={item._id} content={item} heading={this.state.currentDomain.domain.domainName} />)
                             })
                     }
                 </div> : null}
