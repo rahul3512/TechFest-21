@@ -10,10 +10,7 @@ function Home() {
       <HeroSection />
       <InfoSection {...homeObjOne} />
       <HomeSponsor />
-      {/* <InfoSection {...homeObjThree} />
-      <InfoSection {...homeObjTwo} />
-      <Pricing />
-      <InfoSection {...homeObjFour} /> */}
+
     </div>
   );
 }
