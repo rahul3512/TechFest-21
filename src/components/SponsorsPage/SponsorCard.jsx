@@ -1,9 +1,8 @@
 import React from "react";
 function SponsorCard() {
   return (
-    <div>
       <div className="container">
-        <div className="row flex flex-row">
+        <div className="sponsordesc row flex flex-row">
           <div className="col-sm-12 text-center ">
             <h1 className="heading">Grow with us</h1>
             <p className="text-justify">
@@ -89,7 +88,6 @@ function SponsorCard() {
           </div>
         </div>
       </div>
-    </div>
   );
 }
 export default SponsorCard;
