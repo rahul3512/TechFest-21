@@ -43,8 +43,6 @@ function App() {
         <AlertProvider template={AlertTemplate}>
           <PrivateRoute path="/user/dashboard" exact component={UserDashboard} />
         </AlertProvider>
-        
-
       </Switch>
       <Footer />
     </Router>

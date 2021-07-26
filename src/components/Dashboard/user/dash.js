@@ -109,158 +109,158 @@ function Dash() {
   // }
 
   return (
-      <main className="dashboard-dash-main-body">
-        {/* bg effect */}
-        <img className="dashboard-dash-main_left-bar_bg" src={Leffect} alt="left-bar-bg" />
-        <img src={Reffect} alt="right-middle" className="dashboard-dash-main_right-middle_bg" />
-        <img
-          src={BottomLeft}
-          alt="left-bottom_bg"
-          className="dashboard-dash-main_left-bottom_bg"
-        />
-        <div className="dashboard-dash-leftbar">
-          <Link to="/" className="dashboard-dash-logo dashboard-dash-active">
-            <img src={TechIcon} alt="techFEST" />
-            {/* <img src={Techfest21} alt="techFEST-text" className="dashboard-dash-techfestName" /> */}
-          </Link>
-          <div className="dashboard-dash-dashboard-link">
-            <ScrollLink
-              smooth={true}
-              duration={20}
-              to="dashboard"
-              className="dashboard-dash-dlink dashboard-dash-cursor"
-            >
-              <img src={Home} alt="techFEST-profile-icon" />
-              Dashboard
-            </ScrollLink>
-            <ScrollLink
-              smooth={true}
-              duration={10}
-              to="profile"
-              className="dashboard-dash-dlink dashboard-dash-cursor"
-            >
-              <img src={Profile} alt="techFEST-profile-icon" />
-              Profile Information
-            </ScrollLink>
-            <ScrollLink
-              smooth={true}
-              spy={true}
-              duration={20}
-              to="certificate"
-              className="dashboard-dash-dlink dashboard-dash-cursor"
-            >
-              <img src={Certificate} alt="techFEST-profile-icon" />
-              Certificates & Rewards
-            </ScrollLink>
+    <main className="dashboard-dash-main-body">
+      {/* bg effect */}
+      <img className="dashboard-dash-main_left-bar_bg" src={Leffect} alt="left-bar-bg" />
+      <img src={Reffect} alt="right-middle" className="dashboard-dash-main_right-middle_bg" />
+      <img
+        src={BottomLeft}
+        alt="left-bottom_bg"
+        className="dashboard-dash-main_left-bottom_bg"
+      />
+      <div className="dashboard-dash-leftbar">
+        <Link to="/" className="dashboard-dash-logo dashboard-dash-active">
+          <img src={TechIcon} alt="techFEST" />
+          {/* <img src={Techfest21} alt="techFEST-text" className="dashboard-dash-techfestName" /> */}
+        </Link>
+        <div className="dashboard-dash-dashboard-link">
+          <ScrollLink
+            smooth={true}
+            duration={20}
+            to="dashboard"
+            className="dashboard-dash-dlink dashboard-dash-cursor"
+          >
+            <img src={Home} alt="techFEST-profile-icon" />
+            Dashboard
+          </ScrollLink>
+          <ScrollLink
+            smooth={true}
+            duration={10}
+            to="profile"
+            className="dashboard-dash-dlink dashboard-dash-cursor"
+          >
+            <img src={Profile} alt="techFEST-profile-icon" />
+            Profile Information
+          </ScrollLink>
+          <ScrollLink
+            smooth={true}
+            spy={true}
+            duration={20}
+            to="certificate"
+            className="dashboard-dash-dlink dashboard-dash-cursor"
+          >
+            <img src={Certificate} alt="techFEST-profile-icon" />
+            Certificates & Rewards
+          </ScrollLink>
+        </div>
+      </div>
+      {/* <!-- MAIN CONTENT according to the option clicked in leftbar --> */}
+      <div className="dashboard-dash-main-content">
+        {/* <!-- DASHBOARD --> */}
+        <div className="dashboard-dash-dashboard" id="dashboard">
+          <div className="dashboard-dash-user-profile-display">
+            <img src={ProfileImage} alt="profile" />
+            <div className="dashboard-dash-user-info">
+              <b className="dashboard-dash-user-name">{`${values.name}  ${values.lastName}`}</b>
+              <p>{values.collegeName}</p>
+              <p className="dashboard-dash-user-id">{values.userID}</p>
+            </div>
+          </div>
+
+          <div className="dashboard-dash-events">
+
+            {/* <!-- Event Card --> */}
+
+            <div className="dashboard-dash-event-card">
+              <div className="dashboard-dash-event-card_title">
+                <img src={Event} alt="event-techFEST" />
+                Events Registered
+              </div>
+
+              {values.eventRegIn.length > 0 ?
+                <div className="dashboard-dash-event-card_events-list">
+
+                  {values.eventRegIn.map((row) => (
+                    <div className="dashboard-dash-event" key={row._id}>
+                      <span className="dashboard-dash-event-name">{row.eventName}</span>
+                      {/* <span className="dashboard-dash-event-time">{`${moment(row.eventDate).format('DD-MM')}`}</span> */}
+                      <Link to={{ pathname: `/domain#${row._id}` }} className='btn  btn-outline-primary btn-sm'>View detail</Link>
+                    </div>
+                  ))
+                  }
+
+
+                </div>
+                :
+                <div className="dashboard-dash-event" style={{ borderBottom: 'none' }}>
+                  <span className="dashboard-dash-event-name">Please register in Events to see detail </span>
+
+                </div>
+              }
+
+            </div>
+            {/* <!-- Workshop Card --> */}
+            <div className="dashboard-dash-event-card">
+              <div className="dashboard-dash-event-card_title">
+                <img src={Solid} alt="event-techFEST" />
+                Workshops Registered
+              </div>
+              {values.workshopsEnrolled.length > 0 ?
+                <div className="dashboard-dash-event-card_events-list">
+                  {values.workshopsEnrolled.map((row) => (
+                    <div className="dashboard-dash-event">
+                      <span className="dashboard-dash-event-name">{row.workshopName}</span>
+                      <Link to={{ pathname: `/domain#${row._id}` }} className='btn  btn-outline-primary btn-sm'>View detail</Link>
+                    </div>
+                  ))}
+                </div>
+                :
+                <div className="dashboard-dash-event" style={{ borderBottom: 'none' }}>
+                  <span className="dashboard-dash-event-name">Please register in Workshops to see details</span>
+
+                </div>
+              }
+
+            </div>
           </div>
         </div>
-        {/* <!-- MAIN CONTENT according to the option clicked in leftbar --> */}
-        <div className="dashboard-dash-main-content">
-          {/* <!-- DASHBOARD --> */}
-          <div className="dashboard-dash-dashboard" id="dashboard">
-            <div className="dashboard-dash-user-profile-display">
-              <img src={ProfileImage} alt="profile" />
-              <div className="dashboard-dash-user-info">
-                <b className="dashboard-dash-user-name">{`${values.name}  ${values.lastName}`}</b>
-                <p>{values.collegeName}</p>
-                <p className="dashboard-dash-user-id">{values.userID}</p>
+
+        {/* <!-- PROFILE --> */}
+
+        <ProfileInformation />
+
+
+
+        {/* <!-- CERTIFICATION AND AWARDS --> */}
+
+        <div className="dashboard-dash-profile certificate" id="certificate">
+          <div className="dashboard-dash-profile-information">
+            <div className="dashboard-dash-section-heading">
+              <div className="dashboard-dash-section-heading_text">
+                <h3 className="dashboard-dash-section-heading_heading">
+                  Certification & Awards
+                </h3>
+                <p className="dashboard-dash-section-heading_information">
+                  Claim your Certificate Here !
+                </p>
               </div>
             </div>
-
-            <div className="dashboard-dash-events">
-
-              {/* <!-- Event Card --> */}
-
-              <div className="dashboard-dash-event-card">
-                <div className="dashboard-dash-event-card_title">
-                  <img src={Event} alt="event-techFEST" />
-                  Events Registered
+            <div className="dashboard-dash-profile-information_card dashboard-dash-card grid-colum-template-3-1">
+              <div className="dashboard-dash-profile-information_info">
+                <div className="dashboard-dash-pi-heading">
+                  Event Certificates
+                  <hr />
                 </div>
+                <div className="dashboard-dash-pi_personal-info">
 
-                {values.eventRegIn.length > 0 ?
-                  <div className="dashboard-dash-event-card_events-list">
-
-                    {values.eventRegIn.map((row) => (
-                      <div className="dashboard-dash-event" key={row._id}>
-                        <span className="dashboard-dash-event-name">{row.eventName}</span>
-                        {/* <span className="dashboard-dash-event-time">{`${moment(row.eventDate).format('DD-MM')}`}</span> */}
-                        <Link to={{ pathname: `/domain#${row._id}` }} className='btn  btn-outline-primary btn-sm'>View detail</Link>
-                      </div>
-                    ))
-                  }
-                  
-
-                  </div>
-                  :
-                  <div className="dashboard-dash-event" style={{ borderBottom: 'none' }}>
-                    <span className="dashboard-dash-event-name">Please register in Events to see detail </span>
-
-                  </div>
-                }
-
-              </div>
-              {/* <!-- Workshop Card --> */}
-              <div className="dashboard-dash-event-card">
-                <div className="dashboard-dash-event-card_title">
-                  <img src={Solid} alt="event-techFEST" />
-                  Workshops Registered
-                </div>
-                {values.workshopsEnrolled.length > 0 ?
-                  <div className="dashboard-dash-event-card_events-list">
-                    {values.workshopsEnrolled.map((row) => (
-                      <div className="dashboard-dash-event">
-                        <span className="dashboard-dash-event-name">{row.workshopName}</span>
-                        <Link to={{pathname : `/domain#${row._id}`}} className='btn  btn-outline-primary btn-sm'>View detail</Link>
-                      </div>
-                    ))}
-                  </div>
-                  :
-                  <div className="dashboard-dash-event" style={{ borderBottom: 'none' }}>
-                    <span className="dashboard-dash-event-name">Please register in Workshops to see details</span>
-
-                  </div>
-                }
-
-              </div>
-            </div>
-          </div>
-
-          {/* <!-- PROFILE --> */}
-
-          <ProfileInformation />
-
-
-
-          {/* <!-- CERTIFICATION AND AWARDS --> */}
-
-          <div className="dashboard-dash-profile certificate" id="certificate">
-            <div className="dashboard-dash-profile-information">
-              <div className="dashboard-dash-section-heading">
-                <div className="dashboard-dash-section-heading_text">
-                  <h3 className="dashboard-dash-section-heading_heading">
-                    Certification & Awards
-                  </h3>
-                  <p className="dashboard-dash-section-heading_information">
-                    Claim your Certificate Here !
-                  </p>
-                </div>
-              </div>
-              <div className="dashboard-dash-profile-information_card dashboard-dash-card grid-colum-template-3-1">
-                <div className="dashboard-dash-profile-information_info">
-                  <div className="dashboard-dash-pi-heading">
-                    Event Certificates
-                    <hr />
-                  </div>
-                  <div className="dashboard-dash-pi_personal-info">
-
-                    <div className="dashboard-dash-certificate-download_group">
-                      <div className="dashboard-dash-pi_info-group">
-                        Please participate to get certificates
-                      </div>
-
+                  <div className="dashboard-dash-certificate-download_group">
+                    <div className="dashboard-dash-pi_info-group">
+                      Please participate to get certificates
                     </div>
 
-                    {/* <div className="dashboard-dash-certificate-download_group">
+                  </div>
+
+                  {/* <div className="dashboard-dash-certificate-download_group">
                     <div className="dashboard-dash-pi_info-group">
                       <div className="dashboard-dash-info-group_que">Profession</div>
                       <div className="dashboard-dash-info-group_ans">Student</div>
@@ -270,23 +270,23 @@ function Dash() {
                     </Link>
                   </div> */}
 
-                  </div>
-                  <div className="dashboard-dash-pi-heading">
-                    Workshop Certificates
-                    <hr />
-                  </div>
-                  <div className="dashboard-dash-pi-contact-information">
+                </div>
+                <div className="dashboard-dash-pi-heading">
+                  Workshop Certificates
+                  <hr />
+                </div>
+                <div className="dashboard-dash-pi-contact-information">
 
 
-                    <div className="dashboard-dash-certificate-download_group">
-                      <div className="dashboard-dash-pi_info-group">
-                        Please participate to get certificates
-                      </div>
-
+                  <div className="dashboard-dash-certificate-download_group">
+                    <div className="dashboard-dash-pi_info-group">
+                      Please participate to get certificates
                     </div>
 
+                  </div>
 
-                    {/* <div className="dashboard-dash-certificate-download_group">
+
+                  {/* <div className="dashboard-dash-certificate-download_group">
                     <div className="dashboard-dash-pi_info-group">
                       <div className="dashboard-dash-info-group_que">Profession</div>
                       <div className="dashboard-dash-info-group_ans">Student</div>
@@ -298,14 +298,14 @@ function Dash() {
 
 
 
-                  </div>
                 </div>
-                <div className="dashboard-dash-profile-information_pic"></div>
               </div>
+              <div className="dashboard-dash-profile-information_pic"></div>
             </div>
           </div>
+        </div>
 
-          <div class="footer">
+        <div class="footer">
           <div class="footer-copyright-text">
             Copyright © 2021. All Rights Reserved.
           </div>
@@ -330,10 +330,10 @@ function Dash() {
           </div>
         </div>
 
-          {/* <Footer /> */}
-        </div>
-      </main>
-  
+        {/* <Footer /> */}
+      </div>
+    </main>
+
   );
 }
 
