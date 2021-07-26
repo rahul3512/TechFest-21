@@ -41,8 +41,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   appBar: {
-    // backgroundColor: 'transparent',
-    backgroundColor: 'rgba(1, 0, 0, 0.3)',
+    backgroundColor: 'transparent',
     zIndex: 25,
     boxShadow: 'none',
     transition: theme.transitions.create(['margin', 'width'], {
@@ -116,67 +115,43 @@ const Nav = props => {
     {
       text: "Dashboard",
       icon: <DashboardIcon />,
-      onClick: () => {
-        handleDrawerClose()
-        history.push("/dashboard")
-      }
+      onClick: () => history.push("/user/dashboard")     // change /dashboard -->> /user/dashboard    (By Rahul)
     },
     {
       text: "Home",
       icon: <HomeIcon />,
-      onClick: () => {
-        handleDrawerClose()
-        history.push("/")
-      }
+      onClick: () => history.push("/")
     },
     {
       text: "About Us",
       icon: <PeopleIcon />,
-      onClick: () => {
-        handleDrawerClose()
-        history.push("/about-us")
-      }
+      onClick: () => history.push("/about-us")
     },
 
     {
       text: "Domain",
       icon: <DomainIcon />,
-      onClick: () => {
-        handleDrawerClose()
-        history.push("/domain")
-      }
+      onClick: () => history.push("/domain")
     },
     {
       text: "Workshop",
       icon: <SupervisedUserCircleIcon />,
-      onClick: () => {
-        handleDrawerClose()
-        history.push("/workshop")
-      }
+      onClick: () => history.push("/workshop")
     },
     {
       text: "Sponsors",
       icon: <AttachMoneyIcon />,
-      onClick: () => {
-        handleDrawerClose()
-        history.push("/sponsors")
-      }
+      onClick: () => history.push("/sponsors")
     },
     {
       text: "PR Intern",
       icon: <PersonIcon />,
-      onClick: () => {
-        handleDrawerClose()
-        history.push("/pr-intern")
-      }
+      onClick: () => history.push("/pr-intern")
     },
     {
       text: "Contact Us",
       icon: <ContactMailIcon />,
-      onClick: () => {
-        handleDrawerClose()
-        history.push("/contact-us")
-      }
+      onClick: () => history.push("/contact-us")
     }
   ];
 

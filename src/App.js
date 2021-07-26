@@ -12,10 +12,15 @@ import Sponsor from './pages/Sponsor';
 import ContactUs from './pages/ContactUs';
 import ScrollToTop from './components/ScrollToTop';
 
+
 import { Navbar, Footer } from './components';
 import SignIn from './pages/SignIn';
-// import PrivateRoute from './auth/helper/privateRoutes'
-// import UserDashboard from './components/Dashboard/user/UserDashboard';
+import PrivateRoute from './auth/helper/privateRoutes'
+import UserDashboard from './components/Dashboard/user/UserDashboard';
+
+import { Provider as AlertProvider } from 'react-alert';
+import AlertTemplate from 'react-alert-template-basic';
+
 
 function App() {
   return (
@@ -34,7 +39,12 @@ function App() {
         <Route exact path='/contact-us' component={ContactUs} />
         <Route path='/sign-up' component={SignUp} />
         <Route exact path='/' component={Home} />
-        {/* <PrivateRoute path="/user/dashboard" exact component={UserDashboard} /> */}
+
+        <AlertProvider template={AlertTemplate}>
+          <PrivateRoute path="/user/dashboard" exact component={UserDashboard} />
+        </AlertProvider>
+        
+
       </Switch>
       <Footer />
     </Router>
