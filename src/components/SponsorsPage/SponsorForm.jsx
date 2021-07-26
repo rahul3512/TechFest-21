@@ -23,7 +23,7 @@ function SponsorForm() {
     <div>
       <div className="container flex ">
         <div className="jumbotron border border-3">
-          <div className="row">
+          <div className="row sponsordesc">
             <form onSubmit={handleSubmit} className="col border-right px-5">
               <div className="p-3 border">
                 <div className="col-md-12">
@@ -68,7 +68,7 @@ function SponsorForm() {
                 </div>
                 <div className="col-md-12">
                   <label className="labels">
-                    Company Website/Facebook Page
+                    Company Website/FB Page
                   </label>
                   <input
                     type="text"
@@ -89,9 +89,9 @@ function SponsorForm() {
               </div>
             </form>
             <div className="col-lg-7">
-              <h5 className="heading px-5">
+              <h2 className="heading px-5">
                 Download The Sponsorship Brochure!
-              </h5>
+              </h2>
               <img className="image text-center" src={vr} alt="Vrimage" />
             </div>
           </div>
