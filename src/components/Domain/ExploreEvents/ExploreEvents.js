@@ -13,7 +13,7 @@ import TextField from '@material-ui/core/TextField';
 import Slide from '@material-ui/core/Slide';
 import { Link } from 'react-router-dom';
 import { getUser } from '../../Dashboard/user/helper/userapicalls';
-import { getWorkshop, registerInWorkshop } from '../../../auth/helper/Workshop';
+import { getWorkshop, registerInEvent, registerInWorkshop } from '../../../auth/helper/DomainRegistration';
 
 
 export class ExploreEvents extends Component{
@@ -33,7 +33,8 @@ export class ExploreEvents extends Component{
         popUpMessage:'',
         positiveAction:'',
         completeUser : null,
-        viewSchedule:false
+        viewSchedule:false,
+        isEventRegistered:false
     }
 
     getUserData=()=>{
@@ -117,9 +118,33 @@ export class ExploreEvents extends Component{
                 this.setState({isWorkshopRegistered:false,popUpMessage:err,positiveAction:'OK'})
             })
         }
-        
+            
     }
 
+    registerEvent = (eventId) => {
+        this.handleClickOpen();
+        if(!this.state.user){
+            var status = !this.state.user
+            console.log(status)
+            this.setState({popUpMessage:'You are not Logged in. Please Log in first',positiveAction:'Log in'})
+        }else{
+            registerInEvent(this.state.user._id, this.state.token, eventId).then(
+                data => {
+                    console.log(data)
+                    if (data.error) {
+                        console.log(data.error)
+                        this.setState({popUpMessage:data.error,positiveAction:'OK'})
+                    } else {
+                        console.log("registered success")
+                        this.setState({isEventRegistered:true,popUpMessage:'Registration Successful',positiveAction:'OK'})
+                    }
+                }
+            ).catch(err => {
+                console.log(err)
+                this.setState({isEventRegistered:false,popUpMessage:err,positiveAction:'OK'})
+            })
+        }
+    }
     render(){
         return(
             <div id={this.props.id} className={classes.eventContainer}>
@@ -176,10 +201,18 @@ export class ExploreEvents extends Component{
                                     {this.props.content.eventDescription}
                                 </p>
                             </div>
-                            <span>
-                                <button className={classes.btnRegister}>Register Now</button>
-                                <button className={classes.btnStatement}>Problem statement</button>
-                            </span>
+                            {
+                                this.state.isEventRegistered?
+                                    <span>
+                                        <button disabled='true' className={classes.btnRegister}>Registered!</button>
+                                        <button className={classes.btnStatement} >Problem Statement</button>
+                                    </span>
+                                    :
+                                    <span>
+                                        <button className={classes.btnRegister} onClick={()=>{this.registerEvent(this.props.content._id)}}>Register Now</button>
+                                        <button className={classes.btnStatement} >Problem Statement</button>
+                                    </span>
+                            }
                         </div>
                     }
                     <div className={classes.eventPrize}>
@@ -195,8 +228,12 @@ export class ExploreEvents extends Component{
                             </div>
                             }
                         
-                        {/* <div className={classes.coordinatorContainer}>
-                            { {props.content.eventCoordinator.map(item=>{
+                        {
+                            this.props.heading === 'Precula'?
+                            null
+                            :
+                             <div className={classes.coordinatorContainer}>
+                            { this.props.content.eventCoordinator.map(item=>{
                                 return(
                                     <div className={classes.coordinator}>
                                     <div className={classes.coordinatorDetails}>
@@ -206,9 +243,11 @@ export class ExploreEvents extends Component{
                                 <img src={`${BASE_API}${item.photo}`} alt='' className={classes.coordinatorImage}/>
                                 </div>
                                 )
-                            })}  }
+                            })}  
                             
-                        </div> */}
+                            </div> 
+                        }
+                        
                     </div>
                 </div>
                 <Dialog

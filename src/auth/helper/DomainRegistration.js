@@ -29,3 +29,19 @@ export const registerInWorkshop = (userId, token, workshopId) => {
         })
         .catch(err => console.log(err));
 };
+export const registerInEvent = (userId, token, eventId) => {
+
+    console.log(`userId:${userId},tokenId:${token},workshop id : ${eventId}`);
+    return fetch(`${API}/user/${userId}/event/${eventId}`, {
+        method: "POST",
+        headers: {
+            Accept: "application/json",
+            // "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+        },
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};
