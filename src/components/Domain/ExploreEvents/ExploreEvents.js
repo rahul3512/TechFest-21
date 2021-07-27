@@ -9,55 +9,57 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import TextField from '@material-ui/core/TextField';
 import Slide from '@material-ui/core/Slide';
 import { Link } from 'react-router-dom';
+import { getUser } from '../../Dashboard/user/helper/userapicalls';
+import { getWorkshop, registerInWorkshop } from '../../../auth/helper/Workshop';
 
 
 export class ExploreEvents extends Component{
 
     constructor(props){
         super(props);
-        
     }
 
     state={
         user:isAuthenticated().user,
         token:isAuthenticated().token,
-        isRegistered:false,
-        currentWorkshop:{},
+        isWorkshopRegistered:false,
+        currentWorkshop:{
+            sessions:[]
+        },
         open:false,
         popUpMessage:'',
         positiveAction:'',
         completeUser : null,
+        viewSchedule:false
     }
 
-    getUser = (userId, token) => {
-        return fetch(`${API}/user/${userId}`, {
-            method: "GET",
-            headers: {
-                Accept: "application/json",
-    
-                Authorization: `Bearer ${token}`
-            },
-        })
-            .then(response => {
-                return response.json();
-            })
-            .catch(err => console.log(err));
-    };
-    
-    componentDidMount(){
-        this.getUser(this.state.user._id, this.state.token).then((data) => {
-            if (data.error) {
-                // setValues({ ...values, error: data.error });
-                console.log(data.error);
-            } else {
-                this.setState({completeUser:data})
-                // setCompleteUser(data)
-                
-            }
-        });
-        console.log(this.state.completeUser)
+    getUserData=()=>{
+        if(this.state.completeUser === null){
+            getUser(this.state.user._id, this.state.token).then((data) => {
+                console.log(`GET USER DATA:`);
+                console.log(data)
+                if (data.error) {
+                    // setValues({ ...values, error: data.error });
+                    console.log(data.error);
+                } else {
+                    this.setState({completeUser:data})
+                    if(data.workshopsEnrolled.length>0){
+                        data.workshopsEnrolled.map(item=>{
+                            if(this.props.id === item._id){
+                                this.setState({isWorkshopRegistered:true})
+                            }
+                        })
+                        // this.setState({isWorkshopRegistered:true})
+                    }
+                    // setCompleteUser(data)
+                    
+                }
+            });
+        }
+        
     }
 
     Transition = React.forwardRef(function Transition(props, ref) {
@@ -70,48 +72,28 @@ export class ExploreEvents extends Component{
     handleClose=()=>{
         this.setState({open:false})
     }
+    handleClickViewSchedule=()=>{
+        this.loadWorkshop(this.props.id)
+        this.setState({viewSchedule:true})
+    }
+    handleClickCloseViewSchedule=()=>{
+        this.setState({viewSchedule:false})
+    }
 
-    getWorkshop = (WorkshopId) => {
-        return fetch(`${API}/workshop/${WorkshopId}`, {
-            method: "GET",
-            headers: {
-                Accept: "application/json",
     
-            },
-        })
-            .then(response => {
-                return response.json();
-            })
-            .catch(err => console.log(err));
-    };
 
     loadWorkshop = (workshopId) => {
-        this.getWorkshop(workshopId).then(data => {
+        getWorkshop(workshopId).then(data => {
             if (data.error) {
                 alert(data.error);
             } else {
                 this.setState({currentWorkshop:data})
+                console.log(data)
             }
         });
     };
 
-    registerInWorkshop = (userId, token, workshopId) => {
-
-        console.log(`userId:${userId},tokenId:${token},workshop id : ${workshopId}`);
-        return fetch(`${API}/user/${userId}/workshop/${workshopId}`, {
-            method: "POST",
-            headers: {
-                Accept: "application/json",
-                // "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`
-            },
-        })
-            .then(response => {
-                return response.json();
-            })
-            .catch(err => console.log(err));
-    };
- 
+    
     registerWorkshop = (workshopId) => {
         this.handleClickOpen();
         if(!this.state.user){
@@ -119,7 +101,7 @@ export class ExploreEvents extends Component{
             console.log(status)
             this.setState({popUpMessage:'You are not Logged in. Please Log in first',positiveAction:'Log in'})
         }else{
-            this.registerInWorkshop(this.state.user._id, this.state.token, workshopId).then(
+            registerInWorkshop(this.state.user._id, this.state.token, workshopId).then(
                 data => {
                     console.log(data)
                     if (data.error) {
@@ -127,12 +109,12 @@ export class ExploreEvents extends Component{
                         this.setState({popUpMessage:data.error,positiveAction:'OK'})
                     } else {
                         console.log("registered success")
-                        this.setState({isRegistered:true,popUpMessage:'Registration Successful',positiveAction:'OK'})
+                        this.setState({isWorkshopRegistered:true,popUpMessage:'Registration Successful',positiveAction:'OK'})
                     }
                 }
             ).catch(err => {
                 console.log(err)
-                this.setState({isRegistered:false,popUpMessage:err,positiveAction:'OK'})
+                this.setState({isWorkshopRegistered:false,popUpMessage:err,positiveAction:'OK'})
             })
         }
         
@@ -140,8 +122,9 @@ export class ExploreEvents extends Component{
 
     render(){
         return(
-            <div className={classes.eventContainer}>
-                <hr/>
+            <div id={this.props.id} className={classes.eventContainer}>
+                {this.state.user?this.getUserData():null}
+                <hr className={classes.divider}/>
                 <div className={classes.eventContent}>
                     <div className={classes.eventImage}>
                         <div className={classes.eventImageContainer}>
@@ -174,10 +157,10 @@ export class ExploreEvents extends Component{
                                 </p>
                             </div>
                             {
-                                this.state.isRegistered?
+                                this.state.isWorkshopRegistered?
                                     <span>
                                         <button disabled='true' className={classes.btnRegister}>Registered!</button>
-                                        <button className={classes.btnStatement}>View Schedule</button>
+                                        <button className={classes.btnStatement} onClick={()=>this.handleClickViewSchedule()}>View Schedule</button>
                                     </span>
                                     :
                                     <span>
@@ -257,6 +240,60 @@ export class ExploreEvents extends Component{
                             
                         </Button>
                         </DialogActions>
+                </Dialog>
+                <Dialog
+                    open={this.state.viewSchedule}
+                    keepMounted
+                    TransitionComponent={this.Transition}
+                    onClose={this.handleClickCloseViewSchedule}
+                    aria-labelledby="alert-dialog-slide-title"
+                    aria-describedby="alert-dialog-slide-description"
+                >
+                    <DialogContent>
+                        <div className={classes.scheduleName}>
+                            <div>
+                                <DialogContentText>
+                                    <b>Workshop Name</b>
+                                    <p>{this.props.content.workshopName}</p>
+                                </DialogContentText>
+                                
+                            </div>
+                            <div>
+                                <DialogContentText>
+                                    <b>Tenure</b>
+                                    <p>15/07 to 20/07 (5 DAYS)</p>
+                                </DialogContentText>
+                            </div>
+                        </div>
+                        <div className={classes.scheduleHeading}>
+                            <b>Schedule</b>
+                            <hr/>
+                        </div>
+                        <div>
+                            {
+                                this.state.currentWorkshop.sessions.map(item=>{
+                                    return(
+                                        <DialogContentText>
+                                            <div className={classes.sessions}>
+                                                <p>{item.workshopSessionName}</p>
+                                                <p>{item.dateTime.split('T')[0]}</p>
+                                                
+                                                
+                                            </div>        
+                                        </DialogContentText>
+                                        
+                                    )
+                                })
+                                // this.state.currentWorkshop.sessions.map(item=>{console.log(item)})
+                            }
+                            <b>Note:Attendance on all days is mandatory for Successful completion.</b>
+                        </div>
+                    </DialogContent>
+                    <DialogActions>
+                    <Button onClick={this.handleClickCloseViewSchedule} color="primary">
+                        Join WhatsApp Group
+                    </Button>
+                    </DialogActions>
                 </Dialog>
             </div>
         )
