@@ -27,6 +27,8 @@ import AddDomain from './components/Dashboard/superadmin/AddDomain'
 import AddEvent from './components/Dashboard/superadmin/AddEvent'
 import AddWorkshop from './components/Dashboard/superadmin/AddWorkshop'
 import AddWorkshopSession from './components/Dashboard/superadmin/AddWorkshopSession'
+import UpdateDomain from './components/Dashboard/superadmin/UpdateDomain';
+import AdminDomains from './components/Dashboard/superadmin/adminDomains';
 
 
 function App() {
@@ -56,7 +58,16 @@ function App() {
         <SuperAdminRoutes path="/superadmin/addevent" exact component={AddEvent} />
         <SuperAdminRoutes path="/superadmin/addworkshop" exact component={AddWorkshop} />
         <SuperAdminRoutes path="/superadmin/addworkshopsession" exact component={AddWorkshopSession} />
-
+        <SuperAdminRoutes
+          path="/superadmin/domain/update/:domainId"
+          exact
+          component={UpdateDomain}
+        />
+        <SuperAdminRoutes
+          path="/superadmin/admindomains"
+          exact
+          component={AdminDomains}
+        />
 
         <AlertProvider template={AlertTemplate}>
           <PrivateRoute path="/user/dashboard" exact component={UserDashboard} />
