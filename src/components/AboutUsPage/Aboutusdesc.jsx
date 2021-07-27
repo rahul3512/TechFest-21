@@ -4,7 +4,7 @@ import techfestlogo from "../../assets/images/Logo.png";
 function Aboutusdesc() {
   return (
     <div>
-      <section className="container d-flex justify-content-center">
+      <section className="container d-flex justify-content-center aboutusbox">
         <div className="bord image-block">
           <img className="logoimage" src={slietlogo} alt="Logo" />
         </div>
