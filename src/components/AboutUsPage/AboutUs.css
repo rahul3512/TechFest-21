@@ -12,15 +12,14 @@ body {
   background: black;
 } */
 .aboutus-background {
-  background: url('../../assets/images/background.png'), black;
-  background-repeat: no-repeat;
-  background-size:cover;
+  background-color: black ;
   color: white;
 }
-
-
+.aboutusbox{
+  padding-top:15%;
+}
 .logoimage {
-  width: 130px;
+  width: 100px;
 }
 .bord {
   border-right: beige 3px solid;
@@ -41,7 +40,7 @@ body {
   text-align: center;
 }
 .hr-text {
-  font-size: 15px;
+  font-size: 20px;
   background-color: black;
   padding: 0 10px;
   font-family: "VipnagorgiallaRg-BoldItalic";
@@ -67,9 +66,12 @@ body {
     background-size: cover;
   }
   .logoimage {
-    width: 180px;
+    width: 130px;
   }
   .hr-text {
     font-size: 30px;
+  }
+  .aboutusbox{
+    padding-top: 10%;
   }
 }
