@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import GlobalStyle from './globalStyles';
 import Home from './pages/HomePage/Home';
-import SignUp from './pages/SignUp/SignUp';
+// import SignUp from './pages/SignUp/SignUp';
 import PrIntern from './pages/PrIntern';
 import Register from './pages/Register';
 import Domain from './pages/Domain';
@@ -46,7 +46,7 @@ function App() {
         <Route exact path='/about-us' component={AboutUs} />
         <Route exact path='/sponsors' component={Sponsor} />
         <Route exact path='/contact-us' component={ContactUs} />
-        <Route path='/sign-up' component={SignUp} />
+        {/* <Route path='/sign-up' component={SignUp} /> */}
         <Route exact path='/' component={Home} />
 
 
@@ -77,7 +77,7 @@ function App() {
 
 
       </Switch>
-      <Footer />
+      {/* <Footer /> */}
     </Router>
   );
 }

@@ -4,6 +4,7 @@ import CoreTeam from '../components/AboutUsPage/CoreTeam'
 import Visionary from '../components/AboutUsPage/Visionary'
 import background from '../assets/images/background.png';
 import '../components/AboutUsPage/AboutUs.css';
+import { Footer } from '../components';
 
 function AboutUs() {
     return (
@@ -16,6 +17,7 @@ function AboutUs() {
             <CoreTeam />
             <CoreTeam />
             <CoreTeam />
+            <Footer />
         </div>
     )
 }

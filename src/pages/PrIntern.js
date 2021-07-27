@@ -1,16 +1,13 @@
 import React from 'react'
+import PrInternPage from '../components/PrInternPage/PrIntern';
+import { Footer } from '../components'
+
 
 const PrIntern = () => {
     return (
         <div>
-            <h2>PR page</h2>
-            <h2>PR page</h2>
-            <h2>PR page</h2>
-            <h2>PR page</h2>
-            <h2>PR page</h2>
-            <h2>PR page</h2>
-            <h2>PR page</h2>
-
+            <PrInternPage />
+            <Footer />
         </div>
     )
 }

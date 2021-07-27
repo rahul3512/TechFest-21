@@ -1,4 +1,5 @@
 import React from 'react'
+import { Footer } from '../components';
 import SponsorCard from '../components/SponsorsPage/SponsorCard'
 import SponsorCard2 from '../components/SponsorsPage/SponsorCard2'
 import SponsorForm from '../components/SponsorsPage/SponsorForm'
@@ -10,6 +11,7 @@ function Sponsor() {
             <SponsorCard />
             <SponsorCard2 />
             <SponsorForm />
+            <Footer />
         </div>
     )
 }

@@ -6,6 +6,7 @@ function Domain() {
     return (
         <div>
             <DomainPage />
+
         </div>
     )
 }
