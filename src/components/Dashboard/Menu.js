@@ -48,7 +48,7 @@ function Menu({ history }) {
 
 
                 <li>
-                    <Link to="/domains">Domains</Link>
+                    <Link to="/domain">Domains</Link>
                 </li>
                 <li>
                     <Link to="/workshops">Workshops</Link>

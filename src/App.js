@@ -47,9 +47,7 @@ function App() {
         <Route path='/sign-up' component={SignUp} />
         <Route exact path='/' component={Home} />
 
-        <AlertProvider template={AlertTemplate}>
-          <PrivateRoute path="/user/dashboard" exact component={UserDashboard} />
-        </AlertProvider>
+
 
 
         <SuperAdminRoutes path="/superadmin/dashboard" exact component={SuperAdminDashboard} />
@@ -58,6 +56,15 @@ function App() {
         <SuperAdminRoutes path="/superadmin/addevent" exact component={AddEvent} />
         <SuperAdminRoutes path="/superadmin/addworkshop" exact component={AddWorkshop} />
         <SuperAdminRoutes path="/superadmin/addworkshopsession" exact component={AddWorkshopSession} />
+
+
+        <AlertProvider template={AlertTemplate}>
+          <PrivateRoute path="/user/dashboard" exact component={UserDashboard} />
+        </AlertProvider>
+
+
+
+
       </Switch>
       <Footer />
     </Router>
