@@ -74,21 +74,30 @@ class DomainPage extends Component {
     }
 
     componentDidMount() {
-        this.getDomains();
+        this.getDomains();        
     }
 
     getDomains = () => {
         axios.get(`${API}/domains`)
             .then(response => {
                 this.setState({ domains: response.data })
+                
+                if(this.props.redirectTo === 'workshops'){
+                    this.state.domains.map((item,pos)=>{
+                        return(
+                            item.domainName === 'Precula'?this.getSingleDomain(item._id,pos):null
+                        )
+                    })
+                }
+
             }).catch(err => {
                 alert(err.response)
             })
     }
-    getSingleDomain = (id) => {
+    getSingleDomain = (id,pos) => {
         axios.get(`${API}/domain/${id}`)
             .then(response => {
-                this.setState({ currentDomain: response.data, precula: false })
+                this.setState({ currentDomain: response.data, precula: false,exploreEvents:true,animate:true,currentSelected:pos })
                 if (response.data.domain.domainName == 'Precula') {
                     this.getWorkshops();
                 }
@@ -112,7 +121,6 @@ class DomainPage extends Component {
     render() {
         return (
             <div className={classes.container}>
-
                 <img src={this.state.exploreEvents ? `${BASE_API}${this.state.currentDomain?.domain?.photo}` : gradeintLogo} alt='' className={classes.displayImage} />
                 <div className={classes.content}>
                     <CSSTransition
@@ -167,8 +175,7 @@ class DomainPage extends Component {
                             {this.state.domains.map((item, pos) => {
                                 return (
                                     <div className={classes.cardRoot} key={pos} onClick={() => {
-                                        this.getSingleDomain(item._id);
-                                        this.setState({ exploreEvents: true, animate: true, currentSelected: pos });
+                                        this.getSingleDomain(item._id,pos);
                                     }
                                     } >
                                         <div className={[classes.cardContent, this.state.currentSelected === pos ? classes.active : null].join(" ")}>
@@ -189,10 +196,10 @@ class DomainPage extends Component {
                     {
 
                         this.state.precula ? this.state.workshops.map(item => {
-                            return (<ExploreEvents content={item} heading={this.state.currentDomain.domain.domainName} />)
+                            return (<ExploreEvents id={item._id} content={item} heading={this.state.currentDomain.domain.domainName} />)
                         }) :
                             this.state.currentDomain.events.map(item => {
-                                return (<ExploreEvents content={item} heading={this.state.currentDomain.domain.domainName} />)
+                                return (<ExploreEvents id={item._id} content={item} heading={this.state.currentDomain.domain.domainName} />)
                             })
                     }
                 </div> : null}
