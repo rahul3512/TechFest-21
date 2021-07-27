@@ -210,7 +210,7 @@ function Dash() {
                   {values.workshopsEnrolled.map((row) => (
                     <div className="dashboard-dash-event">
                       <span className="dashboard-dash-event-name">{row.workshopName}</span>
-                      <Link to={{ pathname: `/domain#${row._id}` }} className='btn  btn-outline-primary btn-sm'>View detail</Link>
+                      <Link to={{ pathname: `/domain/workshops?${row._id}` }} id={row._id} message={'redirected from dashboard'} className='btn  btn-outline-primary btn-sm'>View detail</Link>
                     </div>
                   ))}
                 </div>
