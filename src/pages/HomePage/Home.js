@@ -1,6 +1,6 @@
 import React from 'react';
 import { homeObjOne } from './Data';
-import { InfoSection } from '../../components';
+import { Footer, InfoSection } from '../../components';
 import HeroSection from '../../components/HomePage/MainSection/HeroSection';
 import HomeSponsor from '../../components/HomePage/SponsorSection/Sponsor';
 
@@ -10,7 +10,7 @@ function Home() {
       <HeroSection />
       <InfoSection {...homeObjOne} />
       <HomeSponsor />
-
+      <Footer />
     </div>
   );
 }
