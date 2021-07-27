@@ -21,12 +21,13 @@ import UserDashboard from './components/Dashboard/user/UserDashboard';
 
 import { Provider as AlertProvider } from 'react-alert';
 import AlertTemplate from 'react-alert-template-basic';
-import SuperAdminDashboard from './components/Dashboard/superAdmin/SuperAdminDashboard'
-import Coordinator from './components/Dashboard/superAdmin/Coordinator'
-import AddDomain from './components/Dashboard/superAdmin/AddDomain'
-import AddEvent from './components/Dashboard/superAdmin/AddEvent'
-import AddWorkshop from './components/Dashboard/superAdmin/AddWorkshop'
-import AddWorkshopSession from './components/Dashboard/superAdmin/AddWorkshopSession'
+import SuperAdminDashboard from './components/Dashboard/superadmin/SuperAdminDashboard'
+import Coordinator from './components/Dashboard/superadmin/Coordinator'
+import AddDomain from './components/Dashboard/superadmin/AddDomain'
+import AddEvent from './components/Dashboard/superadmin/AddEvent'
+import AddWorkshop from './components/Dashboard/superadmin/AddWorkshop'
+import AddWorkshopSession from './components/Dashboard/superadmin/AddWorkshopSession'
+
 
 function App() {
   return (
