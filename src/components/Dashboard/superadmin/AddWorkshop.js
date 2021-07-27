@@ -34,7 +34,7 @@ const Workshop = () => {
 
 
     const [coordinators, setCoordinators] = useState([])
-    const [studentCoordinatorVal, setStudentCoordinatorVal] = useState("")
+    const [studentCoordinatorVal, setStudentCoordinatorVal] = useState([])
 
     const {
         workshopName,
@@ -51,13 +51,22 @@ const Workshop = () => {
         let name = e.target.name;
         var value;
         value = name === "photo" ? e.target.files[0] : e.target.value;
-        if (name === "studentCoordinator") {
-            let a = []
-            a.push(e.target.value)
+        if (name === "studentCoordinator1") {
+            let a = studentCoordinatorVal
+            a[0] = e.target.value
             value = a;
-            setStudentCoordinatorVal(e.target.value)
+            setStudentCoordinatorVal(a)
+            name = "studentCoordinator"
+            // setValues({ ...setValues, studentCoordinatorVal: e.target.value })
+        } else if (name === "studentCoordinator2") {
+            let a = studentCoordinatorVal
+            a[1] = e.target.value
+            value = a;
+            setStudentCoordinatorVal(a)
+            name = "studentCoordinator"
             // setValues({ ...setValues, studentCoordinatorVal: e.target.value })
         }
+
 
 
 
@@ -95,7 +104,7 @@ const Workshop = () => {
                         error: ""
                     });
 
-                    setStudentCoordinatorVal("");
+                    setStudentCoordinatorVal([]);
 
                 }
             })
@@ -124,9 +133,9 @@ const Workshop = () => {
                 <textarea name="workshopDescription" placeholder="Description" id="description" cols="30"
                     rows="10" onChange={handleInputs} value={workshopDescription}></textarea>
 
-                <label for="studentCoordinator">Student Coordinator - 1</label>
+                <label for="studentCoordinator1">Student Coordinator - 1</label>
 
-                <select name="studentCoordinator" id="studentCoordinator" value={studentCoordinatorVal} onChange={handleInputs}>
+                <select name="studentCoordinator1" id="studentCoordinator1" value={studentCoordinatorVal[0]} onChange={handleInputs}>
                     <option value="">Select a student coordinator</option>
                     {coordinators &&
                         coordinators.map((coordinator, index) => {
@@ -139,9 +148,9 @@ const Workshop = () => {
                         })}
                 </select>
 
-                {/* <label for="studentCoordinator">Student Coordinator - 2</label> */}
+                <label for="studentCoordinator">Student Coordinator - 2</label>
 
-                {/* <select name="studentCoordinator" id="studentCoordinator" value={studentCoordinatorVal} onChange={handleInputs}>
+                <select name="studentCoordinator2" id="studentCoordinator2" value={studentCoordinatorVal[1]} onChange={handleInputs}>
                     <option value="">Select a student coordinator</option>
                     {coordinators &&
                         coordinators.map((coordinator, index) => {
@@ -152,7 +161,7 @@ const Workshop = () => {
                                     </option>
                                 );
                         })}
-                </select> */}
+                </select>
 
                 Host Name:
                 <input type="text" placeholder="Enter host name" name="hostName" value={hostName} onChange={handleInputs} />

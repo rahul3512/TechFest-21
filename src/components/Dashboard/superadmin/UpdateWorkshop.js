@@ -1,29 +1,34 @@
+import moment from 'moment';
 import React, { useState, useRef, useEffect } from 'react'
 import { isAuthenticated } from '../../../auth/helper';
 import Base from '../Base';
 import { getCoordinators } from './helper/coordinatorApiCalls';
-import { updateDomain, getDomain } from './helper/domainApiCalls';
+import { getWorkshop, updateWorkshop } from './helper/workshopApiCalls';
 
 
-
-const UpdateDomain = ({ match }) => {
+const UpdateWorkshop = ({ match }) => {
     const ref = React.useRef();
 
 
 
     const { user, token } = isAuthenticated();
     const [values, setValues] = useState({
-        domainName: "",
-        domainDescription: "",
+        workshopName: "",
+        workshopDescription: "",
+        hostName: "",
+        hostDescription: "",
+
         studentCoordinator: [],
 
-        facultyCoordinator: [],
         photo: "",
 
+        startDate: "",
+        endDate: "",
+        whatsappGroupLink: "",
         // photoField: "",
         loading: false,
         error: "",
-        updatedDomain: "",
+        updatedWorkshop: "",
         formData: new FormData()
 
     });
@@ -31,12 +36,15 @@ const UpdateDomain = ({ match }) => {
 
     const [coordinators, setCoordinators] = useState([])
     const [studentCoordinatorVal, setStudentCoordinatorVal] = useState("")
-    const [facultyCoordinatorVal, setFacultyCoordinatorVal] = useState("")
+
     const {
-        domainName,
-        domainDescription,
+        workshopName,
+        workshopDescription,
         studentCoordinator,
-        facultyCoordinator, photo, loading, error, formData, updatedDomain
+        hostName,
+        hostDescription, startDate,
+        endDate,
+        whatsappGroupLink, photo, loading, error, updatedWorkshop, formData
     } = values;
 
 
@@ -44,6 +52,8 @@ const UpdateDomain = ({ match }) => {
         let name = e.target.name;
         var value;
         value = name === "photo" ? e.target.files[0] : e.target.value;
+
+
         if (name === "studentCoordinator1") {
             let a = studentCoordinatorVal
             a[0] = e.target.value
@@ -59,17 +69,6 @@ const UpdateDomain = ({ match }) => {
             name = "studentCoordinator"
             // setValues({ ...setValues, studentCoordinatorVal: e.target.value })
         }
-        else if (name === "facultyCoordinator") {
-            let a = [];
-            // facultyCoordinator.map(fc => {
-            //     a.push(fc)
-            // })
-            a.push(e.target.value)
-            value = a;
-
-            setFacultyCoordinatorVal(e.target.value)
-        }
-
 
         formData.set(name, value);
         setValues({ ...values, [name]: value });
@@ -80,7 +79,7 @@ const UpdateDomain = ({ match }) => {
 
         setValues({ ...values, error: "", loading: true });
 
-        updateDomain(user._id, token, match.params.domainId, formData)
+        updateWorkshop(user._id, match.params.workshopId, token, formData)
             .then(data => {
                 console.log(data)
                 if (data.error) {
@@ -89,25 +88,23 @@ const UpdateDomain = ({ match }) => {
                     ref.current.value = ""
                     setValues({
                         ...values,
-                        domainName: data.domain1.domainName,
-                        domainDescription: data.domain1.domainDescription,
-                        studentCoordinator: data.domain1.studentCoordinator,
+                        workshopName: data.workshop1.workshopName,
+                        workshopDescription: data.workshop1.workshopDescription,
+                        studentCoordinator: data.workshop1.studentCoordinator,
+                        hostName: data.workshop1.hostName,
+                        hostDescription: data.workshop1.hostDescription,
+                        photo: data.workshop1.photo,
 
-                        facultyCoordinator: data.domain1.facultyCoordinator,
-                        photo: data.domain1.photo,
-
-                        // photoField: "",
-                        loading: false,
-                        error: "",
+                        startDate: data.workshop1.startDate,
+                        endDate: data.workshop1.endDate,
+                        whatsappGroupLink: data.workshop1.whatsappGroupLink,
                         formData: new FormData(),
-
-                        updatedDomain: data.domain1.domainName
-
-
+                        updatedWorkshop: data.workshop1.workshopName,
+                        loading: false,
+                        error: ""
                     });
 
-                    setStudentCoordinatorVal([data.domain1.studentCoordinator[0]?._id, data.domain1.studentCoordinator[1]?._id]);
-                    setFacultyCoordinatorVal(data.domain1.facultyCoordinator[0]?._id);
+                    setStudentCoordinatorVal([data.workshop1.studentCoordinator[0]?._id, data.workshop1.studentCoordinator[1]?._id]);
 
                 }
             })
@@ -116,7 +113,7 @@ const UpdateDomain = ({ match }) => {
         console.log(values)
     }
 
-    const domainForm = () => {
+    const workshopForm = () => {
         return (
             <form>
                 Upload Image:
@@ -129,14 +126,14 @@ const UpdateDomain = ({ match }) => {
                     ref={ref}
                 />
 
-                Domain Name:
-                <input type="text" placeholder="Enter your name" name="domainName" value={domainName} onChange={handleInputs} />
+                Workshop Name:
+                <input type="text" placeholder="Enter your name" name="workshopName" value={workshopName} onChange={handleInputs} />
 
                 Description:
-                <textarea name="domainDescription" placeholder="Description" id="description" cols="30"
-                    rows="10" onChange={handleInputs} value={domainDescription} />
+                <textarea name="workshopDescription" placeholder="Description" id="description" cols="30"
+                    rows="10" onChange={handleInputs} value={workshopDescription}></textarea>
 
-                <label for="studentCoordinator">Student Coordinator - 1</label>
+                <label for="studentCoordinator1">Student Coordinator - 1</label>
 
                 <select name="studentCoordinator1" id="studentCoordinator1" value={studentCoordinatorVal[0]} onChange={handleInputs}>
                     <option value="">Select a student coordinator</option>
@@ -151,7 +148,7 @@ const UpdateDomain = ({ match }) => {
                         })}
                 </select>
 
-                <label for="studentCoordinator">Student Coordinator - 2</label>
+                <label for="studentCoordinator2">Student Coordinator - 2</label>
 
                 <select name="studentCoordinator2" id="studentCoordinator2" value={studentCoordinatorVal[1]} onChange={handleInputs}>
                     <option value="">Select a student coordinator</option>
@@ -166,21 +163,20 @@ const UpdateDomain = ({ match }) => {
                         })}
                 </select>
 
+                Host Name:
+                <input type="text" placeholder="Enter host name" name="hostName" value={hostName} onChange={handleInputs} />
 
-                <label for="facultyCoordinator">Faculty Coordinator </label>
+                Description:
+                <textarea name="hostDescription" placeholder="Description" id="description" cols="30"
+                    rows="10" onChange={handleInputs} value={hostDescription}></textarea>
 
-                <select name="facultyCoordinator" id="facultyCoordinator" value={facultyCoordinatorVal} onChange={handleInputs}>
-                    <option value="">Select a faculty coordinator</option>
-                    {coordinators &&
-                        coordinators.map((coordinator, index) => {
-                            if (coordinator.coordinatorType === "Faculty")
-                                return (
-                                    <option key={index} value={coordinator._id}>
-                                        {coordinator.coordinatorName}
-                                    </option>
-                                );
-                        })}
-                </select>
+                start date:
+                <input type="datetime-local" name="startDate" value={startDate} onChange={handleInputs} />
+                end date:
+                <input type="datetime-local" name="endDate" value={endDate} onChange={handleInputs} />
+
+                whatsappGroupLink
+                <input type="text" name="whatsappGroupLink" value={whatsappGroupLink} onChange={handleInputs} />
 
                 <input type="submit" name="submit" onClick={onSubmit} />
 
@@ -192,9 +188,9 @@ const UpdateDomain = ({ match }) => {
     const successMessage = () => (
         <div
             className="alert alert-success mt-3"
-            style={{ display: updatedDomain ? "" : "none" }}
+            style={{ display: updatedWorkshop ? "" : "none" }}
         >
-            <h4>{domainName} updated successfully</h4>
+            <h4>{updatedWorkshop} created successfully</h4>
         </div>
     );
     const errorMessage = () => (
@@ -202,7 +198,7 @@ const UpdateDomain = ({ match }) => {
             className="alert alert-danger mt-3"
             style={{ display: error ? "" : "none" }}
         >
-            <h4>Domain updation failed</h4>
+            <h4>Workshop creation failed</h4>
         </div>
     );
 
@@ -225,8 +221,8 @@ const UpdateDomain = ({ match }) => {
         });
     };
 
-    const preloadDomain = domainId => {
-        getDomain(domainId).then(data => {
+    const preloadWorkshop = (workshopId) => {
+        getWorkshop(workshopId).then(data => {
             console.log(data);
             if (data.error) {
                 setValues({ ...values, error: data.error });
@@ -236,33 +232,40 @@ const UpdateDomain = ({ match }) => {
                     ...values,
 
 
-                    domainName: data.domain.domainName,
-                    domainDescription: data.domain.domainDescription,
-                    studentCoordinator: data.domain.studentCoordinator,
+                    workshopName: data.workshop?.workshopName,
+                    workshopDescription: data.workshop?.workshopDescription,
+                    hostName: data.workshop?.hostName,
+                    hostDescription: data.workshop?.hostDescription,
 
-                    facultyCoordinator: data.domain.facultyCoordinator,
-                    photo: data.domain.photo,
+                    studentCoordinator: data.workshop.studentCoordinator,
 
+                    photo: data.workshop?.photo,
+
+                    startDate: data.workshop?.startDate,
+                    endDate: data.workshop?.endDate,
+                    whatsappGroupLink: data.workshop?.whatsappGroupLink,
                     // photoField: "",
                     loading: false,
                     error: "",
+
                     formData: new FormData()
                 });
-                setStudentCoordinatorVal([data.domain.studentCoordinator[0]._id, data.domain.studentCoordinator[1]?._id])
-                setFacultyCoordinatorVal(data.domain.facultyCoordinator[0]._id)
+                setStudentCoordinatorVal([data.workshop.studentCoordinator[0]._id, data.workshop.studentCoordinator[1]?._id])
+
             }
         });
-    };
+    }
+
     useEffect(() => {
         preload();
-        preloadDomain(match.params.domainId);
+        preloadWorkshop(match.params.workshopId)
     }, []);
     return (
-        <Base title="domain creation page">
+        <Base title="workshop creation page">
 
-            {domainForm()}
+            {workshopForm()}
 
-            {JSON.stringify(values)}
+
             {successMessage()}
             {errorMessage()}
         </Base>
@@ -272,4 +275,4 @@ const UpdateDomain = ({ match }) => {
 
 
 
-export default UpdateDomain;
+export default UpdateWorkshop;

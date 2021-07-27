@@ -36,6 +36,12 @@ function Menu({ history }) {
                         <li>
                             <Link to="/superadmin/admindomains">Admin Domains</Link>
                         </li>
+                        <li>
+                            <Link to="/superadmin/admincoordinators">Admin Coordinators</Link>
+                        </li>
+                        <li>
+                            <Link to="/superadmin/adminworkshops">Admin Workshops</Link>
+                        </li>
                     </>
 
                 )}

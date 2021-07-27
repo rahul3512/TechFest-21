@@ -29,6 +29,10 @@ import AddWorkshop from './components/Dashboard/superadmin/AddWorkshop'
 import AddWorkshopSession from './components/Dashboard/superadmin/AddWorkshopSession'
 import UpdateDomain from './components/Dashboard/superadmin/UpdateDomain';
 import AdminDomains from './components/Dashboard/superadmin/adminDomains';
+import AdminCoordinators from './components/Dashboard/superadmin/AdminCoodinators';
+import UpdateCoordinator from './components/Dashboard/superadmin/UpdateCoordinator';
+import UpdateWorkshop from './components/Dashboard/superadmin/UpdateWorkshop';
+import AdminWorkshops from './components/Dashboard/superadmin/AdminWorkshops';
 
 
 function App() {
@@ -49,9 +53,6 @@ function App() {
         {/* <Route path='/sign-up' component={SignUp} /> */}
         <Route exact path='/' component={Home} />
 
-
-
-
         <SuperAdminRoutes path="/superadmin/dashboard" exact component={SuperAdminDashboard} />
         <SuperAdminRoutes path="/superadmin/coordinator" exact component={Coordinator} />
         <SuperAdminRoutes path="/superadmin/adddomain" exact component={AddDomain} />
@@ -64,9 +65,29 @@ function App() {
           component={UpdateDomain}
         />
         <SuperAdminRoutes
+          path="/superadmin/workshop/update/:workshopId"
+          exact
+          component={UpdateWorkshop}
+        />
+        <SuperAdminRoutes
+          path="/superadmin/coordinator/update/:coordinatorId"
+          exact
+          component={UpdateCoordinator}
+        />
+        <SuperAdminRoutes
           path="/superadmin/admindomains"
           exact
           component={AdminDomains}
+        />
+        <SuperAdminRoutes
+          path="/superadmin/adminworkshops"
+          exact
+          component={AdminWorkshops}
+        />
+        <SuperAdminRoutes
+          path="/superadmin/admincoordinators"
+          exact
+          component={AdminCoordinators}
         />
 
         <AlertProvider template={AlertTemplate}>
