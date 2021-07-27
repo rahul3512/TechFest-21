@@ -12,10 +12,6 @@
   font-family: EMI;
   src: url(../../assets/fonts/exo.medium-italic.otf);
 } */
-.App {
-  font-family: sans-serif;
-  text-align: center;
-}
 /* html,
 body {
   color: white;
@@ -28,7 +24,6 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   color: white;
-  
 }
 
 .card {
@@ -161,9 +156,17 @@ p {
     width: 100%;
     padding: 5px;
   }
+  .sponsorCard {
+    background-color: black;
+  }
 }
 @media (max-width:426px){
   .sponsordesc{
     padding-top:20%;
+  }
+  .sponsorCard {
+    background: black;
+    width:100%;
+    
   }
 }
