@@ -3,9 +3,14 @@ import React from 'react';
 import DomainPage from '../components/Domain/Domain';
 
 function Domain(props) {
+    var state = props.location.state;
+    if (state == undefined) {
+        state = { name : 'none' }
+    }
     return (
         <div>
-            <DomainPage redirectTo={props.location.pathname.split('/domain/')[1]}/>
+            
+            <DomainPage detail={state}/>
         </div>
     )
 }
