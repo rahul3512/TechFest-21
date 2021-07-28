@@ -169,11 +169,11 @@ const UpdateWorkshop = ({ match }) => {
                 Description:
                 <textarea name="hostDescription" placeholder="Description" id="description" cols="30"
                     rows="10" onChange={handleInputs} value={hostDescription}></textarea>
-
+                {/* {moment.utc(startDate).format()} */}
                 start date:
-                <input type="datetime-local" name="startDate" value={startDate} onChange={handleInputs} />
+                <input type="datetime-local" name="startDate" value={moment.utc(startDate).format('YYYY-MM-DD[T]HH:mm:ss')} onChange={handleInputs} />
                 end date:
-                <input type="datetime-local" name="endDate" value={endDate} onChange={handleInputs} />
+                <input type="datetime-local" name="endDate" value={moment.utc(endDate).format('YYYY-MM-DD[T]HH:mm:ss')} onChange={handleInputs} />
 
                 whatsappGroupLink
                 <input type="text" name="whatsappGroupLink" value={whatsappGroupLink} onChange={handleInputs} />
@@ -190,7 +190,7 @@ const UpdateWorkshop = ({ match }) => {
             className="alert alert-success mt-3"
             style={{ display: updatedWorkshop ? "" : "none" }}
         >
-            <h4>{updatedWorkshop} created successfully</h4>
+            <h4>{updatedWorkshop} updated successfully</h4>
         </div>
     );
     const errorMessage = () => (
@@ -198,7 +198,7 @@ const UpdateWorkshop = ({ match }) => {
             className="alert alert-danger mt-3"
             style={{ display: error ? "" : "none" }}
         >
-            <h4>Workshop creation failed</h4>
+            <h4>Workshop updation failed</h4>
         </div>
     );
 
@@ -261,13 +261,13 @@ const UpdateWorkshop = ({ match }) => {
         preloadWorkshop(match.params.workshopId)
     }, []);
     return (
-        <Base title="workshop creation page">
-
+        <Base title="workshop updation page">
+            {successMessage()}
+            {errorMessage()}
             {workshopForm()}
 
 
-            {successMessage()}
-            {errorMessage()}
+
         </Base>
     )
 

@@ -228,11 +228,12 @@ const Workshop = () => {
     return (
         <Base title="workshop creation page">
 
-            {workshopForm()}
 
 
             {successMessage()}
             {errorMessage()}
+
+            {workshopForm()}
         </Base>
     )
 

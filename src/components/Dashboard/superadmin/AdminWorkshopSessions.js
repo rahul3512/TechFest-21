@@ -2,32 +2,32 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 
 import Base from '../Base'
-import { getworkshops } from './helper/workshopApiCalls';
-function AdminWorkshops() {
+import { getWorkshopSessions } from './helper/workshopSessionApiCalls';
+function AdminWorkshopSessions() {
 
-    const [workshops, setWorkshops] = useState([]);
+    const [workshopSessions, setWorkshopSessions] = useState([]);
     const [error, seterror] = useState(false);
 
-    const loadAllDomains = () => {
-        getworkshops().then(data => {
+    const loadAllWorkshopSessions = () => {
+        getWorkshopSessions().then(data => {
             if (data.error) {
                 seterror(data.error);
             } else {
-                setWorkshops(data);
+                setWorkshopSessions(data);
             }
         });
     };
 
     useEffect(() => {
-        loadAllDomains();
+        loadAllWorkshopSessions();
     }, []);
 
 
 
     return (
-        <Base title="Workshop">
+        <Base title="Workshop Sessions">
 
-            {workshops.map((workshop, index) => {
+            {workshopSessions.map((workshopSession, index) => {
                 return (
                     <div key={index} className="col-4 mb-4">
                         {/* <Card product={product} /> */}
@@ -39,13 +39,13 @@ function AdminWorkshops() {
                         </Link> */}
                         <Link
                             className="btn btn-success"
-                            to={`/superadmin/workshop/update/${workshop._id}`}
+                            to={`/superadmin/workshopSession/update/${workshopSession._id}`}
                         >
                             <span className="">Update</span>
                         </Link>
                         <pre>
                             {
-                                JSON.stringify(workshops, null, 2)
+                                JSON.stringify(workshopSession, null, 2)
                             }</pre>
                     </div>
                 );
@@ -54,4 +54,4 @@ function AdminWorkshops() {
     )
 }
 
-export default AdminWorkshops
+export default AdminWorkshopSessions

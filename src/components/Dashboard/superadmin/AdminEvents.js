@@ -1,51 +1,53 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
+import { API } from '../../../Utils/backend';
+
 
 import Base from '../Base'
-import { getworkshops } from './helper/workshopApiCalls';
-function AdminWorkshops() {
+import { getevents } from './helper/eventApiCalls';
+function AdminEvents() {
 
-    const [workshops, setWorkshops] = useState([]);
+    const [events, setEvents] = useState([]);
     const [error, seterror] = useState(false);
 
-    const loadAllDomains = () => {
-        getworkshops().then(data => {
+    const loadAllEvents = () => {
+        getevents().then(data => {
             if (data.error) {
                 seterror(data.error);
             } else {
-                setWorkshops(data);
+                setEvents(data);
             }
         });
     };
 
     useEffect(() => {
-        loadAllDomains();
+        loadAllEvents();
     }, []);
 
 
 
     return (
-        <Base title="Workshop">
+        <Base title="Events">
 
-            {workshops.map((workshop, index) => {
+            {events.map((event, index) => {
                 return (
                     <div key={index} className="col-4 mb-4">
                         {/* <Card product={product} /> */}
                         {/* <Link
                             className="btn btn-success"
-                            to={`/workshop/${workshop._id}`}
+                            to={`/event/${event._id}`}
                         >
                             <span className="">View</span>
                         </Link> */}
                         <Link
                             className="btn btn-success"
-                            to={`/superadmin/workshop/update/${workshop._id}`}
+                            to={`/superadmin/event/update/${event._id}`}
                         >
                             <span className="">Update</span>
                         </Link>
                         <pre>
                             {
-                                JSON.stringify(workshops, null, 2)
+                                JSON.stringify(event, null, 2)
                             }</pre>
                     </div>
                 );
@@ -54,4 +56,4 @@ function AdminWorkshops() {
     )
 }
 
-export default AdminWorkshops
+export default AdminEvents

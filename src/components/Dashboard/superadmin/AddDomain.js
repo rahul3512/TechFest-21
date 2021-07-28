@@ -226,11 +226,13 @@ const Domain = () => {
     return (
         <Base title="domain creation page">
 
-            {domainForm()}
 
-            {JSON.stringify(values)}
+
+
             {successMessage()}
             {errorMessage()}
+            {domainForm()}
+            {JSON.stringify(values)}
         </Base>
     )
 

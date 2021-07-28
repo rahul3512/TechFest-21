@@ -199,11 +199,12 @@ const UpdateCoordinator = ({ match }) => {
     );
 
     return (
-        <Base title="Coordinator creation page">
-            {coordinatorForm()}
+        <Base title="Coordinator update page">
+
 
             {successMessage()}
             {errorMessage()}
+            {coordinatorForm()}
         </Base>
     )
 

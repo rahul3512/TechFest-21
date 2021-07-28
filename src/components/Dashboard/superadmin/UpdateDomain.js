@@ -258,13 +258,14 @@ const UpdateDomain = ({ match }) => {
         preloadDomain(match.params.domainId);
     }, []);
     return (
-        <Base title="domain creation page">
+        <Base title="domain update page">
 
+
+            {successMessage()}
+            {errorMessage()}
             {domainForm()}
 
             {JSON.stringify(values)}
-            {successMessage()}
-            {errorMessage()}
         </Base>
     )
 

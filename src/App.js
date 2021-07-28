@@ -32,7 +32,11 @@ import AdminDomains from './components/Dashboard/superadmin/adminDomains';
 import AdminCoordinators from './components/Dashboard/superadmin/AdminCoodinators';
 import UpdateCoordinator from './components/Dashboard/superadmin/UpdateCoordinator';
 import UpdateWorkshop from './components/Dashboard/superadmin/UpdateWorkshop';
+import UpdateEvent from './components/Dashboard/superadmin/UpdateEvent';
+import UpdateWorkshopSession from './components/Dashboard/superadmin/UpdateWorkshopSession';
 import AdminWorkshops from './components/Dashboard/superadmin/AdminWorkshops';
+import AdminEvents from './components/Dashboard/superadmin/AdminEvents';
+import AdminWorkshopSessions from './components/Dashboard/superadmin/AdminWorkshopSessions';
 
 
 function App() {
@@ -65,6 +69,16 @@ function App() {
           component={UpdateDomain}
         />
         <SuperAdminRoutes
+          path="/superadmin/event/update/:eventId"
+          exact
+          component={UpdateEvent}
+        />
+        <SuperAdminRoutes
+          path="/superadmin/workshopsession/update/:workshopSessionId"
+          exact
+          component={UpdateWorkshopSession}
+        />
+        <SuperAdminRoutes
           path="/superadmin/workshop/update/:workshopId"
           exact
           component={UpdateWorkshop}
@@ -83,6 +97,16 @@ function App() {
           path="/superadmin/adminworkshops"
           exact
           component={AdminWorkshops}
+        />
+        <SuperAdminRoutes
+          path="/superadmin/adminworkshopsessions"
+          exact
+          component={AdminWorkshopSessions}
+        />
+        <SuperAdminRoutes
+          path="/superadmin/adminevents"
+          exact
+          component={AdminEvents}
         />
         <SuperAdminRoutes
           path="/superadmin/admincoordinators"
