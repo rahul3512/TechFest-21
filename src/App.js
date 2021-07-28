@@ -27,6 +27,16 @@ import AddDomain from './components/Dashboard/superadmin/AddDomain'
 import AddEvent from './components/Dashboard/superadmin/AddEvent'
 import AddWorkshop from './components/Dashboard/superadmin/AddWorkshop'
 import AddWorkshopSession from './components/Dashboard/superadmin/AddWorkshopSession'
+import UpdateDomain from './components/Dashboard/superadmin/UpdateDomain';
+import AdminDomains from './components/Dashboard/superadmin/adminDomains';
+import AdminCoordinators from './components/Dashboard/superadmin/AdminCoodinators';
+import UpdateCoordinator from './components/Dashboard/superadmin/UpdateCoordinator';
+import UpdateWorkshop from './components/Dashboard/superadmin/UpdateWorkshop';
+import UpdateEvent from './components/Dashboard/superadmin/UpdateEvent';
+import UpdateWorkshopSession from './components/Dashboard/superadmin/UpdateWorkshopSession';
+import AdminWorkshops from './components/Dashboard/superadmin/AdminWorkshops';
+import AdminEvents from './components/Dashboard/superadmin/AdminEvents';
+import AdminWorkshopSessions from './components/Dashboard/superadmin/AdminWorkshopSessions';
 
 
 function App() {
@@ -47,17 +57,70 @@ function App() {
         {/* <Route path='/sign-up' component={SignUp} /> */}
         <Route exact path='/' component={Home} />
 
-        <AlertProvider template={AlertTemplate}>
-          <PrivateRoute path="/user/dashboard" exact component={UserDashboard} />
-        </AlertProvider>
-
-
         <SuperAdminRoutes path="/superadmin/dashboard" exact component={SuperAdminDashboard} />
         <SuperAdminRoutes path="/superadmin/coordinator" exact component={Coordinator} />
         <SuperAdminRoutes path="/superadmin/adddomain" exact component={AddDomain} />
         <SuperAdminRoutes path="/superadmin/addevent" exact component={AddEvent} />
         <SuperAdminRoutes path="/superadmin/addworkshop" exact component={AddWorkshop} />
         <SuperAdminRoutes path="/superadmin/addworkshopsession" exact component={AddWorkshopSession} />
+        <SuperAdminRoutes
+          path="/superadmin/domain/update/:domainId"
+          exact
+          component={UpdateDomain}
+        />
+        <SuperAdminRoutes
+          path="/superadmin/event/update/:eventId"
+          exact
+          component={UpdateEvent}
+        />
+        <SuperAdminRoutes
+          path="/superadmin/workshopsession/update/:workshopSessionId"
+          exact
+          component={UpdateWorkshopSession}
+        />
+        <SuperAdminRoutes
+          path="/superadmin/workshop/update/:workshopId"
+          exact
+          component={UpdateWorkshop}
+        />
+        <SuperAdminRoutes
+          path="/superadmin/coordinator/update/:coordinatorId"
+          exact
+          component={UpdateCoordinator}
+        />
+        <SuperAdminRoutes
+          path="/superadmin/admindomains"
+          exact
+          component={AdminDomains}
+        />
+        <SuperAdminRoutes
+          path="/superadmin/adminworkshops"
+          exact
+          component={AdminWorkshops}
+        />
+        <SuperAdminRoutes
+          path="/superadmin/adminworkshopsessions"
+          exact
+          component={AdminWorkshopSessions}
+        />
+        <SuperAdminRoutes
+          path="/superadmin/adminevents"
+          exact
+          component={AdminEvents}
+        />
+        <SuperAdminRoutes
+          path="/superadmin/admincoordinators"
+          exact
+          component={AdminCoordinators}
+        />
+
+        <AlertProvider template={AlertTemplate}>
+          <PrivateRoute path="/user/dashboard" exact component={UserDashboard} />
+        </AlertProvider>
+
+
+
+
       </Switch>
       {/* <Footer /> */}
     </Router>

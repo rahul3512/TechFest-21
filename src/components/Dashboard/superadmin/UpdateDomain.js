@@ -2,10 +2,11 @@ import React, { useState, useRef, useEffect } from 'react'
 import { isAuthenticated } from '../../../auth/helper';
 import Base from '../Base';
 import { getCoordinators } from './helper/coordinatorApiCalls';
-import { createDomain } from './helper/domainApiCalls';
+import { updateDomain, getDomain } from './helper/domainApiCalls';
 
 
-const Domain = () => {
+
+const UpdateDomain = ({ match }) => {
     const ref = React.useRef();
 
 
@@ -22,20 +23,20 @@ const Domain = () => {
         // photoField: "",
         loading: false,
         error: "",
-        createdDomain: "",
+        updatedDomain: "",
         formData: new FormData()
 
     });
 
 
     const [coordinators, setCoordinators] = useState([])
-    const [studentCoordinatorVal, setStudentCoordinatorVal] = useState([])
+    const [studentCoordinatorVal, setStudentCoordinatorVal] = useState("")
     const [facultyCoordinatorVal, setFacultyCoordinatorVal] = useState("")
     const {
         domainName,
         domainDescription,
         studentCoordinator,
-        facultyCoordinator, photo, loading, error, createdDomain, formData
+        facultyCoordinator, photo, loading, error, formData, updatedDomain
     } = values;
 
 
@@ -79,7 +80,7 @@ const Domain = () => {
 
         setValues({ ...values, error: "", loading: true });
 
-        createDomain(user._id, token, formData)
+        updateDomain(user._id, token, match.params.domainId, formData)
             .then(data => {
                 console.log(data)
                 if (data.error) {
@@ -88,19 +89,25 @@ const Domain = () => {
                     ref.current.value = ""
                     setValues({
                         ...values,
-                        domainName: "",
-                        domainDescription: "",
-                        studentCoordinator: [],
-                        facultyCoordinator: [],
-                        photo: "",
-                        formData: new FormData(),
-                        createdDomain: data.domain1.domainName,
+                        domainName: data.domain1.domainName,
+                        domainDescription: data.domain1.domainDescription,
+                        studentCoordinator: data.domain1.studentCoordinator,
+
+                        facultyCoordinator: data.domain1.facultyCoordinator,
+                        photo: data.domain1.photo,
+
+                        // photoField: "",
                         loading: false,
-                        error: ""
+                        error: "",
+                        formData: new FormData(),
+
+                        updatedDomain: data.domain1.domainName
+
+
                     });
 
-                    setFacultyCoordinatorVal([]);
-                    setStudentCoordinatorVal("");
+                    setStudentCoordinatorVal([data.domain1.studentCoordinator[0]?._id, data.domain1.studentCoordinator[1]?._id]);
+                    setFacultyCoordinatorVal(data.domain1.facultyCoordinator[0]?._id);
 
                 }
             })
@@ -129,7 +136,7 @@ const Domain = () => {
                 <textarea name="domainDescription" placeholder="Description" id="description" cols="30"
                     rows="10" onChange={handleInputs} value={domainDescription} />
 
-                <label for="studentCoordinator1">Student Coordinator - 1</label>
+                <label for="studentCoordinator">Student Coordinator - 1</label>
 
                 <select name="studentCoordinator1" id="studentCoordinator1" value={studentCoordinatorVal[0]} onChange={handleInputs}>
                     <option value="">Select a student coordinator</option>
@@ -144,7 +151,7 @@ const Domain = () => {
                         })}
                 </select>
 
-                <label for="studentCoordinator2">Student Coordinator - 2</label>
+                <label for="studentCoordinator">Student Coordinator - 2</label>
 
                 <select name="studentCoordinator2" id="studentCoordinator2" value={studentCoordinatorVal[1]} onChange={handleInputs}>
                     <option value="">Select a student coordinator</option>
@@ -158,7 +165,6 @@ const Domain = () => {
                                 );
                         })}
                 </select>
-
 
 
                 <label for="facultyCoordinator">Faculty Coordinator </label>
@@ -186,9 +192,9 @@ const Domain = () => {
     const successMessage = () => (
         <div
             className="alert alert-success mt-3"
-            style={{ display: createdDomain ? "" : "none" }}
+            style={{ display: updatedDomain ? "" : "none" }}
         >
-            <h4>{createdDomain} created successfully</h4>
+            <h4>{domainName} updated successfully</h4>
         </div>
     );
     const errorMessage = () => (
@@ -196,7 +202,7 @@ const Domain = () => {
             className="alert alert-danger mt-3"
             style={{ display: error ? "" : "none" }}
         >
-            <h4>Domain creation failed</h4>
+            <h4>Domain updation failed</h4>
         </div>
     );
 
@@ -219,19 +225,46 @@ const Domain = () => {
         });
     };
 
+    const preloadDomain = domainId => {
+        getDomain(domainId).then(data => {
+            console.log(data);
+            if (data.error) {
+                setValues({ ...values, error: data.error });
+            } else {
 
+                setValues({
+                    ...values,
+
+
+                    domainName: data.domain.domainName,
+                    domainDescription: data.domain.domainDescription,
+                    studentCoordinator: data.domain.studentCoordinator,
+
+                    facultyCoordinator: data.domain.facultyCoordinator,
+                    photo: data.domain.photo,
+
+                    // photoField: "",
+                    loading: false,
+                    error: "",
+                    formData: new FormData()
+                });
+                setStudentCoordinatorVal([data.domain.studentCoordinator[0]._id, data.domain.studentCoordinator[1]?._id])
+                setFacultyCoordinatorVal(data.domain.facultyCoordinator[0]._id)
+            }
+        });
+    };
     useEffect(() => {
         preload();
+        preloadDomain(match.params.domainId);
     }, []);
     return (
-        <Base title="domain creation page">
-
-
+        <Base title="domain update page">
 
 
             {successMessage()}
             {errorMessage()}
             {domainForm()}
+
             {JSON.stringify(values)}
         </Base>
     )
@@ -240,4 +273,4 @@ const Domain = () => {
 
 
 
-export default Domain;
+export default UpdateDomain;

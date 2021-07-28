@@ -33,6 +33,21 @@ function Menu({ history }) {
                         <li>
                             <Link to="/superadmin/addworkshopsession">Add Workshop session</Link>
                         </li>
+                        <li>
+                            <Link to="/superadmin/admindomains">Admin Domains</Link>
+                        </li>
+                        <li>
+                            <Link to="/superadmin/admincoordinators">Admin Coordinators</Link>
+                        </li>
+                        <li>
+                            <Link to="/superadmin/adminworkshops">Admin Workshops</Link>
+                        </li>
+                        <li>
+                            <Link to="/superadmin/adminworkshopsessions">Admin Workshop Sessions</Link>
+                        </li>
+                        <li>
+                            <Link to="/superadmin/adminevents">Admin Events</Link>
+                        </li>
                     </>
 
                 )}
@@ -48,7 +63,7 @@ function Menu({ history }) {
 
 
                 <li>
-                    <Link to="/domains">Domains</Link>
+                    <Link to="/domain">Domains</Link>
                 </li>
                 <li>
                     <Link to="/workshops">Workshops</Link>

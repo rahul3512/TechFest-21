@@ -45,15 +45,15 @@ export const getCoordinator = (CoordinatorId, token) => {
 };
 
 
-export const updateCoordinator = (coordinatorId, token, data) => {
-    return fetch(`${API}/coordinator/${coordinatorId}`, {
+export const updateCoordinator = (userId, coordinatorId, token, data) => {
+    return fetch(`${API}/coordinator/${coordinatorId}/${userId}`, {
         method: "PUT",
         headers: {
             Accept: "application/json",
-            "Content-Type": "application/json",
+            // "Content-Type": "application/json",
             Authorization: `Bearer ${token}`
         },
-        body: JSON.stringify(data)
+        body: data
 
     })
         .then(response => {
