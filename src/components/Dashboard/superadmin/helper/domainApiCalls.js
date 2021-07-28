@@ -18,6 +18,24 @@ export const createDomain = (userId, token, domain) => {
         })
         .catch(err => console.log(err));
 };
+export const updateDomain = (userId, token, domainId, domain) => {
+
+    // console.log(domain.studentCoordinator)
+
+    return fetch(`${API}/domain/${domainId}/${userId}`, {
+        method: "PUT",
+        headers: {
+            Accept: "application/json",
+            // "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+        },
+        body: domain
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};
 
 
 export const getdomains = () => {

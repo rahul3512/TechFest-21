@@ -6,7 +6,7 @@ function Base({
     children
 }) {
     return (
-        <div>
+        <div style={{ backgroundColor: "grey", paddingTop: "100px" }}>
             <Menu></Menu>
             <h1>{title}</h1>
             <div>
