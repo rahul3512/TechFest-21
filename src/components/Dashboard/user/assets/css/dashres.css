@@ -241,6 +241,7 @@ Reusable Elements
   -o-border-radius: calc(var( --length ) *4rem);
   padding:calc(var( --length ) * 2.3rem) calc(var( --length ) *5rem);
   border: 1px solid rgba(255, 255, 255, 0.3);
+  z-index: 1;
 }
 
 .dashboard-dash-event-card_events-list {
@@ -380,6 +381,7 @@ Reusable Elements
   -o-border-radius: calc(var( --length ) *1rem);
   overflow: hidden;
   position: relative;
+  
 }
 .dashboard-dash-explore-card img {
   width: 100%;
