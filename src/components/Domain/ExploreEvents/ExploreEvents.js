@@ -136,6 +136,7 @@ export class ExploreEvents extends Component {
             console.log(status)
             this.setState({ popUpMessage: 'You are not Logged in. Please Log in first', positiveAction: 'Log in' })
         } else {
+            console.log('>>>>>', this.state.user)
             registerInEvent(this.state.user._id, this.state.token, eventId).then(
                 data => {
                     console.log(data)
