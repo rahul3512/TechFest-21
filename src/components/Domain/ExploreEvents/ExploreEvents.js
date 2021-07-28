@@ -55,6 +55,14 @@ export class ExploreEvents extends Component {
                         })
                         // this.setState({isWorkshopRegistered:true})
                     }
+                    if (data.eventRegIn.length > 0) {
+                        data.eventRegIn.map(item => {
+                            if (this.props.id === item._id) {
+                                this.setState({ isEventRegistered: true })
+                            }
+                        })
+                        // this.setState({isWorkshopRegistered:true})
+                    }
                     // setCompleteUser(data)
 
                 }
