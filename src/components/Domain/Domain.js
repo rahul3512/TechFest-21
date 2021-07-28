@@ -8,7 +8,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { CSSTransition, Transition } from 'react-transition-group';
 import { ExploreEvents } from './ExploreEvents/ExploreEvents';
 import axios from 'axios';
-
+// import * as Scroll from "react-scroll";
 
 class DomainPage extends Component {
 
@@ -70,7 +70,8 @@ class DomainPage extends Component {
         exploreEvents: false,
         animate: false,
         workshops: [],
-        precula: false
+        precula: false,
+
     }
 
     componentDidMount() {
@@ -81,17 +82,42 @@ class DomainPage extends Component {
         axios.get(`${API}/domains`)
             .then(response => {
                 this.setState({ domains: response.data })
-                
-                if(this.props.redirectTo === 'workshops'){
-                    this.state.domains.map((item,pos)=>{
-                        return(
-                            item.domainName === 'Precula'?this.getSingleDomain(item._id,pos):null
+                console.log(this.state.domains)
+
+                if (this.props.detail.name == 'workshops') {
+                    console.log(true)
+                    this.state.domains.map((item, pos) => {
+                        return (
+                            item.domainName === 'Precula' ? this.getSingleDomain(item._id, pos) : null
                         )
                     })
+                    setTimeout(() => {
+                        window.location.replace(`${window.location.pathname}#${this.props.detail.id}`)
+                    } , 3000)
                 }
+                if (this.props.detail.name == 'events') {
+                    console.log(false)
+                    // console.log(this.props)
+                    this.state.domains.map((item, pos) => {
+                        // console.log(this.props.detail.id , item._id)
+                        return (
+                            item._id == this.props.detail.id ? this.getSingleDomain(item._id, pos) : null
+                        )
+                    })
+                    console.log(this.props)
+                    setTimeout(() => {
+                        window.location.replace(`${window.location.pathname}#${this.props.detail.secId}`)
+                    } , 5000)
+                }
+                else {
+                    // window.location.replace('/domain');
+                }
+                
 
             }).catch(err => {
-                alert(err.response)
+            
+                // alert(err.response)
+                console.log(err)
             })
     }
     getSingleDomain = (id,pos) => {
@@ -103,7 +129,7 @@ class DomainPage extends Component {
                 }
                 console.log(this.state.currentDomain);
             }).catch(err => {
-                alert("error")
+                // alert("error")
                 console.log(err.response)
             })
     }

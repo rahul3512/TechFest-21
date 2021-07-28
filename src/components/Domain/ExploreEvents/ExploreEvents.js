@@ -55,6 +55,14 @@ export class ExploreEvents extends Component{
                         })
                         // this.setState({isWorkshopRegistered:true})
                     }
+                    if(data.eventRegIn.length>0){
+                        data.eventRegIn.map(item=>{
+                            if(this.props.id === item._id){
+                                this.setState({isEventRegistered:true})
+                            }
+                        })
+                        // this.setState({isWorkshopRegistered:true})
+                    }
                     // setCompleteUser(data)
                     
                 }
@@ -66,7 +74,7 @@ export class ExploreEvents extends Component{
     Transition = React.forwardRef(function Transition(props, ref) {
         return <Slide direction="up" ref={ref} {...props} />;
       });
-
+    c
     handleClickOpen=()=>{
         this.setState({open:true})
     }
