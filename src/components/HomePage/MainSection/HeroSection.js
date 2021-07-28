@@ -38,25 +38,7 @@ function HeroSection() {
 
 
 
-            {/* <div className="hero-div">
-                <div className='hero-content' style={{ margin: 'auto', display: 'flex' }}>
-                    <div className='hero-text'>
-                        <h1>techFEST'</h1>
-                        <p>SLIET Longowal's Virtual <br />Techno-Management Fest</p>
-                        <button
-                            type="submit"
-                            className="btn btn-outline-light btn-rounded "
-                            data-mdb-ripple-color="dark"
-                            onClick={handleRoute} >
 
-                            Adventure Here!
-                        </button>
-                    </div>
-                    <div className='hero-logo'>
-                        <img src={logo} alt="logo" />
-                    </div>
-                </div>
-            </div> */}
         </div>
 
     );
