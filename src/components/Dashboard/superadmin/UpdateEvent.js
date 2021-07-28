@@ -1,12 +1,14 @@
+import moment from 'moment';
+
 import React, { useState, useRef, useEffect } from 'react'
 import { isAuthenticated } from '../../../auth/helper';
 import Base from '../Base';
 import { getCoordinators } from './helper/coordinatorApiCalls';
 import { getdomains } from './helper/domainApiCalls';
-import { createEvent } from './helper/eventApiCalls';
+import { getEvent, updateEvent } from './helper/eventApiCalls';
 
 
-const Event = () => {
+const UpdateEvent = ({ match }) => {
 
     const ref = React.useRef();
     const { user, token } = isAuthenticated();
@@ -33,7 +35,7 @@ const Event = () => {
         eventDescription: "",
         loading: false,
         error: "",
-        createdEvent: "",
+        updatedEvent: "",
         formData: new FormData()
 
     });
@@ -57,7 +59,7 @@ const Event = () => {
 
 
         eventDescription,
-        loading, error, createdEvent, formData
+        loading, error, updatedEvent, formData
     } = values;
 
 
@@ -89,7 +91,9 @@ const Event = () => {
 
         } else if (name == "photo") {
             value = e.target.files[0];
-        } else if (name === "eventCoordinator1") {
+        }
+
+        else if (name === "eventCoordinator1") {
             let a = eventCoordinatorVal
             a[0] = e.target.value
             value = a;
@@ -103,7 +107,9 @@ const Event = () => {
             setEventCoordinatorVal(a)
             name = "eventCoordinator"
             // setValues({ ...setValues, studentCoordinatorVal: e.target.value })
-        } else {
+        }
+
+        else {
             value = e.target.value;
         }
 
@@ -117,7 +123,7 @@ const Event = () => {
 
         setValues({ ...values, error: "", loading: true });
 
-        createEvent(user._id, token, formData)
+        updateEvent(user._id, match.params.eventId, token, formData)
             .then(data => {
                 console.log(data)
                 if (data.error) {
@@ -126,29 +132,30 @@ const Event = () => {
                     ref.current.value = ""
                     setValues({
                         ...values,
-                        eventName: "",
-                        photo: "",
-                        domainRefId: "",
-                        eventDate: "",
+                        eventName: data.event1.eventName,
+                        photo: data.event1.photo,
+                        domainRefId: data.event1.domainRefId?._id,
+                        eventDate: data.event1.eventDate,
 
-                        regEndDate: "",
+                        regEndDate: data.event1.regEndDate,
 
-                        participantCountMin: "",
-                        participantCountMax: "",
-                        eventCoordinator: [],
+                        participantCountMin: data.event1.participantCountMin,
+                        participantCountMax: data.event1.participantCountMax,
+                        eventCoordinator: data.event1.eventCoordinator,
 
-                        eventLink: "",
-                        prize: [],
+                        eventLink: data.event1.eventLink,
+                        prize: data.event1.prize,
 
 
-                        eventDescription: "",
+                        eventDescription: data.event1.eventDescription,
                         formData: new FormData(),
-                        createdEvent: data.event1.eventName,
+                        updatedEvent: data.event1.eventName,
                         loading: false,
                         error: ""
                     });
-                    setEventCoordinatorVal("");
-                    setPrizes([0, 0, 0])
+                    setEventCoordinatorVal([data.event1.eventCoordinator[0]._id, data.event1.eventCoordinator[1]?._id])
+                    let tt = data.event1.prize[0].split(",")
+                    setPrizes([tt[0], tt[1], tt[2]])
 
                 }
             })
@@ -175,9 +182,9 @@ const Event = () => {
                 Event Description:
                 <input type="text" name="eventDescription" value={eventDescription} onChange={handleInputs} />
                 event Date Time:
-                <input type="datetime-local" placeholder="Enter datae of event" name="eventDate" value={eventDate} onChange={handleInputs} />
+                <input type="datetime-local" placeholder="Enter datae of event" name="eventDate" value={moment.utc(eventDate).format('YYYY-MM-DD[T]HH:mm:ss')} onChange={handleInputs} />
                 regEndDate:
-                <input type="datetime-local" placeholder="Enter datae of event" name="regEndDate" value={regEndDate} onChange={handleInputs} />
+                <input type="datetime-local" placeholder="Enter datae of event" name="regEndDate" value={moment.utc(regEndDate).format('YYYY-MM-DD[T]HH:mm:ss')} onChange={handleInputs} />
                 participantCountMin:
                 <input type="number" placeholder="Enter datae of event" name="participantCountMin" value={participantCountMin} onChange={handleInputs} />
                 participantCountMax:
@@ -241,7 +248,6 @@ const Event = () => {
                 </select>
 
 
-
                 <input type="submit" name="submit" onClick={onSubmit} />
 
             </form>
@@ -252,9 +258,9 @@ const Event = () => {
     const successMessage = () => (
         <div
             className="alert alert-success mt-3"
-            style={{ display: createdEvent ? "" : "none" }}
+            style={{ display: updatedEvent ? "" : "none" }}
         >
-            <h4>{createdEvent} created successfully</h4>
+            <h4>{updatedEvent} created successfully</h4>
         </div>
     );
     const errorMessage = () => (
@@ -299,17 +305,55 @@ const Event = () => {
     };
 
 
+    const preloadEvent = (eventId) => {
+        getEvent(eventId).then(data => {
+            console.log(data);
+            if (data.error) {
+                setValues({ ...values, error: data.error });
+            } else {
+
+                setValues({
+                    ...values,
+
+                    eventName: data.eventName,
+                    photo: data.photo,
+                    domainRefId: data.domainRefId?._id,
+                    eventDate: data.eventDate,
+
+                    regEndDate: data.regEndDate,
+
+                    participantCountMin: data.participantCountMin,
+                    participantCountMax: data.participantCountMax,
+                    eventCoordinator: data.eventCoordinator,
+
+                    eventLink: data.eventLink,
+                    prize: data.prize,
+
+
+                    eventDescription: data.eventDescription,
+
+
+                });
+                setEventCoordinatorVal([data.eventCoordinator[0]._id, data.eventCoordinator[1]?._id])
+                let tt = data.prize[0].split(",")
+                setPrizes([tt[0], tt[1], tt[2]])
+
+            }
+        });
+    }
+
     useEffect(() => {
         preload();
+        preloadEvent(match.params.eventId);
     }, []);
     return (
-        <Base title="event creation page">
+        <Base title="event update page">
+
+
             {successMessage()}
             {errorMessage()}
+
             {eventForm()}
-
-
-
         </Base>
     )
 
@@ -317,4 +361,4 @@ const Event = () => {
 
 
 
-export default Event;
+export default UpdateEvent;

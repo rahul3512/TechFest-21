@@ -18,6 +18,24 @@ export const createWorkshop = (userId, token, workshop) => {
         })
         .catch(err => console.log(err));
 };
+export const updateWorkshop = (userId, workshopId, token, workshop) => {
+
+
+
+    return fetch(`${API}/workshop/${workshopId}/${userId}`, {
+        method: "PUT",
+        headers: {
+            Accept: "application/json",
+            // "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+        },
+        body: workshop
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};
 
 export const registerInWorkshop = (userId, token, workshopId) => {
 
