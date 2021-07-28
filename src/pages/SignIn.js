@@ -1,4 +1,4 @@
-import React, { useState , useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import LoginSignUp from "../components/RegisterPage/LoginSignUp";
 import { API } from "../backend";
 import { Redirect } from "react-router-dom";
@@ -32,11 +32,11 @@ function SignIn() {
           else return Promise.reject("Incorrect verification code");
         })
         .then((data) => {
-        //   console.log(data);
+          //   console.log(data);
           setIsVerify(true);
         })
         .catch((error) => {
-        //   console.log(error);
+          //   console.log(error);
           setIsVerify(false);
         });
     } else {
@@ -47,11 +47,14 @@ function SignIn() {
     accountVerification();
   });
   return (
-    {isVerify}  ? (<div style={{ backgroundColor: "black" }}>
-      <LoginSignUp isLogin={true} /> 
+    { isVerify } ? (<div style={{ backgroundColor: "black" }}>
+      <LoginSignUp isLogin={true} />
     </div>) : (<div style={{ backgroundColor: "black" }}>
       <LoginSignUp isLogin={true} />
+
     </div>)
+
+
   );
 }
 
