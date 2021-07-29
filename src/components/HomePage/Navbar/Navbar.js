@@ -30,6 +30,8 @@ import './Navbar.css';
 import { withRouter } from "react-router-dom";
 import Button from '@material-ui/core/Button';
 import { isAuthenticated, signout } from '../../../auth/helper';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import teclogo from '../../../assets/images/techFESTlogo.png';
 
 const drawerWidth = 240;
 
@@ -176,7 +178,15 @@ const Nav = props => {
         handleDrawerClose()
         history.push("/contact-us")
       }
-    }
+    },
+    {
+      text: "Register",
+      icon: <PersonAddIcon />,
+      onClick: () => {
+        handleDrawerClose()
+        history.push("/register")
+      }
+    },
   ];
 
   const handleDrawerOpen = () => {
@@ -198,15 +208,19 @@ const Nav = props => {
       >
         <Toolbar>
           <Typography variant="h6" noWrap className={classes.title}>
-            <Box className='logo'>
-              techFEST'21
+            <Box className='logo' component={Link} to='/'>
+              {/* techFEST'21 */}
+              <img src={teclogo} alt='tec-logo' className='logo-img' />
             </Box>
 
           </Typography>
           <div className="appbar">
 
             <MenuItem className="navmenu" component={Link} to="/pr-intern">PR Intern</MenuItem>
-            <MenuItem className="navmenu" component={Link} to="/register">Register</MenuItem>
+            {
+
+              <MenuItem className="navmenu" component={Link} to="/register">Register</MenuItem>
+            }
             {
               isAuthenticated() && (
                 <MenuItem className="navmenu" onClick={() => signout(() => {
