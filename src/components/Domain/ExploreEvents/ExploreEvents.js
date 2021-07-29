@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import classes from './exploreEvents.module.css'
 import { API, BASE_API } from '../../../Utils/backend';
-import { Calendar, Clock } from 'react-bootstrap-icons'
+import { Calendar, Clock, PersonPlus } from 'react-bootstrap-icons'
 import { isAuthenticated } from '../../../auth/helper/index.js'
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -13,7 +13,7 @@ import TextField from '@material-ui/core/TextField';
 import Slide from '@material-ui/core/Slide';
 import { Link } from 'react-router-dom';
 import { getUser } from '../../Dashboard/user/helper/userapicalls';
-import { getWorkshop, registerInEvent, registerInWorkshop } from '../../../auth/helper/DomainRegistration';
+import { getWorkshop, registerAsTeam, registerInEvent, registerInWorkshop } from '../../../auth/helper/DomainRegistration';
 import image from '../../../assets/images/backgroundDomains.png'
 
 
@@ -35,7 +35,10 @@ export class ExploreEvents extends Component {
         positiveAction: '',
         completeUser: null,
         viewSchedule: false,
-        isEventRegistered: false
+        isEventRegistered: false,
+        openTeamDialog:false,
+        addTeam:false,
+        memberId:''
     }
 
     getUserData = () => {
@@ -58,6 +61,7 @@ export class ExploreEvents extends Component {
                     }
                     if (data.eventRegIn.length > 0) {
                         data.eventRegIn.map(item => {
+                            console.log(item)
                             if (this.props.id === item._id) {
                                 this.setState({ isEventRegistered: true })
                             }
@@ -80,14 +84,23 @@ export class ExploreEvents extends Component {
         this.setState({ open: true })
     }
     handleClose = () => {
-        this.setState({ open: false })
+        if(this.state.addTeam){
+            registerInEventAsTeam(this.state.memberId);
+        }
+        this.setState({ open: false,openTeamDialog:false,addTeam:false })
     }
     handleClickViewSchedule = () => {
         this.loadWorkshop(this.props.id)
         this.setState({ viewSchedule: true })
     }
     handleClickCloseViewSchedule = () => {
-        this.setState({ viewSchedule: false })
+        this.setState({ viewSchedule: false,openTeamDialog:false,addTeam:false })
+    }
+    handleClickAddTeam=()=>{
+        this.setState({addTeam:true,positiveAction:'Add Team Member'})
+    }
+    _handleTextFieldChange=(e)=>{
+        this.setState({memberId:e.target.value})
     }
 
 
@@ -111,6 +124,8 @@ export class ExploreEvents extends Component {
             console.log(status)
             this.setState({ popUpMessage: 'You are not Logged in. Please Log in first', positiveAction: 'Log in' })
         } else {
+            console.log(this.state.currentWorkshop)
+            console.log(this.state.completeUser)
             registerInWorkshop(this.state.user._id, this.state.token, workshopId).then(
                 data => {
                     console.log(data)
@@ -130,6 +145,15 @@ export class ExploreEvents extends Component {
 
     }
 
+    componentDidMount=()=>{
+        this.getUserData();
+    }
+
+    registerAsTeam=()=>{
+        console.log('register as team')
+        this.setState({openTeamDialog:true,positiveAction:'Confirm'})
+    }
+
     registerEvent = (eventId) => {
         this.handleClickOpen();
         if (!this.state.user) {
@@ -137,7 +161,12 @@ export class ExploreEvents extends Component {
             console.log(status)
             this.setState({ popUpMessage: 'You are not Logged in. Please Log in first', positiveAction: 'Log in' })
         } else {
-            console.log('>>>>>', this.state.user)
+            console.log( this.state.user)
+            console.log(this.props.content.participantCountMax)
+            {
+                this.props.content.participantCountMax>1?this.registerAsTeam()
+                :
+            
             registerInEvent(this.state.user._id, this.state.token, eventId).then(
                 data => {
                     console.log(data)
@@ -152,7 +181,7 @@ export class ExploreEvents extends Component {
             ).catch(err => {
                 console.log(err)
                 this.setState({ isEventRegistered: false, popUpMessage: err, positiveAction: 'OK' })
-            })
+            })}
         }
     }
     render() {
@@ -210,7 +239,7 @@ export class ExploreEvents extends Component {
                             {
                                 this.state.isEventRegistered?
                                     <div className={classes.buttonContainer}>
-                                        <button disabled='true' className={classes.btnRegister}>Registered!</button>
+                                        <button disabled='true' className={classes.btnRegister} style={{backgroundColor:'rgba(255,255,255,0.5)'}}>Registered!</button>
                                         <button className={classes.btnStatement} >Problem Statement</button>
                                     </div>
                                     :
@@ -265,12 +294,65 @@ export class ExploreEvents extends Component {
                     aria-labelledby="alert-dialog-slide-title"
                     aria-describedby="alert-dialog-slide-description"
                 >
-                    <DialogTitle id="alert-dialog-slide-title">{"Attention!!"}</DialogTitle>
-                    <DialogContent>
-                        <DialogContentText id="alert-dialog-slide-description">
-                            {this.state.popUpMessage}
-                        </DialogContentText>
-                    </DialogContent>
+                    
+                    {
+                        this.state.openTeamDialog?
+                            this.state.addTeam?
+                            <DialogContent>
+                                <DialogTitle id="alert-dialog-slide-title">{"Attention!!"}</DialogTitle>    
+                                <TextField
+                                    autoFocus
+                                    margin="dense"
+                                    id="userEmail"
+                                    label="Enter email of User"
+                                    type="email"
+                                    fullWidth
+                                    onChange={this._handleTextFieldChange}
+                                />
+                            </DialogContent>:<DialogContent>
+                            <div className={classes.scheduleName}>
+                                <div>
+                                    <DialogContentText>
+                                        <strong>Domain Name</strong><br/>
+                                        <sub>{this.props.heading}</sub>
+                                    </DialogContentText>
+
+                                </div>
+                                <div>
+                                    <DialogContentText>
+                                        <strong>Competition Name</strong><br/>
+                                        <sub>{this.props.content.eventName}</sub>
+                                    </DialogContentText>
+                                </div>
+                            </div>
+                            <div className={classes.scheduleHeading}>
+                                <strong>My Team</strong>
+                                <hr/>
+                                <PersonPlus size={24} cursor='pointer' onClick={()=>{this.handleClickAddTeam()}}/>
+                            </div>    
+                            <div>
+                                <DialogContentText className={classes.sessions}>
+                                    
+                                        <strong>{this.state.completeUser.name}</strong>
+                                        <strong>{this.state.completeUser.userId}</strong>
+                                        {console.log(this.state.completeUser)}
+                                        
+        
+                                </DialogContentText>
+                            </div>
+                        </DialogContent>
+                        
+                        :
+                        <main>
+                            <DialogTitle id="alert-dialog-slide-title">{"Attention!!"}</DialogTitle>
+                            <DialogContent>
+                                <DialogContentText id="alert-dialog-slide-description">
+                                    {this.state.popUpMessage}
+                                </DialogContentText>
+                            </DialogContent>
+                        </main>
+                        
+                    }
                     <DialogActions>
                         <Button onClick={this.handleClose} color="primary">
                             Cancel
@@ -295,18 +377,18 @@ export class ExploreEvents extends Component {
                     aria-labelledby="alert-dialog-slide-title"
                     aria-describedby="alert-dialog-slide-description"
                 >
-                    <DialogContent>
+                        <DialogContent>
                         <div className={classes.scheduleName}>
                             <div>
                                 <DialogContentText>
-                                    <strong>Workshop Name</strong>
+                                    <strong>Workshop Name</strong><br/>
                                     <sub>{this.props.content.workshopName}</sub>
                                 </DialogContentText>
 
                             </div>
                             <div>
                                 <DialogContentText>
-                                    <strong>Tenure</strong>
+                                    <strong>Tenure</strong><br/>
                                     <sub>15/07 to 20/07 (5 DAYS)</sub>
                                 </DialogContentText>
                             </div>
@@ -335,6 +417,8 @@ export class ExploreEvents extends Component {
                             <strong>Note:Attendance on all days is mandatory for Successful completion.</strong>
                         </div>
                     </DialogContent>
+                    
+                    
                     <DialogActions>
                         <Button onClick={this.handleClickCloseViewSchedule} color="primary">
                             Join WhatsApp Group

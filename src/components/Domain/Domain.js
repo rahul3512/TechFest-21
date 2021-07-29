@@ -72,17 +72,30 @@ class DomainPage extends Component {
         animate: false,
         workshops: [],
         precula: false,
+        loading:true
 
     }
 
     componentDidMount() {
-        this.getDomains();        
+        this.getDomains();  
     }
+
+    loadingMessage = () => {
+        return (
+          this.state.loading && (
+            <div className=" text-center my-2">
+              <div className="spinner-border text-dark " role="status">
+                <span className="visually-hidden">Loading...</span>
+              </div>
+            </div>
+          )
+        );
+      };
 
     getDomains = () => {
         axios.get(`${API}/domains`)
             .then(response => {
-                this.setState({ domains: response.data })
+                this.setState({ domains: response.data,loading:false })
                 console.log(this.state.domains)
 
                 if (this.props.detail.name == 'workshops') {
@@ -118,7 +131,7 @@ class DomainPage extends Component {
             }).catch(err => {
             
                 // alert(err.response)
-                console.log(err)
+                alert(err)
             })
     }
     getSingleDomain = (id,pos) => {
@@ -234,6 +247,7 @@ class DomainPage extends Component {
                         </div>
 
                         <Slider {...this.settings} >
+                            {this.loadingMessage()}
                             {this.state.domains.map((item, pos) => {
                                 return (
                                     <div className={classes.cardRoot} key={pos} onClick={() => {

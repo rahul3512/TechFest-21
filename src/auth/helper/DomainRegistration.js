@@ -46,12 +46,13 @@ export const registerInEvent = (userId, token, eventId) => {
         .catch(err => console.log(err));
 };
 
-export const registerAsTeam=(userId, token, eventId)=>{
+export const registerInEventAsTeam=(userId, token, eventId)=>{
     return fetch(`${API}/user/get-id`,{
         method:"POST",
         headers:{
             Accept:"application/json",
             Authorization:`Bearer ${token}`
+            
         }
     }).then(response=>{
         return response.json();
