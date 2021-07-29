@@ -14,7 +14,7 @@ import ScrollToTop from './components/ScrollToTop';
 import Resetpassword from './pages/Resetpassword';
 
 
-import { Navbar, Footer } from './components';
+import { Navbar } from './components';
 import SignIn from './pages/SignIn';
 import PrivateRoute from './auth/helper/privateRoutes'
 import SuperAdminRoutes from './auth/helper/SuperAdminRoutes'

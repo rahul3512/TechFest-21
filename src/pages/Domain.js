@@ -5,11 +5,11 @@ import DomainPage from '../components/Domain/Domain';
 function Domain(props) {
     var state = props.location.state;
     if (state == undefined) {
-        state = { name : 'none' }
+        state = { name: 'none' }
     }
     return (
         <div>
-            <DomainPage detail={state}/>
+            <DomainPage detail={state} />
         </div>
     )
 }
