@@ -39,6 +39,7 @@ class DomainPage extends Component {
                     slidesToShow: 1,
                     swipeToSlide: true,
                     slidesToScroll: 1,
+                    initialSlide:6
                 }
 
             },
@@ -107,7 +108,7 @@ class DomainPage extends Component {
                     console.log(this.props)
                     setTimeout(() => {
                         window.location.replace(`${window.location.pathname}#${this.props.detail.secId}`)
-                    } , 5000)
+                    } , 3000)
                 }
                 else {
                     // window.location.replace('/domain');
@@ -163,7 +164,42 @@ class DomainPage extends Component {
                         </div>
                     </CSSTransition>
                     {this.state.exploreEvents ? <button className={classes.btnExploreEvents} onClick={() => { this.eventRef.current.scrollIntoView() }}>Explore Events</button> : null}
-                    {this.state.exploreEvents ?
+                    {
+                        this.state.exploreEvents?
+                        <div className={classes.coordinators}>
+                            <section className={classes.facultyCoordinatorContainer}>
+                                {this.state.currentDomain.domain.facultyCoordinator.map((item,pos)=>{
+                                    return(
+                                        <div key={pos} className={classes.facultyCoordinator}>
+                                            <img src={`${BASE_API}${item?.photo}`} alt='' className={classes.coordinatorImage} />
+                                            <div>
+                                                <h6>{item.coordinatorName}</h6>
+                                                <p>{item.coordinatorDesignation}</p>
+                                            </div>
+                                        </div>
+                                    )
+                                })}
+                            </section>
+                            <section className={classes.studentCoordinatorContainer}>
+                                {
+                                    this.state.currentDomain.domain.studentCoordinator.map((item,pos)=>{
+                                        return(
+                                            <section key={pos} className={classes.eventCoordinatorData}>
+                                                <div className={classes.coordinatorDetails}>
+                                                    <p>{item.coordinatorName}</p>
+                                                    <p>{`+91 ${item.coordinatorPhone}`}</p>
+                                                </div>
+                                                <img src={`${BASE_API}${item.photo}`} alt='' className={classes.coordinatorImage}/>
+                                            </section>
+                                        )
+                                    })
+                                }
+                            </section>
+                        </div>
+                        :
+                        null
+                    }
+                    {/* {this.state.exploreEvents ?
                         <div className={classes.coordinators}>
                             {this.state.currentDomain.domain.facultyCoordinator.map(item => {
                                 return (
@@ -190,7 +226,7 @@ class DomainPage extends Component {
                                 })}
                             </div>
                         </div>
-                        : null}
+                        : null} */}
                     <div className={classes.cardContainer}>
                         <div className={classes.cardHeadingContainer}>
                             <p>Domains</p>
@@ -208,7 +244,7 @@ class DomainPage extends Component {
                                             <img src={`${BASE_API}${item.photo}`} alt='' className={classes.cardImage} />
                                             <div className={classes.cardData}>
                                                 <h4>{item.domainName}</h4>
-                                                <p>{item.domainDescription}</p>
+                                                <p>{item.domainDescription.length>100?item.domainDescription.slice(0,100)+'...':item.domainDescription}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -221,16 +257,15 @@ class DomainPage extends Component {
                     <h1 className={classes.domainHeading}>{this.state.currentDomain.domain.domainName}</h1>
                     {
 
-                        this.state.precula ? this.state.workshops.map(item => {
-                            return (<ExploreEvents id={item._id} content={item} heading={this.state.currentDomain.domain.domainName} />)
+                        this.state.precula ? this.state.workshops.map((item,pos) => {
+                            return (<ExploreEvents id={item._id} content={item} key={pos} heading={this.state.currentDomain.domain.domainName} />)
                         }) :
-                            this.state.currentDomain.events.map(item => {
-                                return (<ExploreEvents id={item._id} content={item} heading={this.state.currentDomain.domain.domainName} />)
+                            this.state.currentDomain.events.map((item,pos) => {
+                                return (<ExploreEvents id={item._id} key={pos} content={item} heading={this.state.currentDomain.domain.domainName} />)
                             })
                     }
                 </div> : null}
 
-                {/* <img src={gradeintLogo} alt='' className='rightlogo1'/> */}
             </div>
         );
     }

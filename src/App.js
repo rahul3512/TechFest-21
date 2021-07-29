@@ -27,6 +27,7 @@ import AddDomain from './components/Dashboard/superadmin/AddDomain'
 import AddEvent from './components/Dashboard/superadmin/AddEvent'
 import AddWorkshop from './components/Dashboard/superadmin/AddWorkshop'
 import AddWorkshopSession from './components/Dashboard/superadmin/AddWorkshopSession'
+import { ExploreEvents } from './components/Domain/ExploreEvents/ExploreEvents';
 
 
 function App() {

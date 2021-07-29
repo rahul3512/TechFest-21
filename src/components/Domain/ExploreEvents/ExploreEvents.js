@@ -14,6 +14,7 @@ import Slide from '@material-ui/core/Slide';
 import { Link } from 'react-router-dom';
 import { getUser } from '../../Dashboard/user/helper/userapicalls';
 import { getWorkshop, registerInEvent, registerInWorkshop } from '../../../auth/helper/DomainRegistration';
+import image from '../../../assets/images/backgroundDomains.png'
 
 
 export class ExploreEvents extends Component{
@@ -156,108 +157,105 @@ export class ExploreEvents extends Component{
     render(){
         return(
             <div id={this.props.id} className={classes.eventContainer}>
-                {this.state.user?this.getUserData():null}
                 <hr className={classes.divider}/>
-                <div className={classes.eventContent}>
+                <main className={classes.eventContent}>
                     <div className={classes.eventImage}>
-                        <div className={classes.eventImageContainer}>
-                            <img src={`${BASE_API}${this.props.content.photo}`} alt=''/>
-                        </div>
+                        <img src={`${BASE_API}${this.props.content.photo}`} alt='' className={classes.image}/>
                         {
                             this.props.heading === 'Precula'?
                             <div className={classes.eventDeadline}>
                                 <Calendar color='white' size={16}/>
-                                <p>Register Before : </p>
+                                <p>{`Register Before : `} </p>
                                 <Clock color='white' size={16}/>
-                                <p>Time : </p>
+                                <p>{`Time : `}</p>
                             </div>
                             :
                             <div className={classes.eventDeadline}>
                                 <Calendar color='white' size={16}/>
-                                <p>{`Register Before : ${this.props.content.regEndDate.split('T')[0]}`}</p>
-                                <Clock color = 'white' size={16}/>
-                                <p>{`${this.props.content.regEndDate.split('T')[1].split('.')[0]}`}</p> 
+                                <p>{`Register Before : ${this.props.content.regEndDate.split('T')[0]}`} </p>
+                                <Clock color='white' size={16}/>
+                                <p>{`${this.props.content.regEndDate.split('T')[1].split('.')[0]}`}</p>
                             </div>
                         }
                     </div>
+                    {/* SECTION 2 */}
                     {
                         this.props.heading === 'Precula'?
                         <div className={classes.eventInfo}>
-                            <div className={classes.text}>
-                                <h1>{this.props.content.workshopName}</h1>
-                                <p>
-                                    {this.props.content.workshopDescription}
-                                </p>
-                            </div>
+                            <section className={classes.eventInfoData}>
+                                <h1>{this.props.content.workshoptName}</h1>
+                                <p>{this.props.content.workshopDescription}</p>
+                                <strong>Start Date : DD/MM/YYYY     </strong><br/>
+                                <strong>End Date : DD/MM/YYYY   </strong>
+                            </section>
                             {
                                 this.state.isWorkshopRegistered?
-                                    <span>
+                                    <div className={classes.buttonContainer}>
                                         <button disabled='true' className={classes.btnRegister}>Registered!</button>
                                         <button className={classes.btnStatement} onClick={()=>this.handleClickViewSchedule()}>View Schedule</button>
-                                    </span>
+                                    </div>
                                     :
-                                    <span>
+                                    <div className={classes.buttonContainer}>
                                         <button className={classes.btnRegister} onClick={()=>{this.registerWorkshop(this.props.content._id)}}>Register Now</button>
-                                    </span>
+                                    </div>
                             }
                         </div>
                         :
                         <div className={classes.eventInfo}>
-                            <div className={classes.text}>
+                            <section className={classes.eventInfoData}>
                                 <h1>{this.props.content.eventName}</h1>
-                                <p>
-                                    {this.props.content.eventDescription}
-                                </p>
-                            </div>
+                                <p>{this.props.content.eventDescription}</p>
+                            </section>
                             {
                                 this.state.isEventRegistered?
-                                    <span>
+                                    <div className={classes.buttonContainer}>
                                         <button disabled='true' className={classes.btnRegister}>Registered!</button>
                                         <button className={classes.btnStatement} >Problem Statement</button>
-                                    </span>
+                                    </div>
                                     :
-                                    <span>
+                                    <div className={classes.buttonContainer}>
                                         <button className={classes.btnRegister} onClick={()=>{this.registerEvent(this.props.content._id)}}>Register Now</button>
                                         <button className={classes.btnStatement} >Problem Statement</button>
-                                    </span>
+                                    </div>
                             }
                         </div>
                     }
+                    
                     <div className={classes.eventPrize}>
-                        {this.props.heading === 'Precula'? 
-                            <div className={classes.prizeMoney}>
-                                <p>Registration Fees</p>
-                                <p>Free</p>
-                            </div>
-                            :
-                            <div className={classes.prizeMoney}>
-                                <p>Prizes Worth</p>
-                                <p>{`Rs : ${this.props.content.prize[0].split(',').map(i=>Number(i)).reduce((a,b)=>a+b,0)}` }</p>
-                            </div>
-                            }
-                        
-                        {
-                            this.props.heading === 'Precula'?
-                            null
-                            :
-                             <div className={classes.coordinatorContainer}>
-                            { this.props.content.eventCoordinator.map(item=>{
-                                return(
-                                    <div className={classes.coordinator}>
-                                    <div className={classes.coordinatorDetails}>
-                                        <p>{item.coordinatorName}</p>
-                                        <p>{`+91 ${item.coordinatorPhone}`}</p>
-                                    </div>
-                                <img src={`${BASE_API}${item.photo}`} alt='' className={classes.coordinatorImage}/>
+                        <section className={classes.eventAmount}>
+                            {this.props.heading === 'Precula'? 
+                                <div className={classes.prizeMoney}>
+                                    <p>Registration Fees</p>
+                                    <p>Free</p>
                                 </div>
-                                )
-                            })}  
-                            
-                            </div> 
-                        }
-                        
+                                :
+                                <div className={classes.prizeMoney}>
+                                    <p>Prizes Worth</p>
+                                    <p>{`Rs : ${this.props.content.prize[0].split(',').map(i=>Number(i)).reduce((a,b)=>a+b,0)}` }</p>
+                                </div>
+                            }
+                        </section>
+                        <section className={classes.eventCoordinators}>
+                            {
+                                this.props.heading === 'Precula'?
+                                null
+                                :
+                                this.props.content.eventCoordinator.map((item,pos)=>{
+                                    return(
+                                        <section key={pos} className={classes.coordinatorData}>
+                                            <div className={classes.coordinatorDetails}>
+                                                <p>{item.coordinatorName}</p>
+                                                <p>{`+91 ${item.coordinatorPhone}`}</p>
+                                            </div>
+                                            
+                                            <img src={`${BASE_API}${item.photo}`} alt='' className={classes.coordinatorImage}/>
+                                        </section>
+                                    )
+                                })
+                            } 
+                        </section>
                     </div>
-                </div>
+                </main>
                 <Dialog
                     open={this.state.open}
                     keepMounted
@@ -300,20 +298,20 @@ export class ExploreEvents extends Component{
                         <div className={classes.scheduleName}>
                             <div>
                                 <DialogContentText>
-                                    <b>Workshop Name</b>
-                                    <p>{this.props.content.workshopName}</p>
+                                    <strong>Workshop Name</strong>
+                                    <sub>{this.props.content.workshopName}</sub>
                                 </DialogContentText>
                                 
                             </div>
                             <div>
                                 <DialogContentText>
-                                    <b>Tenure</b>
-                                    <p>15/07 to 20/07 (5 DAYS)</p>
+                                    <strong>Tenure</strong>
+                                    <sub>15/07 to 20/07 (5 DAYS)</sub>
                                 </DialogContentText>
                             </div>
                         </div>
                         <div className={classes.scheduleHeading}>
-                            <b>Schedule</b>
+                            <strong>Schedule</strong>
                             <hr/>
                         </div>
                         <div>
@@ -322,8 +320,8 @@ export class ExploreEvents extends Component{
                                     return(
                                         <DialogContentText>
                                             <div className={classes.sessions}>
-                                                <p>{item.workshopSessionName}</p>
-                                                <p>{item.dateTime.split('T')[0]}</p>
+                                                <strong>{item.workshopSessionName}</strong>
+                                                <sub>{item.dateTime.split('T')[0]}</sub>
                                                 
                                                 
                                             </div>        
@@ -333,7 +331,7 @@ export class ExploreEvents extends Component{
                                 })
                                 // this.state.currentWorkshop.sessions.map(item=>{console.log(item)})
                             }
-                            <b>Note:Attendance on all days is mandatory for Successful completion.</b>
+                            <strong>Note:Attendance on all days is mandatory for Successful completion.</strong>
                         </div>
                     </DialogContent>
                     <DialogActions>

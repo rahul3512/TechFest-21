@@ -9,7 +9,6 @@ function Domain(props) {
     }
     return (
         <div>
-            
             <DomainPage detail={state}/>
         </div>
     )

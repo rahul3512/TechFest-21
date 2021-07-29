@@ -1,58 +1,66 @@
 .eventContainer{
-    width: 90vw;
-    height: 60vh;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: #02020E;
+    background-color: transparent;
+    width: inherit;
+    height: auto;
 }
 .divider{
     color: white;
-    width: 100%;
+    width: 90%;
     margin-left: auto;
     margin-right: auto;
-    border: 0.5px solid white;
+    border: 0.5px solid white;    
 }
 .eventContent{
-    background-color: transparent;
-    width: 100%;
-    height: 70%;
-    margin-top: 25px;
     display: flex;
-    padding:12px;
-    padding-bottom: 4px;
     justify-content: space-evenly;
+    width: 100%;
+    height: auto;
 }
+/* EVENT IMAGE */
 .eventImage{
     width: 20%;
-    height: 100%;
+    height: auto;
 }
+.image{
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin-bottom: 12px;
+}
+.eventDeadline{
+    display: grid;
+    width: 100%;
+    grid-template-columns: 8% 90%;
+    grid-row: auto;
+    height: fit-content;
+}
+/* EVENT DATA */
 .eventInfo{
-    width: 40%;
-    height: 100%;
+    width: 45%;
+    height: auto;
 }
-.eventPrize{
-    width: 30%;
-    height: 100%;
-    position: relative;
-}
-.text{
+.eventInfoData{
+    width: 100%;
+    height: 60%;
     color: white;
-    min-width: 16vw;
-    max-width: 35vw;
-    height:100%;
 }
-
-.text h1{
+.eventInfoData h1{
     font-family: VBI;
     font-size: 30px;
     font-weight: 700;
     font-style: italic;
 }
-.text p{
-    font-size:1.0rem;
+.eventInfoData p{
+    font-size: 1.0rem;
     font-family: EXO;
-    font-weight: 500;
     font-style: italic;
+    font-weight: 400;
+}
+.buttonContainer{
+    width: 100%;
+    height: fit-content;
+    margin-top: 12px;
+    display: flex;
 }
 .btnRegister{
     background-color: #FFF;
@@ -63,8 +71,8 @@
     padding: 6px 18px;
     font-size: 16px;
     font-family: EXO;
-    font-style: italic;
     margin-right: 24px;
+    font-style: italic;
 }
 .btnStatement{
     background-color: transparent;
@@ -77,65 +85,44 @@
     color: white;
     font-style: italic;
 }
-.eventImageContainer img{
-    width: 100%;
-    height: 100%;
-    border-radius: 4px;
+/* PRIZE/FEES */
+.eventPrize{
+    width: 30%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: right;
+    
 }
-.eventDeadline{
+.eventAmount{
     width: 100%;
+    padding-right:8px ;
     height: fit-content;
-    display: grid;
-    grid-template-columns: 8% 90%;
-    grid-row: auto;
-    margin-top: 16px;
-}
-.eventDeadline p{
     font-family: EXO;
-    font-size: 14px;
-    font-weight: 400;
-    color: white;
-    font-style: normal;
+    font-size: 24px;
+    font-style: italic;
 }
-.coordinatorContainer{
+.eventCoordinators{
     width: 100%;
-    position: absolute;
-    bottom: 0;
-    height: 30%;
+    height: 100px;
+    display: flex;
+    flex-flow: column wrap;
+    align-content: flex-end;
+}
+.coordinatorData{
+    width: 40%;
+    height: 100%;
+    margin-right: 10px;
     display: flex;
     justify-content: space-between;
 }
 .coordinatorImage{
-    width: 60px;
-    height: 60px;
+    width: 64px;
+    height: 64px;
     border-radius: 50%;
 }
-.coordinator{
-    display: flex;
-    color: white;
-    width: 45%;
-    justify-content: space-evenly;
-    font-family: EXO;
-    font-size: 12px;
-}
-.coordinatorDetails{
-    margin-top: 8px;
-}
-.coordinatorDetails p{
-    font-family: EXO;
-}
-.prizeMoney{
-    position: absolute;
-    right: 0;
-    font-family: EXO;
-    font-size: 24px;
-    font-weight: 700;
-    font-style: italic;
-    color: white;
-}
-.prizeMoney p{
-    font-family: EXO;
-}
+
 .scheduleName{
     width:inherit;
     height:fit-content;
@@ -146,11 +133,11 @@
     margin-left: 30px;
     margin-right: 30px;
 }
-.scheduleName div p{
+.scheduleName div sub{
     font-family: VBI;
     color: gray;
 }
-.scheduleName div b{
+.scheduleName div strong{
     font-family: EXO;
     color: black;
 }
@@ -170,96 +157,90 @@
     width: 100%;
     border-bottom: 0.5px solid black;
 }
-.sessions p{
+.sessions sub{
     color: gray;
 }
-@media screen and (max-width:480px) {
-    .eventContainer{
-        height: 100vh;
-        width: 95vw;
-    }
+@media screen and (max-width:780px) {
     .eventContent{
-     flex-direction: column;
-     height: 90%;
-     padding-top: 0px;
-    }
-    .eventImage{
-        width: 100%;
-        height: 45%;
-    }
-    .eventInfo{
-        width: 100%;
-        height: 35%;
-    }
-    .eventPrize{
-        width: 100%;
-        height: 20%;
-        position: relative;
-    }
-    .text{
-        max-width: 100%;
-    }
-    .btnRegister{
-        padding: 4px 16px;
-        font-size: 12px;
-        margin-right: 16px;
-    }
-    .btnStatement{
-        padding: 4px 16px;
-        font-size: 12px;
-    }.prizeMoney{
-        font-size: 18px;
-    }
-    .coordinator{
-        font-size:10px ;
-    }
-    .coordinatorImage{
-        width: 35px;
-        height: 35px;
-    }
-}
-@media screen and (max-width:768px){
-    .eventContainer{
-        height: 85vh;
-        width: 95vw;
-    }
-    .eventContent{
-     height: 80%;
-     flex-wrap: wrap;
-     padding-top: 0px;
+        flex-wrap: wrap;
     }
     .eventImage{
         width: 30%;
-        height: 60%;
     }
     .eventInfo{
         width: 60%;
-        height: 60%;
     }
     .eventPrize{
         width: 100%;
-        height: 40%;
-        position: relative;
+        margin-top: 24px;
+        flex-direction: row;
+        justify-content: space-between;
+    }  
+    .eventAmount{
+        text-align: left;
+        width: 80%;
     }
-    .text{
-        max-width: 100%;
+    .eventInfoData{
+        height:80%;
+    } 
+}
+@media screen and (max-width:480px){
+    .eventContainer{
+        min-height: 150vh;
+    }
+    .eventContent{
+        flex-direction: column;
+        height: 100%;
+        min-height: inherit;
+    }   
+    /* EVENT IMAGE */
+    .eventImage{
+        width: auto;
+        height: 30%;
+    }
+    .image{
+        width: 100%;
+        height: auto;
+    }
+    .eventDeadline{
+     height: 50px;   
+    }
+    /* EVENT DATA */
+    .eventInfo{
+        width: auto;
+        max-height: 45%;
+        height: calc(fit-content+'10%');
+    }
+    .eventInfoData{
+        max-height: 85%;
+        height:fit-content;
+        padding:2px
     }
     .btnRegister{
-        padding: 6px 18px;
-        font-size: 16px;
-        margin-right: 16px;
+        padding: 4px 16px;
+        font-size: 12px;
     }
     .btnStatement{
-        padding: 6px 18px;
-        font-size: 16px;
-    }.prizeMoney{
-        font-size: 18px;
+        padding: 4px 16px;
+        font-size: 12px;
     }
-    .coordinator{
-        font-size:14px ;
+    /* PRIZE/FEES */
+    .eventPrize{
+        width: auto;
+        height: 30%;
     }
     .coordinatorImage{
-        width: 64px;
-        height: 64px;
+        width: 48px;
+        height: 48px;
+    }
+    .coordinatorData{
+        width: 45%;
+    }
+    .eventCoordinators{
+        flex-direction: column;
+
+    }
+    .coordinatorDetails p{
+        font-size: 10px;
     }
 }
