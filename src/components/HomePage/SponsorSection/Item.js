@@ -6,7 +6,7 @@ export default styled.div`
   align-items: center;
   height: 200px;
   width: 70%;
-  background-color: #00008B;
+  background-color: 'transparent';
   color: #fff;
   margin: 0 15px;
   font-size: 4em;
