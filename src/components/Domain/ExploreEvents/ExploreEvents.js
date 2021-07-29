@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import classes from './exploreEvents.module.css'
 import { API, BASE_API } from '../../../Utils/backend';
-import {Calendar, Clock} from 'react-bootstrap-icons'
-import {isAuthenticated} from '../../../auth/helper/index.js'
+import { Calendar, Clock } from 'react-bootstrap-icons'
+import { isAuthenticated } from '../../../auth/helper/index.js'
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -17,29 +17,29 @@ import { getWorkshop, registerInEvent, registerInWorkshop } from '../../../auth/
 import image from '../../../assets/images/backgroundDomains.png'
 
 
-export class ExploreEvents extends Component{
+export class ExploreEvents extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
     }
 
-    state={
-        user:isAuthenticated().user,
-        token:isAuthenticated().token,
-        isWorkshopRegistered:false,
-        currentWorkshop:{
-            sessions:[]
+    state = {
+        user: isAuthenticated().user,
+        token: isAuthenticated().token,
+        isWorkshopRegistered: false,
+        currentWorkshop: {
+            sessions: []
         },
-        open:false,
-        popUpMessage:'',
-        positiveAction:'',
-        completeUser : null,
-        viewSchedule:false,
-        isEventRegistered:false
+        open: false,
+        popUpMessage: '',
+        positiveAction: '',
+        completeUser: null,
+        viewSchedule: false,
+        isEventRegistered: false
     }
 
-    getUserData=()=>{
-        if(this.state.completeUser === null){
+    getUserData = () => {
+        if (this.state.completeUser === null) {
             getUser(this.state.user._id, this.state.token).then((data) => {
                 console.log(`GET USER DATA:`);
                 console.log(data)
@@ -47,115 +47,116 @@ export class ExploreEvents extends Component{
                     // setValues({ ...values, error: data.error });
                     console.log(data.error);
                 } else {
-                    this.setState({completeUser:data})
-                    if(data.workshopsEnrolled.length>0){
-                        data.workshopsEnrolled.map(item=>{
-                            if(this.props.id === item._id){
-                                this.setState({isWorkshopRegistered:true})
+                    this.setState({ completeUser: data })
+                    if (data.workshopsEnrolled.length > 0) {
+                        data.workshopsEnrolled.map(item => {
+                            if (this.props.id === item._id) {
+                                this.setState({ isWorkshopRegistered: true })
                             }
                         })
                         // this.setState({isWorkshopRegistered:true})
                     }
-                    if(data.eventRegIn.length>0){
-                        data.eventRegIn.map(item=>{
-                            if(this.props.id === item._id){
-                                this.setState({isEventRegistered:true})
+                    if (data.eventRegIn.length > 0) {
+                        data.eventRegIn.map(item => {
+                            if (this.props.id === item._id) {
+                                this.setState({ isEventRegistered: true })
                             }
                         })
                         // this.setState({isWorkshopRegistered:true})
                     }
                     // setCompleteUser(data)
-                    
+
                 }
             });
         }
-        
+
     }
 
     Transition = React.forwardRef(function Transition(props, ref) {
         return <Slide direction="up" ref={ref} {...props} />;
-      });
-    c
-    handleClickOpen=()=>{
-        this.setState({open:true})
+    });
+
+    handleClickOpen = () => {
+        this.setState({ open: true })
     }
-    handleClose=()=>{
-        this.setState({open:false})
+    handleClose = () => {
+        this.setState({ open: false })
     }
-    handleClickViewSchedule=()=>{
+    handleClickViewSchedule = () => {
         this.loadWorkshop(this.props.id)
-        this.setState({viewSchedule:true})
+        this.setState({ viewSchedule: true })
     }
-    handleClickCloseViewSchedule=()=>{
-        this.setState({viewSchedule:false})
+    handleClickCloseViewSchedule = () => {
+        this.setState({ viewSchedule: false })
     }
 
-    
+
 
     loadWorkshop = (workshopId) => {
         getWorkshop(workshopId).then(data => {
             if (data.error) {
                 alert(data.error);
             } else {
-                this.setState({currentWorkshop:data})
+                this.setState({ currentWorkshop: data })
                 console.log(data)
             }
         });
     };
 
-    
+
     registerWorkshop = (workshopId) => {
         this.handleClickOpen();
-        if(!this.state.user){
+        if (!this.state.user) {
             var status = !this.state.user
             console.log(status)
-            this.setState({popUpMessage:'You are not Logged in. Please Log in first',positiveAction:'Log in'})
-        }else{
+            this.setState({ popUpMessage: 'You are not Logged in. Please Log in first', positiveAction: 'Log in' })
+        } else {
             registerInWorkshop(this.state.user._id, this.state.token, workshopId).then(
                 data => {
                     console.log(data)
                     if (data.error) {
                         console.log(data.error)
-                        this.setState({popUpMessage:data.error,positiveAction:'OK'})
+                        this.setState({ popUpMessage: data.error, positiveAction: 'OK' })
                     } else {
                         console.log("registered success")
-                        this.setState({isWorkshopRegistered:true,popUpMessage:'Registration Successful',positiveAction:'OK'})
+                        this.setState({ isWorkshopRegistered: true, popUpMessage: 'Registration Successful', positiveAction: 'OK' })
                     }
                 }
             ).catch(err => {
                 console.log(err)
-                this.setState({isWorkshopRegistered:false,popUpMessage:err,positiveAction:'OK'})
+                this.setState({ isWorkshopRegistered: false, popUpMessage: err, positiveAction: 'OK' })
             })
         }
-            
+
     }
 
     registerEvent = (eventId) => {
         this.handleClickOpen();
-        if(!this.state.user){
+        if (!this.state.user) {
             var status = !this.state.user
             console.log(status)
-            this.setState({popUpMessage:'You are not Logged in. Please Log in first',positiveAction:'Log in'})
-        }else{
+            this.setState({ popUpMessage: 'You are not Logged in. Please Log in first', positiveAction: 'Log in' })
+        } else {
+            console.log('>>>>>', this.state.user)
             registerInEvent(this.state.user._id, this.state.token, eventId).then(
                 data => {
                     console.log(data)
                     if (data.error) {
                         console.log(data.error)
-                        this.setState({popUpMessage:data.error,positiveAction:'OK'})
+                        this.setState({ popUpMessage: data.error, positiveAction: 'OK' })
                     } else {
                         console.log("registered success")
-                        this.setState({isEventRegistered:true,popUpMessage:'Registration Successful',positiveAction:'OK'})
+                        this.setState({ isEventRegistered: true, popUpMessage: 'Registration Successful', positiveAction: 'OK' })
                     }
                 }
             ).catch(err => {
                 console.log(err)
-                this.setState({isEventRegistered:false,popUpMessage:err,positiveAction:'OK'})
+                this.setState({ isEventRegistered: false, popUpMessage: err, positiveAction: 'OK' })
             })
         }
     }
-    render(){
-        return(
+    render() {
+        return (
             <div id={this.props.id} className={classes.eventContainer}>
                 <hr className={classes.divider}/>
                 <main className={classes.eventContent}>
@@ -266,9 +267,9 @@ export class ExploreEvents extends Component{
                 >
                     <DialogTitle id="alert-dialog-slide-title">{"Attention!!"}</DialogTitle>
                     <DialogContent>
-                    <DialogContentText id="alert-dialog-slide-description">
-                        {this.state.popUpMessage}
-                    </DialogContentText>
+                        <DialogContentText id="alert-dialog-slide-description">
+                            {this.state.popUpMessage}
+                        </DialogContentText>
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={this.handleClose} color="primary">
@@ -276,15 +277,15 @@ export class ExploreEvents extends Component{
                         </Button>
                         <Button onClick={this.handleClose} color="primary">
                             {
-                                this.state.positiveAction==='Log in'?
+                                this.state.positiveAction === 'Log in' ?
                                     <Link to="/signin">{this.state.positiveAction}</Link>
                                     :
                                     this.state.positiveAction
                             }
-                        
-                            
+
+
                         </Button>
-                        </DialogActions>
+                    </DialogActions>
                 </Dialog>
                 <Dialog
                     open={this.state.viewSchedule}
@@ -301,7 +302,7 @@ export class ExploreEvents extends Component{
                                     <strong>Workshop Name</strong>
                                     <sub>{this.props.content.workshopName}</sub>
                                 </DialogContentText>
-                                
+
                             </div>
                             <div>
                                 <DialogContentText>
@@ -316,8 +317,8 @@ export class ExploreEvents extends Component{
                         </div>
                         <div>
                             {
-                                this.state.currentWorkshop.sessions.map(item=>{
-                                    return(
+                                this.state.currentWorkshop.sessions.map(item => {
+                                    return (
                                         <DialogContentText>
                                             <div className={classes.sessions}>
                                                 <strong>{item.workshopSessionName}</strong>
@@ -326,7 +327,7 @@ export class ExploreEvents extends Component{
                                                 
                                             </div>        
                                         </DialogContentText>
-                                        
+
                                     )
                                 })
                                 // this.state.currentWorkshop.sessions.map(item=>{console.log(item)})
@@ -335,9 +336,9 @@ export class ExploreEvents extends Component{
                         </div>
                     </DialogContent>
                     <DialogActions>
-                    <Button onClick={this.handleClickCloseViewSchedule} color="primary">
-                        Join WhatsApp Group
-                    </Button>
+                        <Button onClick={this.handleClickCloseViewSchedule} color="primary">
+                            Join WhatsApp Group
+                        </Button>
                     </DialogActions>
                 </Dialog>
             </div>

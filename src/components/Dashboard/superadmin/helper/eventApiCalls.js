@@ -18,6 +18,24 @@ export const createEvent = (userId, token, event) => {
         })
         .catch(err => console.log(err));
 };
+export const updateEvent = (userId, eventId, token, event) => {
+
+    // console.log(event.studentCoordinator)
+
+    return fetch(`${API}/event/${eventId}/${userId}`, {
+        method: "PUT",
+        headers: {
+            Accept: "application/json",
+            // "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+        },
+        body: event
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};
 
 
 export const getevents = () => {

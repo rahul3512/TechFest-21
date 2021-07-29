@@ -2,7 +2,9 @@ import React from "react";
 import Carousel from "react-elastic-carousel";
 import Item from "./Item";
 import '../Navbar/Navbar.css';
-// import "../FeaturedSection/Feature.css";
+import sponsor from '../../../assets/images/slietlogo.png';
+import { fontSize } from "@material-ui/system";
+
 
 const breakPoints = [
     { width: 1, itemsToShow: 1 },
@@ -13,21 +15,21 @@ const breakPoints = [
 
 function HomeSponsor() {
     return (
-        <div className='home-sponsor' style={{ marginTop: '-3px' }}>
-            <h1 style={{ textAlign: "center", fontFamily: 'EXO' }}>
-                Sponsors
+        <div className='home-sponsor' style={{ marginTop: '-39px' }}>
+            <h1 style={{ textAlign: "center", fontFamily: 'EXO', fontSize: '46px', paddingBottom: '17px' }}>
+                <span>Sponsors</span>
 
             </h1>
             <div className="main-sponsor">
                 <Carousel breakPoints={breakPoints}>
-                    <Item>One</Item>
-                    <Item>Two</Item>
-                    <Item>Three</Item>
-                    <Item>Four</Item>
-                    <Item>Five</Item>
-                    <Item>Six</Item>
-                    <Item>Seven</Item>
-                    <Item>Eight</Item>
+                    <Item><img src={sponsor} alt='sponsor' className='sponsor-img' /></Item>
+                    <Item><img src={sponsor} alt='sponsor' className='sponsor-img' /></Item>
+                    <Item><img src={sponsor} alt='sponsor' className='sponsor-img' /></Item>
+                    <Item><img src={sponsor} alt='sponsor' className='sponsor-img' /></Item>
+                    <Item><img src={sponsor} alt='sponsor' className='sponsor-img' /></Item>
+                    <Item><img src={sponsor} alt='sponsor' className='sponsor-img' /></Item>
+                    <Item><img src={sponsor} alt='sponsor' className='sponsor-img' /></Item>
+                    <Item><img src={sponsor} alt='sponsor' className='sponsor-img' /></Item>
                 </Carousel>
             </div>
         </div>

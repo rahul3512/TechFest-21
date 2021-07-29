@@ -130,7 +130,7 @@ function SignUpForm() {
             className="alert alert-success"
             style={{ display: success ? "" : "none" }}
           >
-            New Account was created successfully!!.Please{" "}
+            New Account was created successfully!!. <br />A verification link has been sent to your registered email. Come back and {" "}
             <Link to="/signin">Login Here</Link>
           </div>
         </div>

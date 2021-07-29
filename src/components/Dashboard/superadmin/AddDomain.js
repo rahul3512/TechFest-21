@@ -29,7 +29,7 @@ const Domain = () => {
 
 
     const [coordinators, setCoordinators] = useState([])
-    const [studentCoordinatorVal, setStudentCoordinatorVal] = useState("")
+    const [studentCoordinatorVal, setStudentCoordinatorVal] = useState([])
     const [facultyCoordinatorVal, setFacultyCoordinatorVal] = useState("")
     const {
         domainName,
@@ -43,11 +43,19 @@ const Domain = () => {
         let name = e.target.name;
         var value;
         value = name === "photo" ? e.target.files[0] : e.target.value;
-        if (name === "studentCoordinator") {
-            let a = []
-            a.push(e.target.value)
+        if (name === "studentCoordinator1") {
+            let a = studentCoordinatorVal
+            a[0] = e.target.value
             value = a;
-            setStudentCoordinatorVal(e.target.value)
+            setStudentCoordinatorVal(a)
+            name = "studentCoordinator"
+            // setValues({ ...setValues, studentCoordinatorVal: e.target.value })
+        } else if (name === "studentCoordinator2") {
+            let a = studentCoordinatorVal
+            a[1] = e.target.value
+            value = a;
+            setStudentCoordinatorVal(a)
+            name = "studentCoordinator"
             // setValues({ ...setValues, studentCoordinatorVal: e.target.value })
         }
         else if (name === "facultyCoordinator") {
@@ -91,7 +99,7 @@ const Domain = () => {
                         error: ""
                     });
 
-                    setFacultyCoordinatorVal("");
+                    setFacultyCoordinatorVal([]);
                     setStudentCoordinatorVal("");
 
                 }
@@ -121,9 +129,9 @@ const Domain = () => {
                 <textarea name="domainDescription" placeholder="Description" id="description" cols="30"
                     rows="10" onChange={handleInputs} value={domainDescription} />
 
-                <label for="studentCoordinator">Student Coordinator - 1</label>
+                <label for="studentCoordinator1">Student Coordinator - 1</label>
 
-                <select name="studentCoordinator" id="studentCoordinator" value={studentCoordinatorVal} onChange={handleInputs}>
+                <select name="studentCoordinator1" id="studentCoordinator1" value={studentCoordinatorVal[0]} onChange={handleInputs}>
                     <option value="">Select a student coordinator</option>
                     {coordinators &&
                         coordinators.map((coordinator, index) => {
@@ -136,9 +144,9 @@ const Domain = () => {
                         })}
                 </select>
 
-                {/* <label for="studentCoordinator">Student Coordinator - 2</label> */}
+                <label for="studentCoordinator2">Student Coordinator - 2</label>
 
-                {/* <select name="studentCoordinator" id="studentCoordinator" value={studentCoordinatorVal} onChange={handleInputs}>
+                <select name="studentCoordinator2" id="studentCoordinator2" value={studentCoordinatorVal[1]} onChange={handleInputs}>
                     <option value="">Select a student coordinator</option>
                     {coordinators &&
                         coordinators.map((coordinator, index) => {
@@ -149,7 +157,8 @@ const Domain = () => {
                                     </option>
                                 );
                         })}
-                </select> */}
+                </select>
+
 
 
                 <label for="facultyCoordinator">Faculty Coordinator </label>
@@ -217,11 +226,13 @@ const Domain = () => {
     return (
         <Base title="domain creation page">
 
-            {domainForm()}
 
-            {JSON.stringify(values)}
+
+
             {successMessage()}
             {errorMessage()}
+            {domainForm()}
+            {JSON.stringify(values)}
         </Base>
     )
 

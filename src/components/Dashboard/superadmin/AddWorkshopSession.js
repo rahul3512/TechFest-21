@@ -164,11 +164,12 @@ const WorkshopSession = () => {
     return (
         <Base title="workshopSession creation page">
 
-            {workshopSessionForm()}
 
 
             {successMessage()}
             {errorMessage()}
+            {workshopSessionForm()}
+
         </Base>
     )
 

@@ -15,7 +15,9 @@
   src: url(../../../assets/fonts/exo.medium-italic.otf);
 }
 
+
 .hero-container {
+ 
   background-image: linear-gradient(90deg, #020024 0%, #090979 35%, #00d4ff 100%);
 }
 

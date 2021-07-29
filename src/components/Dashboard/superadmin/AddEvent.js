@@ -11,7 +11,7 @@ const Event = () => {
     const ref = React.useRef();
     const { user, token } = isAuthenticated();
     const [coordinators, setCoordinators] = useState([])
-    const [eventCoordinatorVal, setEventCoordinatorVal] = useState("")
+    const [eventCoordinatorVal, setEventCoordinatorVal] = useState([])
     const [domains, setDomains] = useState([]);
     const [prizes, setPrizes] = useState([0, 0, 0])
     const [values, setValues] = useState({
@@ -67,21 +67,21 @@ const Event = () => {
         var value;
         if (name == "prize1") {
             // console.log("sdahhfgh")
-            let a = [...prize]
+            let a = prizes
             a[0] = e.target.value
             value = a;
             name = "prize"
             setPrizes(a);
 
         } else if (name == "prize2") {
-            let a = [...prize]
+            let a = prizes
             a[1] = e.target.value
             value = a;
             name = "prize"
             setPrizes(a);
 
         } else if (name == "prize3") {
-            let a = [...prize]
+            let a = prizes
             a[2] = e.target.value
             value = a;
             name = "prize"
@@ -89,11 +89,20 @@ const Event = () => {
 
         } else if (name == "photo") {
             value = e.target.files[0];
-        } else if (name == "eventCoordinator") {
-            let a = []
-            a.push(e.target.value)
+        } else if (name === "eventCoordinator1") {
+            let a = eventCoordinatorVal
+            a[0] = e.target.value
             value = a;
-            setEventCoordinatorVal(e.target.value)
+            setEventCoordinatorVal(a)
+            name = "eventCoordinator"
+            // setValues({ ...setValues, studentCoordinatorVal: e.target.value })
+        } else if (name === "eventCoordinator2") {
+            let a = eventCoordinatorVal
+            a[1] = e.target.value
+            value = a;
+            setEventCoordinatorVal(a)
+            name = "eventCoordinator"
+            // setValues({ ...setValues, studentCoordinatorVal: e.target.value })
         } else {
             value = e.target.value;
         }
@@ -202,9 +211,9 @@ const Event = () => {
                         })}
                 </select>
 
-                <label for="eventCoordinator">Event Coordinator </label>
+                <label for="eventCoordinator">Event Coordinator1 </label>
 
-                <select name="eventCoordinator" id="eventCoordinator" value={eventCoordinatorVal} onChange={handleInputs}>
+                <select name="eventCoordinator1" id="eventCoordinator1" value={eventCoordinatorVal[0]} onChange={handleInputs}>
                     <option value="">Select a event coordinator</option>
                     {coordinators &&
                         coordinators.map((coordinator, index) => {
@@ -216,6 +225,21 @@ const Event = () => {
                                 );
                         })}
                 </select>
+                <label for="eventCoordinator">Event Coordinator2 </label>
+
+                <select name="eventCoordinator2" id="eventCoordinator2" value={eventCoordinatorVal[1]} onChange={handleInputs}>
+                    <option value="">Select a event coordinator</option>
+                    {coordinators &&
+                        coordinators.map((coordinator, index) => {
+                            if (coordinator.coordinatorType === "Student")
+                                return (
+                                    <option key={index} value={coordinator._id}>
+                                        {coordinator.coordinatorName}
+                                    </option>
+                                );
+                        })}
+                </select>
+
 
 
                 <input type="submit" name="submit" onClick={onSubmit} />
@@ -280,12 +304,12 @@ const Event = () => {
     }, []);
     return (
         <Base title="event creation page">
-
+            {successMessage()}
+            {errorMessage()}
             {eventForm()}
 
 
-            {successMessage()}
-            {errorMessage()}
+
         </Base>
     )
 
