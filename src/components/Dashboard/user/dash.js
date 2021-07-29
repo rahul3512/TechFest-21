@@ -58,7 +58,7 @@ function Dash() {
 
   const preload = (userId, token) => {
     getUser(userId, token).then(data => {
-
+      console.log(data)
       if (data.error) {
         setValues({ ...values, error: data.error });
 
@@ -182,7 +182,7 @@ function Dash() {
                     <div className="dashboard-dash-event" key={row._id}>
                       <span className="dashboard-dash-event-name">{row.eventName}</span>
                       {/* <span className="dashboard-dash-event-time">{`${moment(row.eventDate).format('DD-MM')}`}</span> */}
-                      <Link to={{ pathname: `/domain`, state: { name: "events", id: row.domainRefId , secId : row._id} }} className='btn  btn-outline-primary btn-sm'>View detail</Link>
+                      <Link to={{ pathname: `/domain`, state: { name: "events", id: row.domainRefId, secId: row._id } }} className='btn  btn-outline-primary btn-sm'>View detail</Link>
                     </div>
                   ))
                   }
@@ -208,7 +208,7 @@ function Dash() {
                   {values.workshopsEnrolled.map((row) => (
                     <div className="dashboard-dash-event">
                       <span className="dashboard-dash-event-name">{row.workshopName}</span>
-                      <Link to={{ pathname: `/domain`  , state : {name : "workshops" , id: row._id}}} id={row._id} message={'redirected from dashboard'} className='btn  btn-outline-primary btn-sm'>View detail</Link>
+                      <Link to={{ pathname: `/domain`, state: { name: "workshops", id: row._id } }} id={row._id} message={'redirected from dashboard'} className='btn  btn-outline-primary btn-sm'>View detail</Link>
                     </div>
                   ))}
                 </div>
