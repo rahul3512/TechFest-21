@@ -25,8 +25,8 @@ import Password from './assets/Icons/password.svg';
 import moment from 'moment';
 import { getUser } from './helper/userapicalls';
 import { isAuthenticated } from '../../../auth/helper';
-import { Check ,Close as CloseIcon } from '@material-ui/icons';
-import { Button, TextField, IconButton ,Fade , Backdrop , makeStyles } from '@material-ui/core';
+import { Check, Close as CloseIcon } from '@material-ui/icons';
+import { Button, TextField, IconButton, Fade, Backdrop, makeStyles } from '@material-ui/core';
 import Modal from "@material-ui/core/Modal";
 import { useAlert } from 'react-alert';
 import { API } from '../../../backend';
@@ -71,25 +71,25 @@ function Dash() {
         setCompleteUser(data);
         setValues({
           ...values,
-          name: data.name,
-          lastName: data.lastName,
-          userID: data.userId,
-          email: data.email,
-          phone: data.phone,
-          designation: data.designation,
-          collegeName: data.collegeName,
-          collegeAddress: data.collegeAddress,
-          courseEnrolled: data.courseEnrolled,
-          branchOfStudy: data.branchOfStudy,
-          yearOfStudy: data.yearOfStudy,
-          whatsappPhoneNumber: data.whatsappPhoneNumber,
-          telegramPhoneNumber: data.telegramPhoneNumber,
-          dob: moment(data.dob).format('YYYY-MM-DD'),
-          eventRegIn: data.eventRegIn,
-          workshopsEnrolled: data.workshopsEnrolled,
+          name: data?.name ? data?.name : "",
+          lastName: data?.lastName ? data?.lastName : "",
+          userID: data?.userId ? data?.userId : "",
+          email: data?.email ? data?.email : "",
+          phone: data?.phone ? data?.phone : "",
+          designation: data?.designation ? data?.designation : "",
+          collegeName: data?.collegeName ? data?.collegeName : "",
+          collegeAddress: data?.collegeAddress ? data?.collegeAddress : "",
+          courseEnrolled: data?.courseEnrolled ? data?.courseEnrolled : "",
+          branchOfStudy: data?.branchOfStudy ? data?.branchOfStudy : "",
+          yearOfStudy: data?.yearOfStudy ? data?.yearOfStudy : "",
+          whatsappPhoneNumber: data?.whatsappPhoneNumber ? data?.whatsappPhoneNumber : "",
+          telegramPhoneNumber: data?.telegramPhoneNumber ? data?.telegramPhoneNumber : "",
+          dob: moment(data?.dob).format('YYYY-MM-DD'),
+          eventRegIn: data?.eventRegIn ? data?.eventRegIn : "",
+          workshopsEnrolled: data?.workshopsEnrolled ? data?.workshopsEnrolled : "",
         });
         // if (values.lastName == undefined) {
-          
+
         // }
       }
     });
@@ -166,8 +166,8 @@ function Dash() {
   const handleChange = (key) => (event) => {
     setVariables({ ...variables, error: false, [key]: event.target.value });
   };
-  
-  
+
+
   const onSubmit = (event) => {
     event.preventDefault();
     setVariables({ ...variables, error: false, loading: true });
@@ -189,8 +189,8 @@ function Dash() {
           if (response.statusCode === 200) {
             setVariables({ ...variables, loading: false, success: true });
             alert.show('Password changed !', {
-              type : 'success' , 
-              timeout : '3000'
+              type: 'success',
+              timeout: '3000'
             })
             setShow(false);
             // return response.json();
@@ -198,15 +198,15 @@ function Dash() {
             setVariables({ ...variables, error: true });
             alert.show(`${response.error}`, {
               type: 'error',
-              timeout :'3000'
+              timeout: '3000'
             })
           }
-        
-        } )
-        
+
+        })
+
         .catch((e) => {
           setVariables({ ...variables, loading: false, success: false, error: true });
-          
+
         });
     }
   };
@@ -222,95 +222,95 @@ function Dash() {
         {/* {loadingMessage()}
         {successMessage()}
         {errorMessage()} */}
-      <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        className={classes.modal}
-        open={show}
-        onClose={handleClose}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 600,
-        }}
-      >
-        <Fade in={show}>
-          <div className={classes.paper}>
-            <IconButton
-              aria-label="close"
-              color="inherit"
-              size="medium"
-              className={classes.right}
-              onClick={() => {
-                setShow(false);
-              }}
-            >
-              <CloseIcon fontSize="large" />
-            </IconButton>
-            <h3
-              id="transition-modal-title"
-              style={{ textAlign: "center" }}
-            >
-              Password Change
-            </h3>
+        <Modal
+          aria-labelledby="transition-modal-title"
+          aria-describedby="transition-modal-description"
+          className={classes.modal}
+          open={show}
+          onClose={handleClose}
+          closeAfterTransition
+          BackdropComponent={Backdrop}
+          BackdropProps={{
+            timeout: 600,
+          }}
+        >
+          <Fade in={show}>
+            <div className={classes.paper}>
+              <IconButton
+                aria-label="close"
+                color="inherit"
+                size="medium"
+                className={classes.right}
+                onClick={() => {
+                  setShow(false);
+                }}
+              >
+                <CloseIcon fontSize="large" />
+              </IconButton>
+              <h3
+                id="transition-modal-title"
+                style={{ textAlign: "center" }}
+              >
+                Password Change
+              </h3>
 
-            <br />
-            <TextField
-              className={classes.fontstyle}
-              type="text"
-              label="Old Password"
-              variant="outlined"
-              InputLabelProps={{
-                className: classes.inputLabel,
-              }}
-              InputProps={{
-                className: classes.input,
-              }}
-              onChange={handleChange("oldPassword")}
-            />
-            <TextField
-              className={classes.fontstyle}
-              type="text"
-              label="New Password"
-              variant="outlined"
-              InputLabelProps={{
-                className: classes.inputLabel,
-              }}
-              InputProps={{
-                className: classes.input,
-              }}
+              <br />
+              <TextField
+                className={classes.fontstyle}
+                type="text"
+                label="Old Password"
+                variant="outlined"
+                InputLabelProps={{
+                  className: classes.inputLabel,
+                }}
+                InputProps={{
+                  className: classes.input,
+                }}
+                onChange={handleChange("oldPassword")}
+              />
+              <TextField
+                className={classes.fontstyle}
+                type="text"
+                label="New Password"
+                variant="outlined"
+                InputLabelProps={{
+                  className: classes.inputLabel,
+                }}
+                InputProps={{
+                  className: classes.input,
+                }}
                 onChange={handleChange("newPassword")}
-            />
-            <TextField
-              className={classes.fontstyle}
-              type="text"
-              label="Confirm Paasword"
-              
-              variant="outlined"
-              InputLabelProps={{
-                className: classes.inputLabel,
-              }}
-              InputProps={{
-                className: classes.input,
+              />
+              <TextField
+                className={classes.fontstyle}
+                type="text"
+                label="Confirm Paasword"
+
+                variant="outlined"
+                InputLabelProps={{
+                  className: classes.inputLabel,
+                }}
+                InputProps={{
+                  className: classes.input,
                 }}
                 onChange={handleChange("confirmPassword")}
-              
-            />
-            <div style={{ textAlign: 'center' }}>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={onSubmit}   
 
-                mx="auto"
-                style={{ padding: "7px 15px", fontSize: "1.05rem" }}
-              >
-                Change Password
-              </Button>
-            </div>
+              />
+              <div style={{ textAlign: 'center' }}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={onSubmit}
+
+                  mx="auto"
+                  style={{ padding: "7px 15px", fontSize: "1.05rem" }}
+                >
+                  Change Password
+                </Button>
+              </div>
             </div>
           </Fade>
-      </Modal>
+        </Modal>
       </div>
     )
   }
@@ -380,13 +380,13 @@ function Dash() {
 
           {/* password change link */}
           <Link className="dashboard-dash-dlink dashboard-dash-cursor" onClick={handleShow}>
-            <img src={Password} alt="password change" style={{ fill : 'white' }}/>
+            <img src={Password} alt="password change" style={{ fill: 'white' }} />
             Change Password
           </Link>
 
 
 
-          
+
 
 
 
