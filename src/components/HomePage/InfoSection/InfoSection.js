@@ -39,7 +39,8 @@ function InfoSection({
       <InfoSec lightBg={lightBg1} style={{
         marginTop: '-8px',
         backgroundImage: `url(${img4})`,
-        width: '100%'
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: '100%',
         // backgroundColor: 'blue'
       }} >
 
