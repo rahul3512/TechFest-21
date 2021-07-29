@@ -47,7 +47,7 @@ font-family: EXO;
   }
 
   @media screen and (max-width: 960px) {
-    width: 60%;
+    width: 86%;
   } 
 
 `;

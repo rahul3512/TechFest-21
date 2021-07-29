@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Button } from '../../../globalStyles';
+import img4 from '../../../assets/images/img6.jpg';
+
 import {
   InfoSec,
   InfoRow,
@@ -13,6 +15,7 @@ import {
   Img
 } from './InfoSection.elements';
 import imgf from '../../../assets/images/video.png'
+import { MenuItem } from '@material-ui/core';
 // import { MenuItem } from '@material-ui/core';
 
 function InfoSection({
@@ -32,8 +35,14 @@ function InfoSection({
   start
 }) {
   return (
-    <>
-      <InfoSec lightBg={lightBg1}>
+    <div style={{ width: '100%' }}>
+      <InfoSec lightBg={lightBg1} style={{
+        marginTop: '-8px',
+        backgroundImage: `url(${img4})`,
+        width: '100%'
+        // backgroundColor: 'blue'
+      }} >
+
         <Container>
           <InfoRow imgStart={imgStart}>
             <InfoColumn>
@@ -41,20 +50,21 @@ function InfoSection({
                 <Heading lightText={lightText}>{headline}</Heading>
                 <TopLine lightTopLine={lightTopLine}>{topLine}</TopLine>
                 <Subtitle lightTextDesc={lightTextDesc}>{description}</Subtitle>
+                <div style={{ display: 'inline-flex' }}>
+                  <Link to='/domain' >
+                    <Button primary={primary}>
+                      {buttonLabel}
+                    </Button>
+                  </Link>
 
-                <Link to='/domain'>
-                  <Button primary={primary}>
-                    {buttonLabel}
-                  </Button>
-                </Link>
-
-
-                <Link to='/about-us' style={{ width: '0px', color: 'white', background: 'transparent' }}>
+                  {/* <Link to='/about-us' style={{ width: '0px', color: 'white', background: 'transparent' }}>
                   <Button>
                     {buttonLabel1}
                   </Button>
-                </Link>
+                </Link> */}
 
+                  <MenuItem className="navmenu" component={Link} to="/about-us">About Us</MenuItem>
+                </div>
               </TextWrapper>
             </InfoColumn>
             <InfoColumn>
@@ -65,7 +75,7 @@ function InfoSection({
           </InfoRow>
         </Container>
       </InfoSec>
-    </>
+    </div >
   );
 }
 

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './assets/css/dashres.css';
 import ProfileInformation from './Profile';
-
 import { Link } from 'react-router-dom';
 import * as Scroll from "react-scroll";
 import Leffect from "./assets/images/Group 1left-bar-background.png";
@@ -9,26 +8,31 @@ import Reffect from "./assets/images/right-middle-bg-effect.png";
 import BottomLeft from "./assets/images/bottom-left-bg.png";
 import TechIcon from "./assets/images/tech icon.svg";
 import Profile from "./assets/images/profile.svg";
-import Techfest21 from "./assets/images/__techFEST 21.svg";
+// import Techfest21 from "./assets/images/__techFEST 21.svg";
 import Home from "./assets/images/home.svg";
-import Payments from "./assets/images/payments.svg";
-import Editbutton from "./assets/images/edit-button.svg";
+// import Payments from "./assets/images/payments.svg";
+// import Editbutton from "./assets/images/edit-button.svg";
 import Certificate from "./assets/images/certificate.svg";
 import Event from "./assets/images/event.svg";
-import Line23 from "./assets/images/Line 23.svg";
+// import Line23 from "./assets/images/Line 23.svg";
 import Solid from "./assets/images/solid.svg";
 import ProfileImage from "./assets/images/profile-image.png";
 import Facebook from './assets/Icons/facebookicon.svg';
 import Instagram from './assets/Icons/instagramicon.svg';
 import Linkedin from './assets/Icons/linkedinicon.svg';
 import Youtube from './assets/Icons/youtubeicon.svg';
-
+import Password from './assets/Icons/password.svg';
 import moment from 'moment';
 import { getUser } from './helper/userapicalls';
 import { isAuthenticated } from '../../../auth/helper';
-import { Check } from '@material-ui/icons';
+import { Check ,Close as CloseIcon } from '@material-ui/icons';
+import { Button, TextField, IconButton ,Fade , Backdrop , makeStyles } from '@material-ui/core';
+import Modal from "@material-ui/core/Modal";
+import { useAlert } from 'react-alert';
+import { API } from '../../../backend';
 
 function Dash() {
+  const alert = useAlert();
   let ScrollLink = Scroll.Link;
   const { user, token } = isAuthenticated();
   const [values, setValues] = useState({
@@ -84,10 +88,232 @@ function Dash() {
           eventRegIn: data.eventRegIn,
           workshopsEnrolled: data.workshopsEnrolled,
         });
+        // if (values.lastName == undefined) {
+          
+        // }
       }
     });
   }
 
+  const useStyles = makeStyles((theme) => ({
+    modal: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      color: "white",
+      overflow: "scroll",
+
+    },
+    paper: {
+      position: 'relative',
+      backgroundColor: "#2a3249",
+      width: "35%",
+      ["@media (max-width:780px)"]: {
+        // eslint-disable-line no-useless-computed-key
+        width: "82%",
+        marginTop: "32rem"
+      },
+      opacity: "1",
+      border: "2px solid #000",
+      boxShadow: theme.shadows[8],
+      padding: theme.spacing(2, 4, 3),
+      marginTop: '5rem'
+    },
+
+    fontstyle: {
+      color: "blue",
+      width: "90%",
+      ["@media (max-width:780px)"]: {
+        // eslint-disable-line no-useless-computed-key
+        width: "90%",
+      },
+      marginBottom: "0.75rem",
+      marginRight: "0.3125rem",
+      letterSpacing: "1.3px",
+    },
+    input: {
+      color: "white",
+      fontSize: "1rem",
+      ["@media (max-width:780px)"]: {
+        // eslint-disable-line no-useless-computed-key
+        fontSize: "0.75rem",
+      },
+      letterSpacing: "0.06rem",
+    },
+    inputLabel: {
+      color: "#ffffff80",
+      fontSize: "0.875rem",
+    },
+    right: {
+
+      position: 'absolute',
+      right: '5px',
+      top: '5px'
+    }
+
+  }));
+  const [variables, setVariables] = useState({
+    oldPassword: "",
+    newPassword: "",
+    confirmPassword: "",
+    error: false,
+    loading: false,
+    success: false,
+  });
+  const { oldPassword, newPassword, confirmPassword, error, loading, success } =
+    variables;
+
+  const handleChange = (key) => (event) => {
+    setVariables({ ...variables, error: false, [key]: event.target.value });
+  };
+  
+  
+  const onSubmit = (event) => {
+    event.preventDefault();
+    setVariables({ ...variables, error: false, loading: true });
+    if (variables.newPassword !== variables.confirmPassword) {
+      setVariables({ ...variables, error: true, loading: false });
+    } else {
+      fetch(`${API}/change-password`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: "application/json",
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ oldPassword: variables.oldPassword, newPassword: variables.newPassword }),
+      })
+        .then(response => response.json())
+        .then(response => {
+          console.log(response)
+          if (response.statusCode === 200) {
+            setVariables({ ...variables, loading: false, success: true });
+            alert.show('Password changed !', {
+              type : 'success' , 
+              timeout : '3000'
+            })
+            setShow(false);
+            // return response.json();
+          } else {
+            setVariables({ ...variables, error: true });
+            alert.show(`${response.error}`, {
+              type: 'error',
+              timeout :'3000'
+            })
+          }
+        
+        } )
+        
+        .catch((e) => {
+          setVariables({ ...variables, loading: false, success: false, error: true });
+          
+        });
+    }
+  };
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const PasswordChange = () => {
+    const classes = useStyles();
+    return (
+      <div>
+        {/* {loadingMessage()}
+        {successMessage()}
+        {errorMessage()} */}
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        className={classes.modal}
+        open={show}
+        onClose={handleClose}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 600,
+        }}
+      >
+        <Fade in={show}>
+          <div className={classes.paper}>
+            <IconButton
+              aria-label="close"
+              color="inherit"
+              size="medium"
+              className={classes.right}
+              onClick={() => {
+                setShow(false);
+              }}
+            >
+              <CloseIcon fontSize="large" />
+            </IconButton>
+            <h3
+              id="transition-modal-title"
+              style={{ textAlign: "center" }}
+            >
+              Password Change
+            </h3>
+
+            <br />
+            <TextField
+              className={classes.fontstyle}
+              type="text"
+              label="Old Password"
+              variant="outlined"
+              InputLabelProps={{
+                className: classes.inputLabel,
+              }}
+              InputProps={{
+                className: classes.input,
+              }}
+              onChange={handleChange("oldPassword")}
+            />
+            <TextField
+              className={classes.fontstyle}
+              type="text"
+              label="New Password"
+              variant="outlined"
+              InputLabelProps={{
+                className: classes.inputLabel,
+              }}
+              InputProps={{
+                className: classes.input,
+              }}
+                onChange={handleChange("newPassword")}
+            />
+            <TextField
+              className={classes.fontstyle}
+              type="text"
+              label="Confirm Paasword"
+              
+              variant="outlined"
+              InputLabelProps={{
+                className: classes.inputLabel,
+              }}
+              InputProps={{
+                className: classes.input,
+                }}
+                onChange={handleChange("confirmPassword")}
+              
+            />
+            <div style={{ textAlign: 'center' }}>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={onSubmit}   
+
+                mx="auto"
+                style={{ padding: "7px 15px", fontSize: "1.05rem" }}
+              >
+                Change Password
+              </Button>
+            </div>
+            </div>
+          </Fade>
+      </Modal>
+      </div>
+    )
+  }
 
   useEffect(() => {
     preload(user._id, token);
@@ -108,6 +334,7 @@ function Dash() {
 
   return (
     <main className="dashboard-dash-main-body">
+      {PasswordChange()}
       {/* bg effect */}
       <img className="dashboard-dash-main_left-bar_bg" src={Leffect} alt="left-bar-bg" />
       <img src={Reffect} alt="right-middle" className="dashboard-dash-main_right-middle_bg" />
@@ -150,6 +377,19 @@ function Dash() {
             <img src={Certificate} alt="techFEST-profile-icon" />
             Certificates & Rewards
           </ScrollLink>
+
+          {/* password change link */}
+          <Link className="dashboard-dash-dlink dashboard-dash-cursor" onClick={handleShow}>
+            <img src={Password} alt="password change" style={{ fill : 'white' }}/>
+            Change Password
+          </Link>
+
+
+
+          
+
+
+
         </div>
       </div>
       {/* <!-- MAIN CONTENT according to the option clicked in leftbar --> */}
@@ -159,9 +399,9 @@ function Dash() {
           <div className="dashboard-dash-user-profile-display">
             <img src={ProfileImage} alt="profile" />
             <div className="dashboard-dash-user-info">
-              <b className="dashboard-dash-user-name">{`${values.name}  ${values.lastName}`}</b>
-              <p>{values.collegeName}</p>
-              <p className="dashboard-dash-user-id">{values.userID}</p>
+              <b className="dashboard-dash-user-name">{`${values?.name}  ${values?.lastName}`}</b>
+              <p>{values?.collegeName}</p>
+              <p className="dashboard-dash-user-id">{values?.userID}</p>
             </div>
           </div>
 
@@ -175,10 +415,10 @@ function Dash() {
                 Events Registered
               </div>
 
-              {values.eventRegIn.length > 0 ?
+              {values?.eventRegIn.length > 0 ?
                 <div className="dashboard-dash-event-card_events-list">
 
-                  {values.eventRegIn.map((row) => (
+                  {values?.eventRegIn.map((row) => (
                     <div className="dashboard-dash-event" key={row._id}>
                       <span className="dashboard-dash-event-name">{row.eventName}</span>
                       {/* <span className="dashboard-dash-event-time">{`${moment(row.eventDate).format('DD-MM')}`}</span> */}
@@ -203,9 +443,9 @@ function Dash() {
                 <img src={Solid} alt="event-techFEST" />
                 Workshops Registered
               </div>
-              {values.workshopsEnrolled.length > 0 ?
+              {values?.workshopsEnrolled.length > 0 ?
                 <div className="dashboard-dash-event-card_events-list">
-                  {values.workshopsEnrolled.map((row) => (
+                  {values?.workshopsEnrolled.map((row) => (
                     <div className="dashboard-dash-event">
                       <span className="dashboard-dash-event-name">{row.workshopName}</span>
                       <Link to={{ pathname: `/domain`, state: { name: "workshops", id: row._id } }} id={row._id} message={'redirected from dashboard'} className='btn  btn-outline-primary btn-sm'>View detail</Link>

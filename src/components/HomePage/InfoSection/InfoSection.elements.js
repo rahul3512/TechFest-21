@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const InfoSec = styled.div`
   color: #fff;
   padding: 80px 0;
-  background-image: linear-gradient(90deg, #020024 0%, #090979 35%, #00d4ff 100%);
+  /* background-image: linear-gradient(90deg, #020024 0%, #090979 35%, #00d4ff 100%); */
   /* background: ${({ lightBg }) => (lightBg ? '#fff' : '#101522')}; */
 `;
 
@@ -79,6 +79,10 @@ font-family: VBI;
   line-height: 1.1;
   font-weight: 600;
   color: ${({ lightText }) => (lightText ? '#f7f8fa' : '#1c2237')};
+
+  @media screen and (max-width: 768px) {
+    font-size: 35px;
+  }
 `;
 
 export const Subtitle = styled.p`

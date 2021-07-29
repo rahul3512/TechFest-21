@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 // import Base from '../core/Base'
-import { Redirect } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { signin, authenticate, isAuthenticated } from "../../auth/helper";
 function LoginForm() {
   const [values, setValues] = useState({
@@ -40,8 +40,8 @@ function LoginForm() {
     return (
       loading && (
         <div className=" text-center my-2">
-          <div class="spinner-border text-light " role="status">
-            <span class="visually-hidden">Loading...</span>
+          <div className="spinner-border text-light " role="status">
+            <span className="visually-hidden">Loading...</span>
           </div>
         </div>
       )
@@ -168,14 +168,13 @@ function LoginForm() {
             </div> */}
             <div className="mb-3">
               <label htmlFor="userEmail" className="form-label lsLabel">
-                <a
-                  href="https://www.google.com"
-                  target="_blank"
+                <Link to = "/ForgetPassword" 
+                  
                   rel="noreferrer"
                   className="text-white"
                 >
                   Forget Password ?
-                </a>
+                  </Link>
               </label>
             </div>
           </div>

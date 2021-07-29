@@ -4,6 +4,7 @@ import "./LoginSignUp.css";
 import bglogo from "../../assets/images/LSBGlogo.png";
 import LoginForm from "./LoginForm";
 import SignUpForm from "./SignUpForm";
+import Footer from "../HomePage/Footer/Footer";
 // import { Redirect } from "react-router-dom";
 
 const LoginSignUp = ({ isLogin }) => {
@@ -54,7 +55,7 @@ const LoginSignUp = ({ isLogin }) => {
           {buttonToggle ? <LoginForm /> : <SignUpForm />};
         </div>
       </div>
-
+    <Footer />
     </div>
   );
 };

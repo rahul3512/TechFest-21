@@ -11,6 +11,7 @@ import AboutUs from './pages/AboutUs';
 import Sponsor from './pages/Sponsor';
 import ContactUs from './pages/ContactUs';
 import ScrollToTop from './components/ScrollToTop';
+import Resetpassword from './pages/Resetpassword';
 
 
 import { Navbar, Footer } from './components';
@@ -56,6 +57,7 @@ function App() {
         <Route exact path='/contact-us' component={ContactUs} />
         {/* <Route path='/sign-up' component={SignUp} /> */}
         <Route exact path='/' component={Home} />
+        <Route exact path='/ForgetPassword' component = {Resetpassword} />
 
         <SuperAdminRoutes path="/superadmin/dashboard" exact component={SuperAdminDashboard} />
         <SuperAdminRoutes path="/superadmin/coordinator" exact component={Coordinator} />
