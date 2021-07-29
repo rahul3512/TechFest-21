@@ -8,8 +8,8 @@ function Home() {
   return (
     <div>
       <HeroSection />
-      <InfoSection {...homeObjOne} />
-      <HomeSponsor />
+      {/* <InfoSection {...homeObjOne} /> */}
+      {/* <HomeSponsor /> */}
       <Footer />
     </div>
   );
