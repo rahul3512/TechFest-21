@@ -526,7 +526,7 @@ const Profile = () => {
                             >
                                 Update
                                 </Button>
-                                </div>
+                            </div>
                         </div>
                     </Fade>
                 </Modal>
@@ -534,7 +534,6 @@ const Profile = () => {
         );
     }
     const ProfileInformation = () => {
-        
         return (
 
             <>
@@ -560,13 +559,13 @@ const Profile = () => {
                                 <div className="dashboard-dash-pi_personal-info">
                                     <div className="dashboard-dash-pi_info-group">
                                         <div className="dashboard-dash-info-group_que">Profession</div>
-                                        <div className="dashboard-dash-info-group_ans">{values.designation}</div>
+                                        <div className="dashboard-dash-info-group_ans">{values?.designation}</div>
                                     </div>
                                     <div className="dashboard-dash-pi_info-group">
                                         <div className="dashboard-dash-info-group_que">
                                             Organisation/College Name
                                         </div>
-                                        <div className="dashboard-dash-info-group_ans">{values.collegeName}</div>
+                                        <div className="dashboard-dash-info-group_ans">{values?.collegeName}</div>
                                     </div>
                                     <div className="dashboard-dash-pi_info-group">
                                         <div className="dashboard-dash-info-group_que">
@@ -576,7 +575,7 @@ const Profile = () => {
                       </span> */}
                                         </div>
                                         <div className="dashboard-dash-info-group_ans">
-                                            {values.courseEnrolled}
+                                            {values?.courseEnrolled}
                                         </div>
                                     </div>
                                     <div className="dashboard-dash-pi_info-group">
@@ -586,12 +585,12 @@ const Profile = () => {
                         (only applicable on college students)
                       </span> */}
                                         </div>
-                                        <div className="dashboard-dash-info-group_ans">{values.yearOfStudy}</div>
+                                        <div className="dashboard-dash-info-group_ans">{values?.yearOfStudy}</div>
                                     </div>
                                     <div className="dashboard-dash-pi_info-group">
                                         <div className="dashboard-dash-info-group_que">Date of Birth</div>
                                         <div className="dashboard-dash-info-group_ans">
-                                            {values.dob.toString()}
+                                            {values?.dob.toString()}
                                         </div>
                                     </div>
                                 </div>
@@ -602,22 +601,22 @@ const Profile = () => {
                                 <div className="dashboard-dash-pi-contact-information">
                                     <div className="dashboard-dash-pi_info-group">
                                         <div className="dashboard-dash-info-group_que">E-mail Address</div>
-                                        <div className="dashboard-dash-info-group_ans">{values.email}</div>
+                                        <div className="dashboard-dash-info-group_ans">{values?.email}</div>
                                     </div>
                                     <div className="dashboard-dash-pi_info-group">
                                         <div className="dashboard-dash-info-group_que">Phone Number</div>
-                                        <div className="dashboard-dash-info-group_ans">{values.phone}</div>
+                                        <div className="dashboard-dash-info-group_ans">{values?.phone}</div>
                                     </div>
                                     <div className="dashboard-dash-pi_info-group">
                                         <div className="dashboard-dash-info-group_que">WhatsApp Number</div>
                                         <div className="dashboard-dash-info-group_ans">
-                                            {values.whatsappPhoneNumber}
+                                            {values?.whatsappPhoneNumber}
                                         </div>
                                     </div>
                                     <div className="dashboard-dash-pi_info-group">
                                         <div className="dashboard-dash-info-group_que">Telegram Number</div>
                                         <div className="dashboard-dash-info-group_ans">
-                                            {values.telegramPhoneNumber}
+                                            {values?.telegramPhoneNumber}
                                         </div>
                                     </div>
                                 </div>
@@ -625,8 +624,8 @@ const Profile = () => {
                             <div className="dashboard-dash-profile-information_pic">
                                 <div className="dashboard-dash-pi-photo-group">
                                     <img src={ProfileImage} alt="profile-image" />
-                                    <div className="dashboard-dash-pi-photo-group_name">{`${values.name} ${values.lastName}`}</div>
-                                    <div className="dashboard-dash-pi-photo-group_tag">{values.userID}</div>
+                                    <div className="dashboard-dash-pi-photo-group_name">{`${values?.name} ${values?.lastName}`}</div>
+                                    <div className="dashboard-dash-pi-photo-group_tag">{values?.userID}</div>
                                 </div>
                             </div>
                         </div>
