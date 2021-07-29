@@ -5,7 +5,7 @@ import "../components/PrInternPage/Printern.css";
 
 const PrIntern = () => {
     return (
-        <div >
+        <div className="printernbg">
             <PrInternPage />
             <Footer />
         </div>
