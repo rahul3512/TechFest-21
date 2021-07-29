@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import LoginSignUp from "../components/RegisterPage/LoginSignUp";
 import { API } from "../backend";
-import { Redirect } from "react-router-dom";
-// import { useLocation } from "react-router-dom";
 
 function SignIn() {
   const [isVerify, setIsVerify] = useState(false);
