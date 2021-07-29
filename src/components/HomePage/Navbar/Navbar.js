@@ -217,10 +217,10 @@ const Nav = props => {
           <div className="appbar">
 
             <MenuItem className="navmenu" component={Link} to="/pr-intern">PR Intern</MenuItem>
-            {
 
-              <MenuItem className="navmenu" component={Link} to="/register">Register</MenuItem>
-            }
+
+            <MenuItem className="navmenu" component={Link} to="/register">Register</MenuItem>
+
             {
               isAuthenticated() && (
                 <MenuItem className="navmenu" onClick={() => signout(() => {

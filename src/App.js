@@ -29,7 +29,7 @@ import AddEvent from './components/Dashboard/superadmin/AddEvent'
 import AddWorkshop from './components/Dashboard/superadmin/AddWorkshop'
 import AddWorkshopSession from './components/Dashboard/superadmin/AddWorkshopSession'
 import UpdateDomain from './components/Dashboard/superadmin/UpdateDomain';
-import AdminDomains from './components/Dashboard/superadmin/adminDomains';
+import AdminDomains from './components/Dashboard/superadmin/AdminDomains';
 import AdminCoordinators from './components/Dashboard/superadmin/AdminCoodinators';
 import UpdateCoordinator from './components/Dashboard/superadmin/UpdateCoordinator';
 import UpdateWorkshop from './components/Dashboard/superadmin/UpdateWorkshop';
@@ -57,7 +57,7 @@ function App() {
         <Route exact path='/contact-us' component={ContactUs} />
         {/* <Route path='/sign-up' component={SignUp} /> */}
         <Route exact path='/' component={Home} />
-        <Route exact path='/ForgetPassword' component = {Resetpassword} />
+        <Route exact path='/ForgetPassword' component={Resetpassword} />
 
         <SuperAdminRoutes path="/superadmin/dashboard" exact component={SuperAdminDashboard} />
         <SuperAdminRoutes path="/superadmin/coordinator" exact component={Coordinator} />
