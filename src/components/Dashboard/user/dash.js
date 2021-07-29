@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './assets/css/dashres.css';
 import ProfileInformation from './Profile';
-
 import { Link } from 'react-router-dom';
 import * as Scroll from "react-scroll";
 import Leffect from "./assets/images/Group 1left-bar-background.png";
@@ -29,8 +28,11 @@ import { isAuthenticated } from '../../../auth/helper';
 import { Check ,Close as CloseIcon } from '@material-ui/icons';
 import { Button, TextField, IconButton ,Fade , Backdrop , makeStyles } from '@material-ui/core';
 import Modal from "@material-ui/core/Modal";
+import { useAlert } from 'react-alert';
+import { API } from '../../../backend';
 
 function Dash() {
+  const alert = useAlert();
   let ScrollLink = Scroll.Link;
   const { user, token } = isAuthenticated();
   const [values, setValues] = useState({
@@ -150,6 +152,65 @@ function Dash() {
     }
 
   }));
+  const [variables, setVariables] = useState({
+    oldPassword: "",
+    newPassword: "",
+    confirmPassword: "",
+    error: false,
+    loading: false,
+    success: false,
+  });
+  const { oldPassword, newPassword, confirmPassword, error, loading, success } =
+    variables;
+
+  const handleChange = (key) => (event) => {
+    setVariables({ ...variables, error: false, [key]: event.target.value });
+  };
+  
+  
+  const onSubmit = (event) => {
+    event.preventDefault();
+    setVariables({ ...variables, error: false, loading: true });
+    if (variables.newPassword !== variables.confirmPassword) {
+      setVariables({ ...variables, error: true, loading: false });
+    } else {
+      fetch(`${API}/change-password`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: "application/json",
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ oldPassword: variables.oldPassword, newPassword: variables.newPassword }),
+      })
+        .then(response => response.json())
+        .then(response => {
+          console.log(response)
+          if (response.statusCode === 200) {
+            setVariables({ ...variables, loading: false, success: true });
+            alert.show('Password changed !', {
+              type : 'success' , 
+              timeout : '3000'
+            })
+            setShow(false);
+            // return response.json();
+          } else {
+            setVariables({ ...variables, error: true });
+            alert.show(`${response.error}`, {
+              type: 'error',
+              timeout :'3000'
+            })
+          }
+        
+        } )
+        
+        .catch((e) => {
+          setVariables({ ...variables, loading: false, success: false, error: true });
+          
+        });
+    }
+  };
+
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -158,6 +219,9 @@ function Dash() {
     const classes = useStyles();
     return (
       <div>
+        {/* {loadingMessage()}
+        {successMessage()}
+        {errorMessage()} */}
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -202,7 +266,7 @@ function Dash() {
               InputProps={{
                 className: classes.input,
               }}
-
+              onChange={handleChange("oldPassword")}
             />
             <TextField
               className={classes.fontstyle}
@@ -215,7 +279,7 @@ function Dash() {
               InputProps={{
                 className: classes.input,
               }}
-              
+                onChange={handleChange("newPassword")}
             />
             <TextField
               className={classes.fontstyle}
@@ -228,14 +292,15 @@ function Dash() {
               }}
               InputProps={{
                 className: classes.input,
-              }}
+                }}
+                onChange={handleChange("confirmPassword")}
               
             />
             <div style={{ textAlign: 'center' }}>
               <Button
                 variant="contained"
                 color="primary"
-                // onClick={onSubmit}   
+                onClick={onSubmit}   
 
                 mx="auto"
                 style={{ padding: "7px 15px", fontSize: "1.05rem" }}
