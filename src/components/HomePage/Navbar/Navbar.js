@@ -218,8 +218,12 @@ const Nav = props => {
 
             <MenuItem className="navmenu" component={Link} to="/pr-intern">PR Intern</MenuItem>
 
+            {
+              !isAuthenticated() && (
+                <MenuItem className="navmenu" component={Link} to="/register">Register</MenuItem>
 
-            <MenuItem className="navmenu" component={Link} to="/register">Register</MenuItem>
+              )
+            }
 
             {
               isAuthenticated() && (
