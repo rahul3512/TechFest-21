@@ -77,19 +77,19 @@ const Profile = () => {
                 setCompleteUser(data)
                 setValues({
                     ...values,
-                    name: data.name,
-                    lastName: data.lastName,
-                    userID: data.userId,
-                    email: data.email,
-                    phone: data.phone,
-                    designation: data.designation,
-                    collegeName: data.collegeName,
-                    collegeAddress: data.collegeAddress,
-                    courseEnrolled: data.courseEnrolled,
-                    branchOfStudy: data.branchOfStudy,
-                    yearOfStudy: data.yearOfStudy,
-                    whatsappPhoneNumber: data.whatsappPhoneNumber,
-                    telegramPhoneNumber: data.telegramPhoneNumber,
+                    name: data?.name ? data?.name : "",
+                    lastName: data?.lastName ? data?.lastName : "",
+                    userID: data?.userId ? data?.userId : "",
+                    email: data?.email ? data?.email : "",
+                    phone: data?.phone ? data?.phone : "",
+                    designation: data?.designation ? data?.designation : "",
+                    collegeName: data?.collegeName ? data?.collegeName : "",
+                    collegeAddress: data?.collegeAddress ? data?.collegeAddress : "",
+                    courseEnrolled: data?.courseEnrolled ? data?.courseEnrolled : "",
+                    branchOfStudy: data?.branchOfStudy ? data?.branchOfStudy : "",
+                    yearOfStudy: data?.yearOfStudy ? data?.yearOfStudy : "",
+                    whatsappPhoneNumber: data?.whatsappPhoneNumber ? data?.whatsappPhoneNumber : "",
+                    telegramPhoneNumber: data?.telegramPhoneNumber ? data?.telegramPhoneNumber : "",
                     dob: moment(data.dob).format("YYYY-MM-DD"),
                 });
             }
@@ -106,10 +106,10 @@ const Profile = () => {
     }, []);
 
 
-    
 
 
-    
+
+
     const errorMessage = () => (
         <div
             className="dashboard-dash-alert alert-danger mt-3"
@@ -172,16 +172,16 @@ const Profile = () => {
                 } else {
                     alert.show("Profile Updated ! ", {
                         timeout: '3000',
-                        type : 'success'
-                    } )
-                    
-                
+                        type: 'success'
+                    })
+
+
                     setValues({
                         ...values,
                         loading: false,
                         error: "",
                         updated: true,
-                        
+
                     });
                 }
             })
@@ -200,7 +200,7 @@ const Profile = () => {
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    
+
     const useStyles = makeStyles((theme) => ({
         modal: {
             display: "flex",
@@ -208,7 +208,7 @@ const Profile = () => {
             justifyContent: "center",
             color: "white",
             overflow: "scroll",
-            
+
         },
         paper: {
             position: 'relative',
@@ -223,7 +223,7 @@ const Profile = () => {
             border: "2px solid #000",
             boxShadow: theme.shadows[8],
             padding: theme.spacing(2, 4, 3),
-            marginTop : '5rem'
+            marginTop: '5rem'
         },
 
         fontstyle: {
@@ -239,7 +239,7 @@ const Profile = () => {
         },
         input: {
             color: "white",
-            fontSize:  "1rem" ,
+            fontSize: "1rem",
             ["@media (max-width:780px)"]: {
                 // eslint-disable-line no-useless-computed-key
                 fontSize: "0.75rem",
@@ -256,7 +256,7 @@ const Profile = () => {
             right: '5px',
             top: '5px'
         }
-          
+
     }));
 
     const ProfileModal = () => {
@@ -308,7 +308,7 @@ const Profile = () => {
                                 InputProps={{
                                     className: classes.input,
                                 }}
-                                
+
                             />
                             <TextField
                                 className={classes.fontstyle}
@@ -508,23 +508,23 @@ const Profile = () => {
                                 InputProps={{
                                     className: classes.input,
                                     inputProps: {
-                                        min : 1,
-                                        max : 7
+                                        min: 1,
+                                        max: 7
                                     }
                                 }}
                                 onChange={handleChange("yearOfStudy")}
                             />
                             <br />
-                            <div style={{textAlign : 'center'}}>
-                            <Button
-                                variant="contained"
-                                color="primary"
+                            <div style={{ textAlign: 'center' }}>
+                                <Button
+                                    variant="contained"
+                                    color="primary"
                                     onClick={onSubmit}
-                                    
-                                mx="auto"
-                                style={{ padding: "8px 20px", fontSize: "1.25rem" }}
-                            >
-                                Update
+
+                                    mx="auto"
+                                    style={{ padding: "8px 20px", fontSize: "1.25rem" }}
+                                >
+                                    Update
                                 </Button>
                             </div>
                         </div>
@@ -642,7 +642,7 @@ const Profile = () => {
                 ProfileInformation()
                 // profileForm()
             }
-            
+
         </>
     );
 };
