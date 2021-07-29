@@ -12,7 +12,7 @@ import SkillsRocket from '../../assets/images/SkillsRocket.png'
 
 function PrInternPage() {
     return (
-        <div className="pr-container" style={{ backgroundColor: 'black' }}>
+        <div className="pr-container">
             <div className="container">
                 <div className="sponsordesc row flex flex-row">
                     <div className="col-sm-12 text-center ">
@@ -31,26 +31,28 @@ function PrInternPage() {
                 </div>
 
                 <h3 className="heading text-white mt-5 text-center">Why become a PR Intern ?</h3>
-                <div className="row container d-flex justify-content-around">
+                <div className="row container d-flex">
                     <div className="col ">
                         <div className="printern">
                             <div className="card-body text-center">
-                                <div className="card-image pb-3">
+                                <div className="printern-image card-image pb-3">
                                     <img className="image-size" src={SkillsRocket} alt="printernimage" />
                                 </div>
+                                <div>
                                 <h4 className="card-title">Alpha Sponsor</h4>
                                 <p className="card-text">
                                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                                     do eiusmod tempor
                                 </p>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div className="col">
                         <div className="printern">
                             <div className="card-body text-center">
-                                <div className="card-image pb-3">
-                                    <img className="image-size" src={Leader} alt="printernimage" />
+                                <div className="printern-image pb-3">
+                                    <img className="image-size1" src={Leader} alt="printernimage" />
                                 </div>
                                 <h4 className="card-title">Alpha Sponsor</h4>
                                 <p className="card-text">
@@ -63,7 +65,7 @@ function PrInternPage() {
                     <div className="col">
                         <div className="printern">
                             <div className="card-body text-center">
-                                <div className="card-image pb-3">
+                                <div className="printern-image pb-3">
                                     <img className="image-size" src={Recognised} alt="printernimage" />
                                 </div>
                                 <h4 className="card-title">Alpha Sponsor</h4>
@@ -74,12 +76,10 @@ function PrInternPage() {
                             </div>
                         </div>
                     </div>
-                </div>
-                <div className="row container d-flex justify-content-around">
                     <div className="col">
                         <div className="printern">
                             <div className="card-body text-center">
-                                <div className="card-image pb-3">
+                                <div className="printern-image pb-3">
                                     <img className="image-size" src={Concession} alt="printernimage" />
                                 </div>
                                 <h4 className="card-title">Alpha Sponsor</h4>
@@ -93,7 +93,7 @@ function PrInternPage() {
                     <div className="col">
                         <div className="printern">
                             <div className="card-body text-center">
-                                <div className="card-image pb-3">
+                                <div className="printern-image pb-3">
                                     <img className="image-size" src={Headphones} alt="printernimage" />
                                 </div>
                                 <h4 className="card-title">Alpha Sponsor</h4>
@@ -107,7 +107,7 @@ function PrInternPage() {
                     <div className="col">
                         <div className="printern">
                             <div className="card-body text-center">
-                                <div className="card-image pb-3">
+                                <div className="printern-image pb-3">
                                     <img className="image-size" src={Rocket} alt="printernimage" />
                                 </div>
                                 <h4 className="card-title">Alpha Sponsor</h4>
