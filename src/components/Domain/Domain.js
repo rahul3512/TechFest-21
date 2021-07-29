@@ -39,6 +39,7 @@ class DomainPage extends Component {
                     slidesToShow: 1,
                     swipeToSlide: true,
                     slidesToScroll: 1,
+                    initialSlide:6
                 }
 
             },
@@ -71,17 +72,30 @@ class DomainPage extends Component {
         animate: false,
         workshops: [],
         precula: false,
+        loading:true
 
     }
 
     componentDidMount() {
-        this.getDomains();        
+        this.getDomains();  
     }
+
+    loadingMessage = () => {
+        return (
+          this.state.loading && (
+            <div className=" text-center my-2">
+              <div className="spinner-border text-dark " role="status">
+                <span className="visually-hidden">Loading...</span>
+              </div>
+            </div>
+          )
+        );
+      };
 
     getDomains = () => {
         axios.get(`${API}/domains`)
             .then(response => {
-                this.setState({ domains: response.data })
+                this.setState({ domains: response.data,loading:false })
                 console.log(this.state.domains)
 
                 if (this.props.detail.name == 'workshops') {
@@ -117,7 +131,7 @@ class DomainPage extends Component {
             }).catch(err => {
             
                 // alert(err.response)
-                console.log(err)
+                alert(err)
             })
     }
     getSingleDomain = (id,pos) => {
@@ -163,7 +177,42 @@ class DomainPage extends Component {
                         </div>
                     </CSSTransition>
                     {this.state.exploreEvents ? <button className={classes.btnExploreEvents} onClick={() => { this.eventRef.current.scrollIntoView() }}>Explore Events</button> : null}
-                    {this.state.exploreEvents ?
+                    {
+                        this.state.exploreEvents?
+                        <div className={classes.coordinators}>
+                            <section className={classes.facultyCoordinatorContainer}>
+                                {this.state.currentDomain.domain.facultyCoordinator.map((item,pos)=>{
+                                    return(
+                                        <div key={pos} className={classes.facultyCoordinator}>
+                                            <img src={`${BASE_API}${item?.photo}`} alt='' className={classes.coordinatorImage} />
+                                            <div>
+                                                <h6>{item.coordinatorName}</h6>
+                                                <p>{item.coordinatorDesignation}</p>
+                                            </div>
+                                        </div>
+                                    )
+                                })}
+                            </section>
+                            <section className={classes.studentCoordinatorContainer}>
+                                {
+                                    this.state.currentDomain.domain.studentCoordinator.map((item,pos)=>{
+                                        return(
+                                            <section key={pos} className={classes.eventCoordinatorData}>
+                                                <div className={classes.coordinatorDetails}>
+                                                    <p>{item.coordinatorName}</p>
+                                                    <p>{`+91 ${item.coordinatorPhone}`}</p>
+                                                </div>
+                                                <img src={`${BASE_API}${item.photo}`} alt='' className={classes.coordinatorImage}/>
+                                            </section>
+                                        )
+                                    })
+                                }
+                            </section>
+                        </div>
+                        :
+                        null
+                    }
+                    {/* {this.state.exploreEvents ?
                         <div className={classes.coordinators}>
                             {this.state.currentDomain.domain.facultyCoordinator.map(item => {
                                 return (
@@ -190,7 +239,7 @@ class DomainPage extends Component {
                                 })}
                             </div>
                         </div>
-                        : null}
+                        : null} */}
                     <div className={classes.cardContainer}>
                         <div className={classes.cardHeadingContainer}>
                             <p>Domains</p>
@@ -198,6 +247,7 @@ class DomainPage extends Component {
                         </div>
 
                         <Slider {...this.settings} >
+                            {this.loadingMessage()}
                             {this.state.domains.map((item, pos) => {
                                 return (
                                     <div className={classes.cardRoot} key={pos} onClick={() => {
@@ -208,7 +258,7 @@ class DomainPage extends Component {
                                             <img src={`${BASE_API}${item.photo}`} alt='' className={classes.cardImage} />
                                             <div className={classes.cardData}>
                                                 <h4>{item.domainName}</h4>
-                                                <p>{item.domainDescription}</p>
+                                                <p>{item.domainDescription.length>100?item.domainDescription.slice(0,100)+'...':item.domainDescription}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -221,16 +271,15 @@ class DomainPage extends Component {
                     <h1 className={classes.domainHeading}>{this.state.currentDomain.domain.domainName}</h1>
                     {
 
-                        this.state.precula ? this.state.workshops.map(item => {
-                            return (<ExploreEvents id={item._id} content={item} heading={this.state.currentDomain.domain.domainName} />)
+                        this.state.precula ? this.state.workshops.map((item,pos) => {
+                            return (<ExploreEvents id={item._id} content={item} key={pos} heading={this.state.currentDomain.domain.domainName} />)
                         }) :
-                            this.state.currentDomain.events.map(item => {
-                                return (<ExploreEvents id={item._id} content={item} heading={this.state.currentDomain.domain.domainName} />)
+                            this.state.currentDomain.events.map((item,pos) => {
+                                return (<ExploreEvents id={item._id} key={pos} content={item} heading={this.state.currentDomain.domain.domainName} />)
                             })
                     }
                 </div> : null}
 
-                {/* <img src={gradeintLogo} alt='' className='rightlogo1'/> */}
             </div>
         );
     }
