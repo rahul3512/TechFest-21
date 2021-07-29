@@ -7,9 +7,6 @@ function Menu({ history }) {
     return (
         <div>
             <ul>
-                <li>
-                    <Link to="/">Home</Link>
-                </li>
 
 
 
@@ -19,7 +16,7 @@ function Menu({ history }) {
                             <Link to="/superadmin/dashboard">Super Admin Dashboard</Link>
                         </li>
                         <li>
-                            <Link to="/superadmin/coordinator">Coordinator</Link>
+                            <Link to="/superadmin/coordinator">Add Coordinator</Link>
                         </li>
                         <li>
                             <Link to="/superadmin/adddomain">Add Domain</Link>
@@ -60,14 +57,6 @@ function Menu({ history }) {
 
 
 
-
-
-                <li>
-                    <Link to="/domain">Domains</Link>
-                </li>
-                <li>
-                    <Link to="/workshops">Workshops</Link>
-                </li>
 
 
 
