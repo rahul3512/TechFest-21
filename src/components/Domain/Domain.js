@@ -107,7 +107,7 @@ class DomainPage extends Component {
                     console.log(this.props)
                     setTimeout(() => {
                         window.location.replace(`${window.location.pathname}#${this.props.detail.secId}`)
-                    } , 5000)
+                    } , 3000)
                 }
                 else {
                     // window.location.replace('/domain');
