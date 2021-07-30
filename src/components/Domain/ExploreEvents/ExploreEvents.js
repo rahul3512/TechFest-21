@@ -13,8 +13,10 @@ import TextField from '@material-ui/core/TextField';
 import Slide from '@material-ui/core/Slide';
 import { Link } from 'react-router-dom';
 import { getUser } from '../../Dashboard/user/helper/userapicalls';
-import { getWorkshop, registerAsTeam, registerInEvent, registerInWorkshop } from '../../../auth/helper/DomainRegistration';
+import { createTeam, getWorkshop, registerInEvent, registerInEventAsTeam, registerInWorkshop } from '../../../auth/helper/DomainRegistration';
 import image from '../../../assets/images/backgroundDomains.png'
+import { Snackbar } from '@material-ui/core';
+import { Alert } from '../Alert';
 
 
 export class ExploreEvents extends Component {
@@ -38,7 +40,9 @@ export class ExploreEvents extends Component {
         isEventRegistered: false,
         openTeamDialog:false,
         addTeam:false,
-        memberId:''
+        memberId:'',
+        openSnackbar:false,
+        error:''
     }
 
     getUserData = () => {
@@ -79,13 +83,21 @@ export class ExploreEvents extends Component {
     Transition = React.forwardRef(function Transition(props, ref) {
         return <Slide direction="up" ref={ref} {...props} />;
     });
+    
 
     handleClickOpen = () => {
         this.setState({ open: true })
     }
     handleClose = () => {
         if(this.state.addTeam){
-            registerInEventAsTeam(this.state.memberId);
+            let teamMembers=[];
+            registerInEventAsTeam(this.state.memberId,this.state.token,this.props.content._id,)
+            .then(response=>{
+                teamMembers.add(response.data.id)
+                createTeam(this.state.token,this.teamMembers,this.props.content.eventId,teamMembers.length+1,this.state.completeUser.userId);
+            }).catch(err=>{
+                this.setState({openSnackbar:true,error:err})
+            });
         }
         this.setState({ open: false,openTeamDialog:false,addTeam:false })
     }
@@ -101,6 +113,9 @@ export class ExploreEvents extends Component {
     }
     _handleTextFieldChange=(e)=>{
         this.setState({memberId:e.target.value})
+    }
+    closeSnackbar=()=>{
+        this.setState({openSnackbar:false})
     }
 
 
@@ -425,6 +440,11 @@ export class ExploreEvents extends Component {
                         </Button>
                     </DialogActions>
                 </Dialog>
+                <Snackbar open={this.state.openSnackbar} autoHideDuration={6000} onClose={this.closeSnackbar}>
+                    <Alert onClose={this.closeSnackbar} severity="error" >
+                        {this.state.error}
+                    </Alert>
+                </Snackbar>
             </div>
         )
     }
