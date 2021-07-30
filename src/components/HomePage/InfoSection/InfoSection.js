@@ -40,7 +40,8 @@ function InfoSection({
         marginTop: '-8px',
         backgroundImage: `url(${img4})`,
         backgroundRepeat: 'no-repeat',
-        backgroundSize: '100%',
+        // backgroundSize: '100%',
+        backgroundSize: 'cover',
         // backgroundColor: 'blue'
       }} >
 
