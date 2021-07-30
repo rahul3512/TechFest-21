@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Redirect } from "react-router-dom";
 import bglogo from "../../assets/images/LSBGlogo.png";
 import { API } from "../../backend";
 import Footer from "../HomePage/Footer/Footer";
-import "../RegisterPage/LoginSignUp.css";
+import "./Reset.css";
 // import OtpInput from "react-otp-input";
 // import { Link } from "react-router-dom";
 
 const Reset = () => {
   const [otpToggle, setOtpToggle] = useState(false);
+  const [signin, setSignin] = useState(false);
   const [values, setValues] = useState({
     email: "",
     error: "",
@@ -41,10 +43,10 @@ const Reset = () => {
   const successMessage = () => {
     return (
       success && (
-        <div className="row">
+        <>
           {/* <div className="offset-sm-3 col-md-6 text-left"> */}
           <div
-            className="alert alert-success"
+            className="alert alert-success mx-2"
             style={{ display: success ? "" : "none" }}
           >
             {otpToggle
@@ -52,17 +54,17 @@ const Reset = () => {
               : "OTP-send to your Email !!"}
             {/* </div> */}
           </div>
-        </div>
+        </>
       )
     );
   };
   const errorMessage = () => {
     return (
       error && (
-        <div className="row">
+        <>
           {/* <div className="offset-sm-3 col-md-6 text-left"> */}
           <div
-            className="alert alert-danger"
+            className="alert alert-danger mx-2"
             style={{ display: error ? "" : "none" }}
           >
             {otpToggle
@@ -70,10 +72,11 @@ const Reset = () => {
               : "Your email is not registerd with Us. Check it again!!"}
           </div>
           {/* </div> */}
-        </div>
+        </>
       )
     );
   };
+
   const onSubmitOtp = (event) => {
     event.preventDefault();
     setValues({ ...values, error: false, loading: true });
@@ -86,28 +89,31 @@ const Reset = () => {
       body: JSON.stringify({ email: values.email, otp: values.otp }),
     })
       .then((response) => {
-        // console.log(response);
+        console.log(response);
         if (response.status === 200) {
           setValues({ ...values, loading: true });
           return response.json();
+        }
+      })
+      .then((data) => {
+        // console.log(data);
+        if (data.statusCode === 200) {
+          setValues({ ...values, loading: false, success: true });
+          setTimeout(() => {
+            setValues({
+              email: "",
+              error: "",
+              otp: "",
+              loading: false,
+              success: false,
+            });
+            setOtpToggle(false);
+            setSignin(true);
+          }, 4000);
         } else {
-          // console.log(response);
           setValues({ ...values, error: true });
           return Promise.error("OTP not matched ");
         }
-      })
-      .then(() => {
-        setValues({ ...values, loading: false, success: true });
-        setTimeout(() => {
-          setValues({
-            email: "",
-            error: "",
-            otp: "",
-            loading: false,
-            success: false,
-          });
-          setOtpToggle(false);
-        }, 5000);
       })
       .catch((e) => {
         setValues({ ...values, loading: false, success: false, error: true });
@@ -151,7 +157,7 @@ const Reset = () => {
   const reserPasswordEmailForm = () => {
     return (
       <form id="reset" className="input-group">
-        <div className="LSbox mt-2" style={{ width: "90%", marginLeft: "5%" }}>
+        <div className="RLSbox mt-2">
           <div className="mb-3">
             <label htmlFor="userEmail" className="form-label lsLabel">
               Email address
@@ -197,16 +203,12 @@ const Reset = () => {
 
   return (
     <>
-      <div className="loginBG"></div>
-      <div className="loginBGlogo">
-        <img
-          src={bglogo}
-          alt="background logo"
-          style={{ width: "50vw", height: "50vh", paddingLeft: "25vw" }}
-        />
+      <div className="RloginBG"></div>
+      <div className="RloginBGlogo">
+        <img src={bglogo} alt="background logo" />
       </div>
-      <div className="loginSignup">
-        <div className="lsFormBox  ">
+      <div className="RloginSignup">
+        <div className="RlsFormBox  ">
           <h1 className="text-center text-white pt-4">TechFEST'21</h1>
           <p className="tagline">Revitalizing India : Growth Beyond Infinity</p>
           <h4 className="text-center my-3">
@@ -219,6 +221,7 @@ const Reset = () => {
         </div>
       </div>
       <Footer />
+      {signin && <Redirect to="/signin" />}
     </>
   );
 };
