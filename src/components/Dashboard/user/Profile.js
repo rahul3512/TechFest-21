@@ -269,8 +269,8 @@ const Profile = () => {
             letterSpacing: "0.06rem",
         },
         inputLabel: {
-            color: "#ffffff80",
-            fontSize: "0.875rem",
+            color: "white",
+            fontSize: "0.975rem",
         },
         right: {
 
@@ -350,7 +350,7 @@ const Profile = () => {
                             <TextField
                                 className={classes.fontstyle}
                                 type="email"
-                                label="email"
+                                label="Email"
                                 value={email}
                                 variant="outlined"
 
@@ -378,7 +378,7 @@ const Profile = () => {
                             <TextField
                                 className={classes.fontstyle}
                                 type="tel"
-                                label="whatsapp Phone no."
+                                label="Whatsapp Phone no."
                                 value={whatsappPhoneNumber}
                                 variant="outlined"
                                 InputLabelProps={{
@@ -408,7 +408,7 @@ const Profile = () => {
                             <TextField
                                 className={classes.fontstyle}
                                 type="tel"
-                                label="telegram Phone no."
+                                label="Telegram Phone no."
                                 value={telegramPhoneNumber}
                                 variant="outlined"
                                 InputLabelProps={{
@@ -435,7 +435,7 @@ const Profile = () => {
                             <TextField
                                 className={classes.fontstyle}
                                 type="text"
-                                label="designation"
+                                label="Designation"
                                 value={designation}
                                 variant="outlined"
                                 InputLabelProps={{
@@ -449,7 +449,7 @@ const Profile = () => {
                             <TextField
                                 className={classes.fontstyle}
                                 type="date"
-                                label="dob"
+                                label="DOB"
                                 value={dob.toString()}
                                 onChange={handleChange("dob")}
                                 variant="outlined"
@@ -506,7 +506,7 @@ const Profile = () => {
                             <TextField
                                 className={classes.fontstyle}
                                 type="text"
-                                label="branch Of Study"
+                                label="Branch Of Study"
                                 value={branchOfStudy}
                                 variant="outlined"
                                 InputLabelProps={{

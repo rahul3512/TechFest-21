@@ -6,12 +6,13 @@ import { getworkshops } from './helper/workshopApiCalls';
 function AdminWorkshops() {
 
     const [workshops, setWorkshops] = useState([]);
-    const [error, seterror] = useState(false);
+    // const [error, seterror] = useState(false);
 
     const loadAllDomains = () => {
         getworkshops().then(data => {
             if (data.error) {
-                seterror(data.error);
+                // seterror(data.error);
+                console.log(data.error);
             } else {
                 setWorkshops(data);
             }
