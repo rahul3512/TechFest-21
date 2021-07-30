@@ -1,12 +1,16 @@
 import React from 'react'
 import { Footer } from '../components'
+import DomainPage from '../components/Domain/Domain'
 
 function Workshop() {
+    var state = {
+        name: 'workshops',
+        id : ''
+    }
     return (
         <div>
-            Workshop
-
-            <Footer />
+            <DomainPage detail={state} />
+            {/* <Footer /> */}
         </div>
     )
 }
