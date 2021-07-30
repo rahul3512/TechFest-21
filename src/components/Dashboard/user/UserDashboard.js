@@ -8,7 +8,7 @@ function UserDashboard() {
 
     const { user, token } = isAuthenticated();
 
-    const [hasPaidEntry, setHasPaidEntry] = useState(user.hasPaidEntry)
+    // const [hasPaidEntry, setHasPaidEntry] = useState(user.hasPaidEntry)
 
     const [error, setError] = useState(null);
 
@@ -48,6 +48,7 @@ function UserDashboard() {
                     updateUser(user._id, token, { hasPaidEntry: true }).then(data => {
                         if (data.error) {
                             setError(data.error);
+                            console.log(error)
                         }
                     }).catch(err => console.log(err))
                 }

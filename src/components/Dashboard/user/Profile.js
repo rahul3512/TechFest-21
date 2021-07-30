@@ -43,7 +43,7 @@ const Profile = () => {
     const [whatsappPhoneNumberCheck, setWhatsappPhoneNumberCheck] =
         useState(false);
 
-    const [completeUser, setCompleteUser] = useState(null)
+    // const [completeUser, setCompleteUser] = useState(null)
 
     const {
         name,
@@ -77,7 +77,7 @@ const Profile = () => {
                     type : 'error'
                 })
             } else {
-                setCompleteUser(data)
+                // setCompleteUser(data)
                 setValues({
                     ...values,
                     name: data?.name ? data?.name : "",
@@ -392,7 +392,7 @@ const Profile = () => {
                             <FormControlLabel
                                 control={
                                     <Checkbox
-                                        checked={phone == whatsappPhoneNumber}
+                                        checked={phone === whatsappPhoneNumber}
                                         onChange={handleCheck("whatsappPhoneNumber")}
                                         name="checkedB"
                                         color="primary"
@@ -422,7 +422,7 @@ const Profile = () => {
                             <FormControlLabel
                                 control={
                                     <Checkbox
-                                        checked={phone == telegramPhoneNumber}
+                                        checked={phone === telegramPhoneNumber}
                                         onChange={handleCheck("telegramPhoneNumber")}
                                         name="checkedB"
                                         color="primary"

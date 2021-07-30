@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect  } from 'react';
 import './assets/css/dashres.css';
 import ProfileInformation from './Profile';
 import { Link } from 'react-router-dom';
@@ -25,7 +25,7 @@ import Password from './assets/Icons/password.svg';
 import moment from 'moment';
 import { getUser } from './helper/userapicalls';
 import { isAuthenticated } from '../../../auth/helper';
-import { Check, Close as CloseIcon } from '@material-ui/icons';
+import {  Close as CloseIcon } from '@material-ui/icons';
 import { Button, TextField, IconButton, Fade, Backdrop, makeStyles } from '@material-ui/core';
 import Modal from "@material-ui/core/Modal";
 import { useAlert } from 'react-alert';
@@ -57,7 +57,7 @@ function Dash() {
     error: "",
 
   });
-  const [completeUser, setCompleteUser] = useState(null);
+  // const [completeUser, setCompleteUser] = useState(null);
 
 
   const preload = (userId, token) => {
@@ -68,7 +68,7 @@ function Dash() {
 
       } else {
 
-        setCompleteUser(data);
+        // setCompleteUser(data);
         setValues({
           ...values,
           name: data?.name ? data?.name : "",
@@ -162,7 +162,7 @@ function Dash() {
   });
   const loadingMessage = () => {
     return (
-      loading && (
+      variables.loading && (
         <div className=" text-center my-2">
           <div className="spinner-border text-light " role="status">
             <span className="visually-hidden">Loading...</span>
@@ -172,8 +172,8 @@ function Dash() {
     );
   };
  
-  const { oldPassword, newPassword, confirmPassword, loading , error , success } =
-    variables;
+  // const { oldPassword, newPassword, confirmPassword, loading , error , success } =
+  //   variables;
 
   const handleChange = (key) => (event) => {
     setVariables({ ...variables, error: false, [key]: event.target.value });
@@ -350,7 +350,8 @@ function Dash() {
 
   //   }
   // }
-
+  
+  
   return (
     <main className="dashboard-dash-main-body">
       {PasswordChange()}
@@ -363,7 +364,7 @@ function Dash() {
         className="dashboard-dash-main_left-bottom_bg"
       />
       <div className="dashboard-dash-leftbar">
-        <Link to="/" className="dashboard-dash-logo dashboard-dash-active">
+        <Link to="/" className="dashboard-dash-logo">
           <img src={TechIcon} alt="techFEST" />
           {/* <img src={Techfest21} alt="techFEST-text" className="dashboard-dash-techfestName" /> */}
         </Link>
@@ -372,7 +373,9 @@ function Dash() {
             smooth={true}
             duration={20}
             to="dashboard"
-            className="dashboard-dash-dlink dashboard-dash-cursor"
+            spy={true}
+            activeClass ='dashboard-dash-active'
+            className={"dashboard-dash-dlink dashboard-dash-cursor "}
           >
             <img src={Home} alt="techFEST-profile-icon" />
             Dashboard
@@ -381,7 +384,9 @@ function Dash() {
             smooth={true}
             duration={10}
             to="profile"
-            className="dashboard-dash-dlink dashboard-dash-cursor"
+            spy={true}
+            activeClass= 'dashboard-dash-active'
+            className={"dashboard-dash-dlink dashboard-dash-cursor "}
           >
             <img src={Profile} alt="techFEST-profile-icon" />
             Profile Information
@@ -391,14 +396,15 @@ function Dash() {
             spy={true}
             duration={20}
             to="certificate"
-            className="dashboard-dash-dlink dashboard-dash-cursor"
+            activeClass='dashboard-dash-active'
+            className={"dashboard-dash-dlink dashboard-dash-cursor "}
           >
             <img src={Certificate} alt="techFEST-profile-icon" />
             Certificates & Rewards
           </ScrollLink>
 
           {/* password change link */}
-          <Link className="dashboard-dash-dlink dashboard-dash-cursor" onClick={handleShow} to='#'>
+          <Link  className="dashboard-dash-dlink dashboard-dash-cursor" onClick={handleShow} to='#'>
             <img src={Password} alt="password change" style={{ fill: 'white' }} />
             Change Password
           </Link>
@@ -414,7 +420,7 @@ function Dash() {
       {/* <!-- MAIN CONTENT according to the option clicked in leftbar --> */}
       <div className="dashboard-dash-main-content">
         {/* <!-- DASHBOARD --> */}
-        <div className="dashboard-dash-dashboard" id="dashboard">
+        <div className="dashboard-dash-dashboard" id="dashboard" >
           <div className="dashboard-dash-user-profile-display">
             <img src={ProfileImage} alt="profile" />
             <div className="dashboard-dash-user-info">
@@ -483,14 +489,13 @@ function Dash() {
         </div>
 
         {/* <!-- PROFILE --> */}
-
+        
         <ProfileInformation />
-
 
 
         {/* <!-- CERTIFICATION AND AWARDS --> */}
 
-        <div className="dashboard-dash-profile certificate" id="certificate">
+        <div className="dashboard-dash-profile dashboard-dash-certificate" id="certificate" >
           <div className="dashboard-dash-profile-information">
             <div className="dashboard-dash-section-heading">
               <div className="dashboard-dash-section-heading_text">
