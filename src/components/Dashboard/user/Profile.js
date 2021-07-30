@@ -34,7 +34,7 @@ const Profile = () => {
         branchOfStudy: "",
         yearOfStudy: 0,
         loading: false,
-        updated: false,
+        // updated: false,
         error: "",
     });
 
@@ -48,7 +48,7 @@ const Profile = () => {
     const {
         name,
         lastName,
-        userID,
+        // userID,
         email,
         phone,
         dob,
@@ -61,7 +61,7 @@ const Profile = () => {
         whatsappPhoneNumber,
         telegramPhoneNumber,
         loading,
-        updated,
+        // updated,
         error,
     } = values;
 
@@ -72,7 +72,10 @@ const Profile = () => {
         getUser(userId, token).then((data) => {
             if (data.error) {
                 setValues({ ...values, error: data.error });
-                console.log(values);
+                alert.show(`${error}`, {
+                    timeout: '3000',
+                    type : 'error'
+                })
             } else {
                 setCompleteUser(data)
                 setValues({
@@ -106,18 +109,28 @@ const Profile = () => {
     }, []);
 
 
+    const loadingMessage = () => {
+        return (
+            loading && (
+                <div className=" text-center my-2">
+                    <div className="spinner-border text-light " role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            )
+        );
+    };
 
 
 
-
-    const errorMessage = () => (
-        <div
-            className="dashboard-dash-alert alert-danger mt-3"
-            style={{ display: error ? "" : "none" }}
-        >
-            <h4>profile updation failed</h4>
-        </div>
-    );
+    // const errorMessage = () => (
+    //     <div
+    //         className="dashboard-dash-alert alert-danger mt-3"
+    //         style={{ display: error ? "" : "none" }}
+    //     >
+    //         <h4>profile updation failed</h4>
+    //     </div>
+    // );
 
     const handleChange = (key) => (event) => {
         return setValues({ ...values, [key]: event.target.value });
@@ -169,6 +182,10 @@ const Profile = () => {
                         error: data.error,
                         loading: false,
                     });
+                    alert.show(`${error}`, {
+                        type: 'error',
+                        timeout :'3000'
+                    })
                 } else {
                     alert.show("Profile Updated ! ", {
                         timeout: '3000',
@@ -185,7 +202,12 @@ const Profile = () => {
                     });
                 }
             })
-            .catch("user not updated");
+            .catch(() => {
+                alert.show("user not updated", {
+                    timeout: '3000',
+                    type :'error'
+                })
+            });
         handleClose();
     };
 
@@ -288,6 +310,7 @@ const Profile = () => {
                             >
                                 <CloseIcon fontSize="large" />
                             </IconButton>
+                            {loadingMessage()}
                             <h1
                                 id="transition-modal-title"
                                 style={{ textAlign: "center" }}
