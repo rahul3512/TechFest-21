@@ -14,7 +14,7 @@ import ScrollToTop from './components/ScrollToTop';
 import Resetpassword from './pages/Resetpassword';
 
 
-import { Navbar, Footer } from './components';
+import { Navbar } from './components';
 import SignIn from './pages/SignIn';
 import PrivateRoute from './auth/helper/privateRoutes'
 import SuperAdminRoutes from './auth/helper/SuperAdminRoutes'
@@ -29,7 +29,7 @@ import AddEvent from './components/Dashboard/superadmin/AddEvent'
 import AddWorkshop from './components/Dashboard/superadmin/AddWorkshop'
 import AddWorkshopSession from './components/Dashboard/superadmin/AddWorkshopSession'
 import UpdateDomain from './components/Dashboard/superadmin/UpdateDomain';
-import AdminDomains from './components/Dashboard/superadmin/AdminDomains';
+import AdminDomains from './components/Dashboard/superadmin/adminDomains';
 import AdminCoordinators from './components/Dashboard/superadmin/AdminCoodinators';
 import UpdateCoordinator from './components/Dashboard/superadmin/UpdateCoordinator';
 import UpdateWorkshop from './components/Dashboard/superadmin/UpdateWorkshop';

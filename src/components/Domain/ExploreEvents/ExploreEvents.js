@@ -99,20 +99,20 @@ export class ExploreEvents extends Component {
                 this.setState({openSnackbar:true,error:err})
             });
         }
-        this.setState({ open: false,openTeamDialog:false,addTeam:false })
+        this.setState({ open: false, openTeamDialog: false, addTeam: false })
     }
     handleClickViewSchedule = () => {
         this.loadWorkshop(this.props.id)
         this.setState({ viewSchedule: true })
     }
     handleClickCloseViewSchedule = () => {
-        this.setState({ viewSchedule: false,openTeamDialog:false,addTeam:false })
+        this.setState({ viewSchedule: false, openTeamDialog: false, addTeam: false })
     }
-    handleClickAddTeam=()=>{
-        this.setState({addTeam:true,positiveAction:'Add Team Member'})
+    handleClickAddTeam = () => {
+        this.setState({ addTeam: true, positiveAction: 'Add Team Member' })
     }
-    _handleTextFieldChange=(e)=>{
-        this.setState({memberId:e.target.value})
+    _handleTextFieldChange = (e) => {
+        this.setState({ memberId: e.target.value })
     }
     closeSnackbar=()=>{
         this.setState({openSnackbar:false})
@@ -160,13 +160,13 @@ export class ExploreEvents extends Component {
 
     }
 
-    componentDidMount=()=>{
+    componentDidMount = () => {
         this.getUserData();
     }
 
-    registerAsTeam=()=>{
+    registerAsTeam = () => {
         console.log('register as team')
-        this.setState({openTeamDialog:true,positiveAction:'Confirm'})
+        this.setState({ openTeamDialog: true, positiveAction: 'Confirm' })
     }
 
     registerEvent = (eventId) => {
@@ -176,99 +176,100 @@ export class ExploreEvents extends Component {
             console.log(status)
             this.setState({ popUpMessage: 'You are not Logged in. Please Log in first', positiveAction: 'Log in' })
         } else {
-            console.log( this.state.user)
+            console.log(this.state.user)
             console.log(this.props.content.participantCountMax)
             {
-                this.props.content.participantCountMax>1?this.registerAsTeam()
-                :
-            
-            registerInEvent(this.state.user._id, this.state.token, eventId).then(
-                data => {
-                    console.log(data)
-                    if (data.error) {
-                        console.log(data.error)
-                        this.setState({ popUpMessage: data.error, positiveAction: 'OK' })
-                    } else {
-                        console.log("registered success")
-                        this.setState({ isEventRegistered: true, popUpMessage: 'Registration Successful', positiveAction: 'OK' })
-                    }
-                }
-            ).catch(err => {
-                console.log(err)
-                this.setState({ isEventRegistered: false, popUpMessage: err, positiveAction: 'OK' })
-            })}
+                this.props.content.participantCountMax > 1 ? this.registerAsTeam()
+                    :
+
+                    registerInEvent(this.state.user._id, this.state.token, eventId).then(
+                        data => {
+                            console.log(data)
+                            if (data.error) {
+                                console.log(data.error)
+                                this.setState({ popUpMessage: data.error, positiveAction: 'OK' })
+                            } else {
+                                console.log("registered success")
+                                this.setState({ isEventRegistered: true, popUpMessage: 'Registration Successful', positiveAction: 'OK' })
+                            }
+                        }
+                    ).catch(err => {
+                        console.log(err)
+                        this.setState({ isEventRegistered: false, popUpMessage: err, positiveAction: 'OK' })
+                    })
+            }
         }
     }
     render() {
         return (
             <div id={this.props.id} className={classes.eventContainer}>
-                <hr className={classes.divider}/>
+                <hr className={classes.divider} />
                 <main className={classes.eventContent}>
                     <div className={classes.eventImage}>
-                        <img src={`${BASE_API}${this.props.content.photo}`} alt='' className={classes.image}/>
+                        <img src={`${BASE_API}${this.props.content.photo}`} alt='' className={classes.image} />
                         {
-                            this.props.heading === 'Precula'?
-                            <div className={classes.eventDeadline}>
-                                <Calendar color='white' size={16}/>
-                                <p>{`Register Before : `} </p>
-                                <Clock color='white' size={16}/>
-                                <p>{`Time : `}</p>
-                            </div>
-                            :
-                            <div className={classes.eventDeadline}>
-                                <Calendar color='white' size={16}/>
-                                <p>{`Register Before : ${this.props.content.regEndDate.split('T')[0]}`} </p>
-                                <Clock color='white' size={16}/>
-                                <p>{`${this.props.content.regEndDate.split('T')[1].split('.')[0]}`}</p>
-                            </div>
+                            this.props.heading === 'Precula' ?
+                                <div className={classes.eventDeadline}>
+                                    <Calendar color='white' size={16} />
+                                    <p>{`Register Before : `} </p>
+                                    <Clock color='white' size={16} />
+                                    <p>{`Time : `}</p>
+                                </div>
+                                :
+                                <div className={classes.eventDeadline}>
+                                    <Calendar color='white' size={16} />
+                                    <p>{`Register Before : ${this.props.content.regEndDate.split('T')[0]}`} </p>
+                                    <Clock color='white' size={16} />
+                                    <p>{`${this.props.content.regEndDate.split('T')[1].split('.')[0]}`}</p>
+                                </div>
                         }
                     </div>
                     {/* SECTION 2 */}
                     {
-                        this.props.heading === 'Precula'?
-                        <div className={classes.eventInfo}>
-                            <section className={classes.eventInfoData}>
-                                <h1>{this.props.content.workshoptName}</h1>
-                                <p>{this.props.content.workshopDescription}</p>
-                                <strong>Start Date : DD/MM/YYYY     </strong><br/>
-                                <strong>End Date : DD/MM/YYYY   </strong>
-                            </section>
-                            {
-                                this.state.isWorkshopRegistered?
-                                    <div className={classes.buttonContainer}>
-                                        <button disabled='true' className={classes.btnRegister}>Registered!</button>
-                                        <button className={classes.btnStatement} onClick={()=>this.handleClickViewSchedule()}>View Schedule</button>
-                                    </div>
-                                    :
-                                    <div className={classes.buttonContainer}>
-                                        <button className={classes.btnRegister} onClick={()=>{this.registerWorkshop(this.props.content._id)}}>Register Now</button>
-                                    </div>
-                            }
-                        </div>
-                        :
-                        <div className={classes.eventInfo}>
-                            <section className={classes.eventInfoData}>
-                                <h1>{this.props.content.eventName}</h1>
-                                <p>{this.props.content.eventDescription}</p>
-                            </section>
-                            {
-                                this.state.isEventRegistered?
-                                    <div className={classes.buttonContainer}>
-                                        <button disabled='true' className={classes.btnRegister} style={{backgroundColor:'rgba(255,255,255,0.5)'}}>Registered!</button>
-                                        <button className={classes.btnStatement} >Problem Statement</button>
-                                    </div>
-                                    :
-                                    <div className={classes.buttonContainer}>
-                                        <button className={classes.btnRegister} onClick={()=>{this.registerEvent(this.props.content._id)}}>Register Now</button>
-                                        <button className={classes.btnStatement} >Problem Statement</button>
-                                    </div>
-                            }
-                        </div>
+                        this.props.heading === 'Precula' ?
+                            <div className={classes.eventInfo}>
+                                <section className={classes.eventInfoData}>
+                                    <h1>{this.props.content.workshoptName}</h1>
+                                    <p>{this.props.content.workshopDescription}</p>
+                                    <strong>Start Date : DD/MM/YYYY     </strong><br />
+                                    <strong>End Date : DD/MM/YYYY   </strong>
+                                </section>
+                                {
+                                    this.state.isWorkshopRegistered ?
+                                        <div className={classes.buttonContainer}>
+                                            <button disabled='true' className={classes.btnRegister}>Registered!</button>
+                                            <button className={classes.btnStatement} onClick={() => this.handleClickViewSchedule()}>View Schedule</button>
+                                        </div>
+                                        :
+                                        <div className={classes.buttonContainer}>
+                                            <button className={classes.btnRegister} onClick={() => { this.registerWorkshop(this.props.content._id) }}>Register Now</button>
+                                        </div>
+                                }
+                            </div>
+                            :
+                            <div className={classes.eventInfo}>
+                                <section className={classes.eventInfoData}>
+                                    <h1>{this.props.content.eventName}</h1>
+                                    <p>{this.props.content.eventDescription}</p>
+                                </section>
+                                {
+                                    this.state.isEventRegistered ?
+                                        <div className={classes.buttonContainer}>
+                                            <button disabled='true' className={classes.btnRegister} style={{ backgroundColor: 'rgba(255,255,255,0.5)' }}>Registered!</button>
+                                            <button className={classes.btnStatement} >Problem Statement</button>
+                                        </div>
+                                        :
+                                        <div className={classes.buttonContainer}>
+                                            <button className={classes.btnRegister} onClick={() => { this.registerEvent(this.props.content._id) }}>Register Now</button>
+                                            <button className={classes.btnStatement} >Problem Statement</button>
+                                        </div>
+                                }
+                            </div>
                     }
-                    
+
                     <div className={classes.eventPrize}>
                         <section className={classes.eventAmount}>
-                            {this.props.heading === 'Precula'? 
+                            {this.props.heading === 'Precula' ?
                                 <div className={classes.prizeMoney}>
                                     <p>Registration Fees</p>
                                     <p>Free</p>
@@ -276,28 +277,28 @@ export class ExploreEvents extends Component {
                                 :
                                 <div className={classes.prizeMoney}>
                                     <p>Prizes Worth</p>
-                                    <p>{`Rs : ${this.props.content.prize[0].split(',').map(i=>Number(i)).reduce((a,b)=>a+b,0)}` }</p>
+                                    <p>{`Rs : ${this.props.content.prize[0].split(',').map(i => Number(i)).reduce((a, b) => a + b, 0)}`}</p>
                                 </div>
                             }
                         </section>
                         <section className={classes.eventCoordinators}>
                             {
-                                this.props.heading === 'Precula'?
-                                null
-                                :
-                                this.props.content.eventCoordinator.map((item,pos)=>{
-                                    return(
-                                        <section key={pos} className={classes.coordinatorData}>
-                                            <div className={classes.coordinatorDetails}>
-                                                <p>{item.coordinatorName}</p>
-                                                <p>{`+91 ${item.coordinatorPhone}`}</p>
-                                            </div>
-                                            
-                                            <img src={`${BASE_API}${item.photo}`} alt='' className={classes.coordinatorImage}/>
-                                        </section>
-                                    )
-                                })
-                            } 
+                                this.props.heading === 'Precula' ?
+                                    null
+                                    :
+                                    this.props.content.eventCoordinator.map((item, pos) => {
+                                        return (
+                                            <section key={pos} className={classes.coordinatorData}>
+                                                <div className={classes.coordinatorDetails}>
+                                                    <p>{item.coordinatorName}</p>
+                                                    <p>{`+91 ${item.coordinatorPhone}`}</p>
+                                                </div>
+
+                                                <img src={`${BASE_API}${item.photo}`} alt='' className={classes.coordinatorImage} />
+                                            </section>
+                                        )
+                                    })
+                            }
                         </section>
                     </div>
                 </main>
@@ -309,64 +310,64 @@ export class ExploreEvents extends Component {
                     aria-labelledby="alert-dialog-slide-title"
                     aria-describedby="alert-dialog-slide-description"
                 >
-                    
-                    {
-                        this.state.openTeamDialog?
-                            this.state.addTeam?
-                            <DialogContent>
-                                <DialogTitle id="alert-dialog-slide-title">{"Attention!!"}</DialogTitle>    
-                                <TextField
-                                    autoFocus
-                                    margin="dense"
-                                    id="userEmail"
-                                    label="Enter email of User"
-                                    type="email"
-                                    fullWidth
-                                    onChange={this._handleTextFieldChange}
-                                />
-                            </DialogContent>:<DialogContent>
-                            <div className={classes.scheduleName}>
-                                <div>
-                                    <DialogContentText>
-                                        <strong>Domain Name</strong><br/>
-                                        <sub>{this.props.heading}</sub>
-                                    </DialogContentText>
 
-                                </div>
-                                <div>
-                                    <DialogContentText>
-                                        <strong>Competition Name</strong><br/>
-                                        <sub>{this.props.content.eventName}</sub>
+                    {
+                        this.state.openTeamDialog ?
+                            this.state.addTeam ?
+                                <DialogContent>
+                                    <DialogTitle id="alert-dialog-slide-title">{"Attention!!"}</DialogTitle>
+                                    <TextField
+                                        autoFocus
+                                        margin="dense"
+                                        id="userEmail"
+                                        label="Enter email of User"
+                                        type="email"
+                                        fullWidth
+                                        onChange={this._handleTextFieldChange}
+                                    />
+                                </DialogContent> : <DialogContent>
+                                    <div className={classes.scheduleName}>
+                                        <div>
+                                            <DialogContentText>
+                                                <strong>Domain Name</strong><br />
+                                                <sub>{this.props.heading}</sub>
+                                            </DialogContentText>
+
+                                        </div>
+                                        <div>
+                                            <DialogContentText>
+                                                <strong>Competition Name</strong><br />
+                                                <sub>{this.props.content.eventName}</sub>
+                                            </DialogContentText>
+                                        </div>
+                                    </div>
+                                    <div className={classes.scheduleHeading}>
+                                        <strong>My Team</strong>
+                                        <hr />
+                                        <PersonPlus size={24} cursor='pointer' onClick={() => { this.handleClickAddTeam() }} />
+                                    </div>
+                                    <div>
+                                        <DialogContentText className={classes.sessions}>
+
+                                            <strong>{this.state.completeUser.name}</strong>
+                                            <strong>{this.state.completeUser.userId}</strong>
+                                            {console.log(this.state.completeUser)}
+
+
+                                        </DialogContentText>
+                                    </div>
+                                </DialogContent>
+
+                            :
+                            <main>
+                                <DialogTitle id="alert-dialog-slide-title">{"Attention!!"}</DialogTitle>
+                                <DialogContent>
+                                    <DialogContentText id="alert-dialog-slide-description">
+                                        {this.state.popUpMessage}
                                     </DialogContentText>
-                                </div>
-                            </div>
-                            <div className={classes.scheduleHeading}>
-                                <strong>My Team</strong>
-                                <hr/>
-                                <PersonPlus size={24} cursor='pointer' onClick={()=>{this.handleClickAddTeam()}}/>
-                            </div>    
-                            <div>
-                                <DialogContentText className={classes.sessions}>
-                                    
-                                        <strong>{this.state.completeUser.name}</strong>
-                                        <strong>{this.state.completeUser.userId}</strong>
-                                        {console.log(this.state.completeUser)}
-                                        
-        
-                                </DialogContentText>
-                            </div>
-                        </DialogContent>
-                        
-                        :
-                        <main>
-                            <DialogTitle id="alert-dialog-slide-title">{"Attention!!"}</DialogTitle>
-                            <DialogContent>
-                                <DialogContentText id="alert-dialog-slide-description">
-                                    {this.state.popUpMessage}
-                                </DialogContentText>
-                            </DialogContent>
-                        </main>
-                        
+                                </DialogContent>
+                            </main>
+
                     }
                     <DialogActions>
                         <Button onClick={this.handleClose} color="primary">
@@ -392,25 +393,25 @@ export class ExploreEvents extends Component {
                     aria-labelledby="alert-dialog-slide-title"
                     aria-describedby="alert-dialog-slide-description"
                 >
-                        <DialogContent>
+                    <DialogContent>
                         <div className={classes.scheduleName}>
                             <div>
                                 <DialogContentText>
-                                    <strong>Workshop Name</strong><br/>
+                                    <strong>Workshop Name</strong><br />
                                     <sub>{this.props.content.workshopName}</sub>
                                 </DialogContentText>
 
                             </div>
                             <div>
                                 <DialogContentText>
-                                    <strong>Tenure</strong><br/>
+                                    <strong>Tenure</strong><br />
                                     <sub>15/07 to 20/07 (5 DAYS)</sub>
                                 </DialogContentText>
                             </div>
                         </div>
                         <div className={classes.scheduleHeading}>
                             <strong>Schedule</strong>
-                            <hr/>
+                            <hr />
                         </div>
                         <div>
                             {
@@ -420,9 +421,9 @@ export class ExploreEvents extends Component {
                                             <div className={classes.sessions}>
                                                 <strong>{item.workshopSessionName}</strong>
                                                 <sub>{item.dateTime.split('T')[0]}</sub>
-                                                
-                                                
-                                            </div>        
+
+
+                                            </div>
                                         </DialogContentText>
 
                                     )
@@ -432,8 +433,8 @@ export class ExploreEvents extends Component {
                             <strong>Note:Attendance on all days is mandatory for Successful completion.</strong>
                         </div>
                     </DialogContent>
-                    
-                    
+
+
                     <DialogActions>
                         <Button onClick={this.handleClickCloseViewSchedule} color="primary">
                             Join WhatsApp Group

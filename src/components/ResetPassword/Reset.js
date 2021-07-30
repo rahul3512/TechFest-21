@@ -3,8 +3,8 @@ import bglogo from "../../assets/images/LSBGlogo.png";
 import { API } from "../../backend";
 import Footer from "../HomePage/Footer/Footer";
 import "../RegisterPage/LoginSignUp.css";
-import OtpInput from "react-otp-input";
-import { Link } from "react-router-dom";
+// import OtpInput from "react-otp-input";
+// import { Link } from "react-router-dom";
 
 const Reset = () => {
   const [otpToggle, setOtpToggle] = useState(false);
@@ -91,7 +91,7 @@ const Reset = () => {
           setValues({ ...values, loading: true });
           return response.json();
         } else {
-            // console.log(response);
+          // console.log(response);
           setValues({ ...values, error: true });
           return Promise.error("OTP not matched ");
         }
