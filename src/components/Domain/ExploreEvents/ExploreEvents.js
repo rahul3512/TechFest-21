@@ -47,35 +47,38 @@ export class ExploreEvents extends Component {
 
     getUserData = () => {
         if (this.state.completeUser === null) {
-            getUser(this.state.user._id, this.state.token).then((data) => {
-                console.log(`GET USER DATA:`);
-                console.log(data)
-                if (data.error) {
-                    // setValues({ ...values, error: data.error });
-                    console.log(data.error);
-                } else {
-                    this.setState({ completeUser: data })
-                    if (data.workshopsEnrolled.length > 0) {
-                        data.workshopsEnrolled.map(item => {
-                            if (this.props.id === item._id) {
-                                this.setState({ isWorkshopRegistered: true })
-                            }
-                        })
-                        // this.setState({isWorkshopRegistered:true})
+            if(this.state.user){
+                getUser(this.state.user._id, this.state.token).then((data) => {
+                    console.log(`GET USER DATA:`);
+                    console.log(data)
+                    if (data.error) {
+                        // setValues({ ...values, error: data.error });
+                        this.setState({openSnackbar:true,error:data.error})
+                    } else {
+                        this.setState({ completeUser: data })
+                        if (data.workshopsEnrolled.length > 0) {
+                            data.workshopsEnrolled.map(item => {
+                                if (this.props.id === item._id) {
+                                    this.setState({ isWorkshopRegistered: true })
+                                }
+                            })
+                            // this.setState({isWorkshopRegistered:true})
+                        }
+                        if (data.eventRegIn.length > 0) {
+                            data.eventRegIn.map(item => {
+                                console.log(item)
+                                if (this.props.id === item._id) {
+                                    this.setState({ isEventRegistered: true })
+                                }
+                            })
+                            // this.setState({isWorkshopRegistered:true})
+                        }
+                        // setCompleteUser(data)
+    
                     }
-                    if (data.eventRegIn.length > 0) {
-                        data.eventRegIn.map(item => {
-                            console.log(item)
-                            if (this.props.id === item._id) {
-                                this.setState({ isEventRegistered: true })
-                            }
-                        })
-                        // this.setState({isWorkshopRegistered:true})
-                    }
-                    // setCompleteUser(data)
-
-                }
-            });
+                });
+            }
+            
         }
 
     }
@@ -123,7 +126,7 @@ export class ExploreEvents extends Component {
     loadWorkshop = (workshopId) => {
         getWorkshop(workshopId).then(data => {
             if (data.error) {
-                alert(data.error);
+                this.setState({error:data.error,openSnackbar:true});
             } else {
                 this.setState({ currentWorkshop: data })
                 console.log(data)
@@ -133,6 +136,7 @@ export class ExploreEvents extends Component {
 
 
     registerWorkshop = (workshopId) => {
+
         this.handleClickOpen();
         if (!this.state.user) {
             var status = !this.state.user
@@ -161,7 +165,7 @@ export class ExploreEvents extends Component {
     }
 
     componentDidMount = () => {
-        this.getUserData();
+        this.getUserData()
     }
 
     registerAsTeam = () => {
@@ -174,7 +178,7 @@ export class ExploreEvents extends Component {
         if (!this.state.user) {
             var status = !this.state.user
             console.log(status)
-            this.setState({ popUpMessage: 'You are not Logged in. Please Log in first', positiveAction: 'Log in' })
+            this.setState({ popUpMessage: 'You are not Logged in. Please Log in first', positiveAction: 'LogIn' })
         } else {
             console.log(this.state.user)
             console.log(this.props.content.participantCountMax)
@@ -237,7 +241,7 @@ export class ExploreEvents extends Component {
                                 {
                                     this.state.isWorkshopRegistered ?
                                         <div className={classes.buttonContainer}>
-                                            <button disabled='true' className={classes.btnRegister}>Registered!</button>
+                                            <button disabled='true' className={classes.btnRegister} style={{backgroundColor: 'rgba(255,255,255,0.5)'}}>Registered!</button>
                                             <button className={classes.btnStatement} onClick={() => this.handleClickViewSchedule()}>View Schedule</button>
                                         </div>
                                         :
@@ -375,7 +379,7 @@ export class ExploreEvents extends Component {
                         </Button>
                         <Button onClick={this.handleClose} color="primary">
                             {
-                                this.state.positiveAction === 'Log in' ?
+                                this.state.positiveAction === 'LogIn' ?
                                     <Link to="/signin">{this.state.positiveAction}</Link>
                                     :
                                     this.state.positiveAction

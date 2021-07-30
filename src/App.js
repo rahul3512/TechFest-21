@@ -24,7 +24,7 @@ import { Provider as AlertProvider } from 'react-alert';
 import AlertTemplate from 'react-alert-template-basic';
 import SuperAdminDashboard from './components/Dashboard/superadmin/SuperAdminDashboard'
 import Coordinator from './components/Dashboard/superadmin/Coordinator'
-import AddDomain from './components/Dashboard/superadmin/addDomain'
+import AddDomain from './components/Dashboard/superadmin/AddDomain'
 import AddEvent from './components/Dashboard/superadmin/AddEvent'
 import AddWorkshop from './components/Dashboard/superadmin/AddWorkshop'
 import AddWorkshopSession from './components/Dashboard/superadmin/AddWorkshopSession'
