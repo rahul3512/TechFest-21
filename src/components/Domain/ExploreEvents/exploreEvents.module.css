@@ -209,7 +209,7 @@
     .eventInfo{
         width: auto;
         max-height: 45%;
-        height: calc(fit-content+'10%');
+        /* height: calc(fit-content+10%); */
     }
     .eventInfoData{
         max-height: 85%;
