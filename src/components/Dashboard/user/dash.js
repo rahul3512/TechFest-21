@@ -171,7 +171,8 @@ function Dash() {
       )
     );
   };
-  const { oldPassword, newPassword, confirmPassword, error, loading, success } =
+ 
+  const { oldPassword, newPassword, confirmPassword, loading , error , success } =
     variables;
 
   const handleChange = (key) => (event) => {
@@ -184,6 +185,10 @@ function Dash() {
     setVariables({ ...variables, error: false, loading: true });
     if (variables.newPassword !== variables.confirmPassword) {
       setVariables({ ...variables, error: true, loading: false });
+      alert.show(`PASSWORD IS INCORRECT`, {
+        type: 'error',
+        timeout: '3000'
+      })
     } else {
       fetch(`${API}/change-password`, {
         method: "POST",
@@ -202,12 +207,12 @@ function Dash() {
             alert.show('Password changed !', {
               type: 'success',
               timeout: '3000'
-            })
+            });
             setShow(false);
             // return response.json();
           } else {
-            setVariables({ ...variables, error: true , loading : false });
-            alert.show(`${response.error}`, {
+            setVariables({ ...variables, error: true, loading: false });
+            alert.show(`PASSWORD IS INCORRECT`, {
               type: 'error',
               timeout: '3000'
             })
@@ -217,6 +222,10 @@ function Dash() {
 
         .catch((e) => {
           setVariables({ ...variables, loading: false, success: false, error: true });
+          alert.show(`PASSWORD IS INCORRECT`, {
+            type: 'error',
+            timeout: '3000'
+          })
 
         });
     }
@@ -230,9 +239,6 @@ function Dash() {
     const classes = useStyles();
     return (
       <div>
-        {/* {loadingMessage()}
-        {successMessage()}
-        {errorMessage()} */}
         <Modal
           aria-labelledby="transition-modal-title"
           aria-describedby="transition-modal-description"
@@ -258,6 +264,7 @@ function Dash() {
               >
                 <CloseIcon fontSize="large" />
               </IconButton>
+              
               {loadingMessage()}
               <h3
                 id="transition-modal-title"

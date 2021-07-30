@@ -34,7 +34,7 @@ const Profile = () => {
         branchOfStudy: "",
         yearOfStudy: 0,
         loading: false,
-        updated: false,
+        // updated: false,
         error: "",
     });
 
@@ -48,7 +48,7 @@ const Profile = () => {
     const {
         name,
         lastName,
-        userID,
+        // userID,
         email,
         phone,
         dob,
@@ -61,7 +61,7 @@ const Profile = () => {
         whatsappPhoneNumber,
         telegramPhoneNumber,
         loading,
-        updated,
+        // updated,
         error,
     } = values;
 
@@ -72,7 +72,10 @@ const Profile = () => {
         getUser(userId, token).then((data) => {
             if (data.error) {
                 setValues({ ...values, error: data.error });
-                console.log(values);
+                alert.show(`${error}`, {
+                    timeout: '3000',
+                    type : 'error'
+                })
             } else {
                 setCompleteUser(data)
                 setValues({
@@ -120,14 +123,14 @@ const Profile = () => {
 
 
 
-    const errorMessage = () => (
-        <div
-            className="dashboard-dash-alert alert-danger mt-3"
-            style={{ display: error ? "" : "none" }}
-        >
-            <h4>profile updation failed</h4>
-        </div>
-    );
+    // const errorMessage = () => (
+    //     <div
+    //         className="dashboard-dash-alert alert-danger mt-3"
+    //         style={{ display: error ? "" : "none" }}
+    //     >
+    //         <h4>profile updation failed</h4>
+    //     </div>
+    // );
 
     const handleChange = (key) => (event) => {
         return setValues({ ...values, [key]: event.target.value });
