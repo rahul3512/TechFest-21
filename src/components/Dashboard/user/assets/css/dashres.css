@@ -1,5 +1,5 @@
 /* Importing Fonts */
-@import url("https://fonts.googleapis.dashboard-dash-com/css2?family=Exo:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+/* @import url("https://fonts.googleapis.dashboard-dash-com/css2?family=Exo:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"); */
 
 /* CSS Reset */
 /* *{
@@ -7,7 +7,7 @@
 } */
 
 :root {
-  --length: 0.625;
+  --length: 0.600;
 }
 
 
@@ -648,7 +648,7 @@ Reusable Elements
 
 @media only screen and (max-width: 1000px) {
   .dashboard-dash-leftbar {
-    width: calc(var( --length ) *30rem);
+    width: calc(var( --length ) *59%);
   }
   .dashboard-dash-dlink {
     padding-left: calc(var( --length ) *2rem);
@@ -662,7 +662,7 @@ Reusable Elements
 
 }
 
-@media only screen and (max-width: 900px) {
+@media only screen and (max-width: 950px) {
   .dashboard-dash-leftbar {
     display: none;
   }
@@ -677,6 +677,7 @@ Reusable Elements
    .dashboard-dash-main_left-bar_bg {
       display : none;
   }
+  
 }
 
 @media only screen and (max-width: 700px) {

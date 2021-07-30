@@ -160,6 +160,17 @@ function Dash() {
     loading: false,
     success: false,
   });
+  const loadingMessage = () => {
+    return (
+      loading && (
+        <div className=" text-center my-2">
+          <div className="spinner-border text-light " role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      )
+    );
+  };
   const { oldPassword, newPassword, confirmPassword, error, loading, success } =
     variables;
 
@@ -195,7 +206,7 @@ function Dash() {
             setShow(false);
             // return response.json();
           } else {
-            setVariables({ ...variables, error: true });
+            setVariables({ ...variables, error: true , loading : false });
             alert.show(`${response.error}`, {
               type: 'error',
               timeout: '3000'
@@ -247,6 +258,7 @@ function Dash() {
               >
                 <CloseIcon fontSize="large" />
               </IconButton>
+              {loadingMessage()}
               <h3
                 id="transition-modal-title"
                 style={{ textAlign: "center" }}
@@ -379,7 +391,7 @@ function Dash() {
           </ScrollLink>
 
           {/* password change link */}
-          <Link className="dashboard-dash-dlink dashboard-dash-cursor" onClick={handleShow}>
+          <Link className="dashboard-dash-dlink dashboard-dash-cursor" onClick={handleShow} to='#'>
             <img src={Password} alt="password change" style={{ fill: 'white' }} />
             Change Password
           </Link>
@@ -446,7 +458,7 @@ function Dash() {
               {values?.workshopsEnrolled.length > 0 ?
                 <div className="dashboard-dash-event-card_events-list">
                   {values?.workshopsEnrolled.map((row) => (
-                    <div className="dashboard-dash-event">
+                    <div className="dashboard-dash-event" key = {row._id}>
                       <span className="dashboard-dash-event-name">{row.workshopName}</span>
                       <Link to={{ pathname: `/domain`, state: { name: "workshops", id: row._id } }} id={row._id} message={'redirected from dashboard'} className='btn  btn-outline-primary btn-sm'>View detail</Link>
                     </div>
@@ -543,16 +555,16 @@ function Dash() {
           </div>
         </div>
 
-        <div class="footer">
-          <div class="footer-copyright-text">
+        <div className="footer">
+          <div className="footer-copyright-text">
             Copyright © 2021. All Rights Reserved.
           </div>
-          <div class="footer-cta">
+          <div className="footer-cta">
             <Link to="#" className="dashboard-dash-Link-a dashboard-dash-cursor">
               Join our Telegram Commuity
             </Link>
           </div>
-          <div class="footer-sm">
+          <div className="footer-sm">
             <Link to="#" className="dashboard-dash-Link-a">
               <img src={Facebook} alt="facebook" />
             </Link>
@@ -562,9 +574,12 @@ function Dash() {
             <Link to="#" className="dashboard-dash-Link-a">
               <img src={Linkedin} alt="linkedin" />
             </Link>
-            <Link to="#" className="dashboard-dash-Link-a">
+            <a href={
+              '//www.youtube.com/channel/UCsKsymTY_4BYR-wytLjex7A?view_as=subscriber'
+            } className="dashboard-dash-Link-a"
+            target = '_blank'>
               <img src={Youtube} alt="youtube" />
-            </Link>
+            </a>
           </div>
         </div>
 

@@ -106,7 +106,17 @@ const Profile = () => {
     }, []);
 
 
-
+    const loadingMessage = () => {
+        return (
+            loading && (
+                <div className=" text-center my-2">
+                    <div className="spinner-border text-light " role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            )
+        );
+    };
 
 
 
@@ -169,6 +179,10 @@ const Profile = () => {
                         error: data.error,
                         loading: false,
                     });
+                    alert.show(`${error}`, {
+                        type: 'error',
+                        timeout :'3000'
+                    })
                 } else {
                     alert.show("Profile Updated ! ", {
                         timeout: '3000',
@@ -185,7 +199,12 @@ const Profile = () => {
                     });
                 }
             })
-            .catch("user not updated");
+            .catch(() => {
+                alert.show("user not updated", {
+                    timeout: '3000',
+                    type :'error'
+                })
+            });
         handleClose();
     };
 
@@ -288,6 +307,7 @@ const Profile = () => {
                             >
                                 <CloseIcon fontSize="large" />
                             </IconButton>
+                            {loadingMessage()}
                             <h1
                                 id="transition-modal-title"
                                 style={{ textAlign: "center" }}
