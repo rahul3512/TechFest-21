@@ -1,11 +1,13 @@
 import React from "react";
+import { FaWhatsapp } from "react-icons/fa";
 
 // import { Link } from "react-router-dom";
 
 const SocialMediaIcons = () => {
   return (
     <div className="social-icons">
-      <a href="https://m.facebook.com/techfestsliet/" target="_blank" rel="noreferrer">
+      < FaWhatsapp />
+      {/* <a href="https://m.facebook.com/techfestsliet/" target="_blank" rel="noreferrer">
         <i className="fab fa-facebook"></i>
       </a>
       <a href="https://instagram.com/techfestsliet_" target="_blank" rel="noreferrer">
@@ -19,7 +21,7 @@ const SocialMediaIcons = () => {
       </a> */}
       <a href="https://twitter.com/techfestsliet" target="_blank" rel="noreferrer">
         <i className="fab fa-twitter"></i>
-      </a>
+      </a> */}
     </div>
   );
 };
