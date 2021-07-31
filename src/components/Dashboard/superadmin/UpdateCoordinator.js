@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { isAuthenticated } from '../../../auth/helper';
 import Base from '../Base';
 import { getCoordinator, updateCoordinator } from './helper/coordinatorApiCalls';
@@ -30,7 +30,9 @@ const UpdateCoordinator = ({ match }) => {
         coordinatorPhone,
         coordinatorEmail,
         coordinatorDesignation,
-        coordinatorType, photo, loading, error, updatedCoordinator, formData
+        coordinatorType,
+        // photo, loading,
+        error, updatedCoordinator, formData
     } = values;
 
     const preload = (coordinatorId) => {

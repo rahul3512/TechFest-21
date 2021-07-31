@@ -43,7 +43,7 @@ const Profile = () => {
     const [whatsappPhoneNumberCheck, setWhatsappPhoneNumberCheck] =
         useState(false);
 
-    const [completeUser, setCompleteUser] = useState(null)
+    // const [completeUser, setCompleteUser] = useState(null)
 
     const {
         name,
@@ -77,7 +77,7 @@ const Profile = () => {
                     type : 'error'
                 })
             } else {
-                setCompleteUser(data)
+                // setCompleteUser(data)
                 setValues({
                     ...values,
                     name: data?.name ? data?.name : "",
@@ -269,8 +269,8 @@ const Profile = () => {
             letterSpacing: "0.06rem",
         },
         inputLabel: {
-            color: "#ffffff80",
-            fontSize: "0.875rem",
+            color: "white",
+            fontSize: "0.975rem",
         },
         right: {
 
@@ -350,7 +350,7 @@ const Profile = () => {
                             <TextField
                                 className={classes.fontstyle}
                                 type="email"
-                                label="email"
+                                label="Email"
                                 value={email}
                                 variant="outlined"
 
@@ -378,7 +378,7 @@ const Profile = () => {
                             <TextField
                                 className={classes.fontstyle}
                                 type="tel"
-                                label="whatsapp Phone no."
+                                label="Whatsapp Phone no."
                                 value={whatsappPhoneNumber}
                                 variant="outlined"
                                 InputLabelProps={{
@@ -392,7 +392,7 @@ const Profile = () => {
                             <FormControlLabel
                                 control={
                                     <Checkbox
-                                        checked={phone == whatsappPhoneNumber}
+                                        checked={phone === whatsappPhoneNumber}
                                         onChange={handleCheck("whatsappPhoneNumber")}
                                         name="checkedB"
                                         color="primary"
@@ -408,7 +408,7 @@ const Profile = () => {
                             <TextField
                                 className={classes.fontstyle}
                                 type="tel"
-                                label="telegram Phone no."
+                                label="Telegram Phone no."
                                 value={telegramPhoneNumber}
                                 variant="outlined"
                                 InputLabelProps={{
@@ -422,7 +422,7 @@ const Profile = () => {
                             <FormControlLabel
                                 control={
                                     <Checkbox
-                                        checked={phone == telegramPhoneNumber}
+                                        checked={phone === telegramPhoneNumber}
                                         onChange={handleCheck("telegramPhoneNumber")}
                                         name="checkedB"
                                         color="primary"
@@ -435,7 +435,7 @@ const Profile = () => {
                             <TextField
                                 className={classes.fontstyle}
                                 type="text"
-                                label="designation"
+                                label="Designation"
                                 value={designation}
                                 variant="outlined"
                                 InputLabelProps={{
@@ -449,7 +449,7 @@ const Profile = () => {
                             <TextField
                                 className={classes.fontstyle}
                                 type="date"
-                                label="dob"
+                                label="DOB"
                                 value={dob.toString()}
                                 onChange={handleChange("dob")}
                                 variant="outlined"
@@ -506,7 +506,7 @@ const Profile = () => {
                             <TextField
                                 className={classes.fontstyle}
                                 type="text"
-                                label="branch Of Study"
+                                label="Branch Of Study"
                                 value={branchOfStudy}
                                 variant="outlined"
                                 InputLabelProps={{
