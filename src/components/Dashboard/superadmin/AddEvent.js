@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState,  useEffect } from 'react'
 import { isAuthenticated } from '../../../auth/helper';
 import Base from '../Base';
 import { getCoordinators } from './helper/coordinatorApiCalls';
@@ -50,14 +50,12 @@ const Event = () => {
 
         participantCountMin,
         participantCountMax,
-        eventCoordinator,
-
+        // eventCoordinator, prize,
         eventLink,
-        prize,
-
 
         eventDescription,
-        loading, error, createdEvent, formData
+        // loading,
+        error, createdEvent, formData
     } = values;
 
 
@@ -65,7 +63,7 @@ const Event = () => {
         let name = e.target.name;
 
         var value;
-        if (name == "prize1") {
+        if (name === "prize1") {
             // console.log("sdahhfgh")
             let a = prizes
             a[0] = e.target.value
@@ -73,21 +71,21 @@ const Event = () => {
             name = "prize"
             setPrizes(a);
 
-        } else if (name == "prize2") {
+        } else if (name === "prize2") {
             let a = prizes
             a[1] = e.target.value
             value = a;
             name = "prize"
             setPrizes(a);
 
-        } else if (name == "prize3") {
+        } else if (name === "prize3") {
             let a = prizes
             a[2] = e.target.value
             value = a;
             name = "prize"
             setPrizes(a);
 
-        } else if (name == "photo") {
+        } else if (name === "photo") {
             value = e.target.files[0];
         } else if (name === "eventCoordinator1") {
             let a = eventCoordinatorVal

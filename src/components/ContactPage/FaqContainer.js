@@ -16,14 +16,14 @@ const FaqContainer = () => {
         <h4 className="text-white text-center mb-4 mt-3">
           Don't Think Twice
           <br />
-          write us at &nbsp;
+          Contact Us - &nbsp;
           <a
-            href="mailto:support@techfestsliet.com"
+            href="mailto:techfest@sliet.ac.in"
             target="_blank"
             rel="noreferrer"
             className="text-white text-decoration-underline"
           >
-            support@techfestsliet.com
+            techfest@sliet.ac.in
           </a>
         </h4>
         <h4 className="text-white my-3 text-center">Stay Updated Here!</h4>

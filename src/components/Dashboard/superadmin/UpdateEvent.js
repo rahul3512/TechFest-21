@@ -10,7 +10,7 @@ import { getEvent, updateEvent } from './helper/eventApiCalls';
 
 const UpdateEvent = ({ match }) => {
 
-    const ref = React.useRef();
+    const ref = useRef();
     const { user, token } = isAuthenticated();
     const [coordinators, setCoordinators] = useState([])
     const [eventCoordinatorVal, setEventCoordinatorVal] = useState([])
@@ -44,7 +44,7 @@ const UpdateEvent = ({ match }) => {
 
     const {
         eventName,
-        photo,
+        // photo,
         domainRefId,
         eventDate,
 
@@ -52,14 +52,15 @@ const UpdateEvent = ({ match }) => {
 
         participantCountMin,
         participantCountMax,
-        eventCoordinator,
+        // eventCoordinator,
 
         eventLink,
-        prize,
+        // prize,
 
 
         eventDescription,
-        loading, error, updatedEvent, formData
+        // loading,
+        error, updatedEvent, formData
     } = values;
 
 
@@ -67,7 +68,7 @@ const UpdateEvent = ({ match }) => {
         let name = e.target.name;
 
         var value;
-        if (name == "prize1") {
+        if (name === "prize1") {
             // console.log("sdahhfgh")
             let a = prizes
             a[0] = e.target.value
@@ -75,21 +76,21 @@ const UpdateEvent = ({ match }) => {
             name = "prize"
             setPrizes(a);
 
-        } else if (name == "prize2") {
+        } else if (name === "prize2") {
             let a = prizes
             a[1] = e.target.value
             value = a;
             name = "prize"
             setPrizes(a);
 
-        } else if (name == "prize3") {
+        } else if (name === "prize3") {
             let a = prizes
             a[2] = e.target.value
             value = a;
             name = "prize"
             setPrizes(a);
 
-        } else if (name == "photo") {
+        } else if (name === "photo") {
             value = e.target.files[0];
         }
 
@@ -224,12 +225,13 @@ const UpdateEvent = ({ match }) => {
                     <option value="">Select a event coordinator</option>
                     {coordinators &&
                         coordinators.map((coordinator, index) => {
-                            if (coordinator.coordinatorType === "Student")
+                            if (coordinator.coordinatorType === "Student") {
                                 return (
                                     <option key={index} value={coordinator._id}>
                                         {coordinator.coordinatorName}
                                     </option>
                                 );
+                            }
                         })}
                 </select>
                 <label for="eventCoordinator">Event Coordinator2 </label>
@@ -238,12 +240,13 @@ const UpdateEvent = ({ match }) => {
                     <option value="">Select a event coordinator</option>
                     {coordinators &&
                         coordinators.map((coordinator, index) => {
-                            if (coordinator.coordinatorType === "Student")
+                            if (coordinator.coordinatorType === "Student") {
                                 return (
                                     <option key={index} value={coordinator._id}>
                                         {coordinator.coordinatorName}
                                     </option>
                                 );
+                            }
                         })}
                 </select>
 
