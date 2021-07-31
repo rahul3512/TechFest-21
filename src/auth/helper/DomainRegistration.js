@@ -53,12 +53,12 @@ export const registerInEventAsTeam=(emailId,token, eventId)=>{
             Accept:"application/json",
             Authorization:`Bearer ${token}`          
         },
-        body:JSON.stringify({
+        body:{
             
-            "email":emailId,
+            "email":"harsimran.sliet@gmail.com",
             "eventId":eventId
         
-        })
+        }
     }).then(response=>{
         return response.json();
     }).catch(err=>{

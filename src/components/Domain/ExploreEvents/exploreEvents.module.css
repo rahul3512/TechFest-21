@@ -163,6 +163,8 @@
 @media screen and (max-width:780px) {
     .eventContent{
         flex-wrap: wrap;
+        padding-left: 12px;
+        padding-right: 12px;
     }
     .eventImage{
         width: 30%;
@@ -182,11 +184,16 @@
     }
     .eventInfoData{
         height:80%;
+    }
+    .coordinatorData{
+        width: 50%;
     } 
 }
 @media screen and (max-width:480px){
     .eventContainer{
         min-height: 150vh;
+        padding-left: 12px;
+        padding-right: 12px;
     }
     .eventContent{
         flex-direction: column;
@@ -230,17 +237,18 @@
         height: 30%;
     }
     .coordinatorImage{
-        width: 48px;
-        height: 48px;
+        width: 36px;
+        height: 36px;
     }
     .coordinatorData{
-        width: 45%;
+        width: 92%;
+        height: fit-content;
     }
     .eventCoordinators{
         flex-direction: column;
-
+        height: fit-content;
     }
     .coordinatorDetails p{
-        font-size: 10px;
+        font-size: 12px;
     }
 }

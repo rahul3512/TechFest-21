@@ -96,8 +96,15 @@ export class ExploreEvents extends Component {
             let teamMembers=[];
             registerInEventAsTeam(this.state.memberId,this.state.token,this.props.content._id,)
             .then(response=>{
-                teamMembers.add(response.data.id)
-                createTeam(this.state.token,this.teamMembers,this.props.content.eventId,teamMembers.length+1,this.state.completeUser.userId);
+                console.log(response)
+                console.log(this.state.memberId)
+                    if(response.status != 200){
+                        this.setState({openSnackbar:true,error:response.error})
+                    }else{
+
+                    }
+                // teamMembers.add(response.data.id)
+                // createTeam(this.state.token,this.teamMembers,this.props.content.eventId,teamMembers.length+1,this.state.completeUser.userId);
             }).catch(err=>{
                 this.setState({openSnackbar:true,error:err})
             });
@@ -235,6 +242,7 @@ export class ExploreEvents extends Component {
                                 <section className={classes.eventInfoData}>
                                     <h1>{this.props.content.workshoptName}</h1>
                                     <p>{this.props.content.workshopDescription}</p>
+                                    {console.log(this.props.content)}
                                     <strong>Start Date : DD/MM/YYYY     </strong><br />
                                     <strong>End Date : DD/MM/YYYY   </strong>
                                 </section>
@@ -377,10 +385,12 @@ export class ExploreEvents extends Component {
                         <Button onClick={this.handleClose} color="primary">
                             Cancel
                         </Button>
+                        
                         <Button onClick={this.handleClose} color="primary">
                             {
                                 this.state.positiveAction === 'LogIn' ?
-                                    <Link to="/signin">{this.state.positiveAction}</Link>
+                                    <strong><Link to="/signin">{this.state.positiveAction}</Link></strong>
+                                    
                                     :
                                     this.state.positiveAction
                             }
