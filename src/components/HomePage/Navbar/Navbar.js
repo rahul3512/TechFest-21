@@ -29,6 +29,7 @@ import { withRouter } from "react-router-dom";
 import { isAuthenticated, signout } from '../../../auth/helper';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import teclogo from '../../../assets/images/techFESTlogo.png';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 const drawerWidth = 240;
 
@@ -176,16 +177,31 @@ const Nav = props => {
         handleDrawerClose()
         history.push("/contact-us")
       }
-    },
-    {
+    }
+  ];
+
+  // AppBar drawer signout authentication check
+  if (!isAuthenticated()) {
+    itemsList.push({
       text: "Register",
       icon: <PersonAddIcon />,
       onClick: () => {
         handleDrawerClose()
         history.push("/register")
       }
-    },
-  ];
+    })
+  } else {
+    itemsList.push(
+      {
+        text: "Sign out",
+        icon: <ExitToAppIcon />,
+        onClick: () => signout(() => {
+          handleDrawerClose()
+          history.push("/")
+        })
+      }
+    )
+  }
 
   const handleDrawerOpen = () => {
     setOpen(true);

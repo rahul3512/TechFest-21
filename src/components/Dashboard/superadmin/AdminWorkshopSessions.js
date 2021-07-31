@@ -6,12 +6,12 @@ import { getWorkshopSessions } from './helper/workshopSessionApiCalls';
 function AdminWorkshopSessions() {
 
     const [workshopSessions, setWorkshopSessions] = useState([]);
-    const [error, seterror] = useState(false);
+    // const [error, seterror] = useState(false);
 
     const loadAllWorkshopSessions = () => {
         getWorkshopSessions().then(data => {
             if (data.error) {
-                seterror(data.error);
+                // seterror(data.error);
             } else {
                 setWorkshopSessions(data);
             }

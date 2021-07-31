@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState } from 'react'
 import { isAuthenticated } from '../../../auth/helper';
 import Base from '../Base';
 import { createCoordinator } from './helper/coordinatorApiCalls';
@@ -29,7 +29,9 @@ const Coordinator = () => {
         coordinatorPhone,
         coordinatorEmail,
         coordinatorDesignation,
-        coordinatorType, photo, loading, error, createdCoordinator, formData
+        coordinatorType,
+        // photo, loading,
+        error, createdCoordinator, formData
     } = values;
 
 

@@ -123,43 +123,7 @@
     border-radius: 50%;
 }
 
-.scheduleName{
-    width:inherit;
-    height:fit-content;
-    display:flex;
-    justify-content: space-between;
-}
-.scheduleName div{
-    margin-left: 30px;
-    margin-right: 30px;
-}
-.scheduleName div sub{
-    font-family: VBI;
-    color: gray;
-}
-.scheduleName div strong{
-    font-family: EXO;
-    color: black;
-}
-.scheduleHeading{
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-    margin-top: 20px;
-}
-.scheduleHeading hr{
-    width: 70%;
-    border:0.5px solid black;
-}
-.sessions{
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    border-bottom: 0.5px solid black;
-}
-.sessions sub{
-    color: gray;
-}
+
 @media screen and (max-width:780px) {
     .eventContent{
         flex-wrap: wrap;
@@ -216,7 +180,7 @@
     .eventInfo{
         width: auto;
         max-height: 45%;
-        height: calc(fit-content+'10%');
+        /* height: calc(fit-content+10%); */
     }
     .eventInfoData{
         max-height: 85%;

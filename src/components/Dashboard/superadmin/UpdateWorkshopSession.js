@@ -1,14 +1,14 @@
 import moment from 'moment';
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { isAuthenticated } from '../../../auth/helper';
 import Base from '../Base';
-import { getCoordinators } from './helper/coordinatorApiCalls';
+// import { getCoordinators } from './helper/coordinatorApiCalls';
 import { getworkshops } from './helper/workshopApiCalls';
 import { getWorkshopSession, updateWorkshopSession } from './helper/workshopSessionApiCalls';
 
 
 const UpdateWorkshopSession = ({ match }) => {
-
+    // const ref = useRef();
 
     const { user, token } = isAuthenticated();
     const [workshops, setWorkshops] = useState([]);
@@ -35,7 +35,9 @@ const UpdateWorkshopSession = ({ match }) => {
         scheduledLink,
 
 
-        workshopId, loading, error, updatedWorkshopSession
+        workshopId,
+        // loading,
+        error, updatedWorkshopSession
     } = values;
 
 

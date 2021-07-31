@@ -7,7 +7,7 @@ import { getWorkshop, updateWorkshop } from './helper/workshopApiCalls';
 
 
 const UpdateWorkshop = ({ match }) => {
-    const ref = React.useRef();
+    const ref = useRef();
 
 
 
@@ -40,11 +40,14 @@ const UpdateWorkshop = ({ match }) => {
     const {
         workshopName,
         workshopDescription,
-        studentCoordinator,
+        // studentCoordinator,
         hostName,
         hostDescription, startDate,
         endDate,
-        whatsappGroupLink, photo, loading, error, updatedWorkshop, formData
+        whatsappGroupLink,
+        // photo,
+        // loading,
+        error, updatedWorkshop, formData
     } = values;
 
 

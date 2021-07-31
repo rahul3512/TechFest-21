@@ -1,25 +1,16 @@
 import React from "react";
-
-// import { Link } from "react-router-dom";
+import { FaFacebook, FaInstagram, FaLinkedin, FaYoutube, FaTwitter } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const SocialMediaIcons = () => {
   return (
     <div className="social-icons">
-      <a href="https://m.facebook.com/techfestsliet/" target="_blank" rel="noreferrer">
-        <i className="fab fa-facebook"></i>
-      </a>
-      <a href="https://instagram.com/techfestsliet_" target="_blank" rel="noreferrer">
-        <i className="fab fa-instagram"></i>
-      </a>
-      <a href="https://www.linkedin.com/company/techfest-sliet" target="_blank" rel="noreferrer">
-        <i className="fab fa-linkedin"></i>
-      </a>
-      {/* <a href="https://www.linkedin.com/company/techfest-sliet" target="_blank" rel="noreferrer">
-        <i className="fab fa-youtube"></i>
-      </a> */}
-      <a href="https://twitter.com/techfestsliet" target="_blank" rel="noreferrer">
-        <i className="fab fa-twitter"></i>
-      </a>
+      <Link to={{ pathname: "https://www.facebook.com/techfestsliet/" }} className="fab" target="_blank"><FaFacebook /></Link>
+      <Link to={{ pathname: "https://instagram.com/techfestsliet_" }} className="fab" target="_blank"><FaInstagram /></Link>
+      <Link to={{ pathname: "https://www.linkedin.com/company/techfest-sliet" }} className="fab" target="_blank"><FaLinkedin /></Link>
+      <Link to={{ pathname: "https://www.youtube.com/channel/UCTSrKfF90hZq7reWgd2oyZg" }} className="fab" target="_blank"><FaYoutube /></Link>
+      <Link to={{ pathname: "https://twitter.com/techfestsliet" }} className="fab" target="_blank"><FaTwitter /></Link>
+
     </div>
   );
 };

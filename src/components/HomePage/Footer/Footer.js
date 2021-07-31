@@ -28,21 +28,21 @@ function Footer() {
           <FooterSubHeading >
             Copyright © 2021. All Rights Reserved.
           </FooterSubHeading>
-
-          <Button fontBig>Join Our Telegram Community</Button>
-
+          <SocialIconLink href='https://t.me/joinchat/D6puheMtqWI2M2Jl' target='_blank' aria-label='Telegram'>
+            <Button fontBig >Join Our Telegram Community</Button>
+          </SocialIconLink>
 
 
           <SocialIcons>
-            <SocialIconLink href='/' target='_blank' aria-label='Facebook'>
+            <SocialIconLink href='https://www.facebook.com/techfestsliet/' target='_blank' aria-label='Facebook'>
               <FaFacebook />
             </SocialIconLink>
-            <SocialIconLink href='/' target='_blank' aria-label='Instagram'>
+            <SocialIconLink href='https://instagram.com/techfestsliet_' target='_blank' aria-label='Instagram'>
               <FaInstagram />
             </SocialIconLink>
             <SocialIconLink
               href={
-                '//www.youtube.com/channel/UCsKsymTY_4BYR-wytLjex7A?view_as=subscriber'
+                'https://www.youtube.com/channel/UCTSrKfF90hZq7reWgd2oyZg'
               }
               rel='noopener noreferrer'
               target='_blank'
@@ -50,10 +50,10 @@ function Footer() {
             >
               <FaYoutube />
             </SocialIconLink>
-            <SocialIconLink href='/' target='_blank' aria-label='Twitter'>
+            <SocialIconLink href='https://twitter.com/techfestsliet' target='_blank' aria-label='Twitter'>
               <FaTwitter />
             </SocialIconLink>
-            <SocialIconLink href='/' target='_blank' aria-label='LinkedIn'>
+            <SocialIconLink href='https://www.linkedin.com/company/techfest-sliet' target='_blank' aria-label='LinkedIn'>
               <FaLinkedin />
             </SocialIconLink>
           </SocialIcons>

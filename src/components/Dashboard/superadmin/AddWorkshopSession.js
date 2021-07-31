@@ -1,7 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { isAuthenticated } from '../../../auth/helper';
 import Base from '../Base';
-import { getCoordinators } from './helper/coordinatorApiCalls';
+// import { getCoordinators } from './helper/coordinatorApiCalls';
 import { getworkshops } from './helper/workshopApiCalls';
 import { createWorkshopSession } from './helper/workshopSessionApiCalls';
 
@@ -34,7 +34,7 @@ const WorkshopSession = () => {
         scheduledLink,
 
 
-        workshopId, loading, error, createdWorkshopSession, formData
+        workshopId, error, createdWorkshopSession, formData
     } = values;
 
 

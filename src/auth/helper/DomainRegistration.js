@@ -51,16 +51,18 @@ export const registerInEventAsTeam=(emailId,token, eventId)=>{
         method:"POST",
         headers:{
             Accept:"application/json",
-            Authorization:`Bearer ${token}`          
+            Authorization:`Bearer ${token}`,
+            "Content-Type": "application/json",
         },
-        body:{
+        body:JSON.stringify({
             
-            "email":"harsimran.sliet@gmail.com",
-            "eventId":eventId
+            "email":'harsimran.sliet@gmail.com',
+            "eventId":eventId,
         
-        }
+        })
     }).then(response=>{
-        return response.json();
+        return( response.json());
+
     }).catch(err=>{
         console.log(err);
     });
@@ -70,7 +72,8 @@ export const createTeam=(token,teamMembers,eventId,totalTeamMember,teamLeader)=>
         method:"POST",
         headers:{
             Accept:"application/json",
-            Authorization:`Bearer ${token}` 
+            Authorization:`Bearer ${token}`,
+            "Content-Type": "application/json",
         },
         body:JSON.stringify({
             "teamMembers":teamMembers,

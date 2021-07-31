@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import classes from './exploreEvents.module.css'
-import { API, BASE_API } from '../../../Utils/backend';
+import { BASE_API } from '../../../Utils/backend';
 import { Calendar, Clock, PersonPlus } from 'react-bootstrap-icons'
 import { isAuthenticated } from '../../../auth/helper/index.js'
 import Button from '@material-ui/core/Button';
@@ -14,15 +14,16 @@ import Slide from '@material-ui/core/Slide';
 import { Link } from 'react-router-dom';
 import { getUser } from '../../Dashboard/user/helper/userapicalls';
 import { createTeam, getWorkshop, registerInEvent, registerInEventAsTeam, registerInWorkshop } from '../../../auth/helper/DomainRegistration';
-import image from '../../../assets/images/backgroundDomains.png'
 import { Snackbar } from '@material-ui/core';
 import { Alert } from '../Alert';
+import { DialogComponent } from '../Dialogs/Dialog';
 
 
 export class ExploreEvents extends Component {
 
     constructor(props) {
         super(props);
+        this.dialog=React.createRef();
     }
 
     state = {
@@ -32,30 +33,43 @@ export class ExploreEvents extends Component {
         currentWorkshop: {
             sessions: []
         },
-        open: false,
-        popUpMessage: '',
-        positiveAction: '',
+        dialog:{
+            open:false,
+            register:false,
+            openTeamDialog:false,
+            viewSchedule:false,
+            addTeam:false,
+            data:{},
+            popUpMessage:'',
+            positiveAction:'',
+        },
+        myTeam:[],
         completeUser: null,
-        viewSchedule: false,
         isEventRegistered: false,
-        openTeamDialog:false,
-        addTeam:false,
-        memberId:'',
-        openSnackbar:false,
-        error:''
+        memberId: '',
+        openSnackbar: false,
+        error: '',
+        name:''
     }
+
 
     getUserData = () => {
         if (this.state.completeUser === null) {
-            if(this.state.user){
+            if (this.state.user) {
                 getUser(this.state.user._id, this.state.token).then((data) => {
                     console.log(`GET USER DATA:`);
                     console.log(data)
                     if (data.error) {
                         // setValues({ ...values, error: data.error });
-                        this.setState({openSnackbar:true,error:data.error})
+                        this.setState({ openSnackbar: true, error: data.error })
+                        
                     } else {
-                        this.setState({ completeUser: data })
+                        this.setState({ completeUser: data, })
+                        let userInfo={
+                            name:data.name,
+                            id:data.userId
+                        }
+                        this.updatemyTeam(userInfo)
                         if (data.workshopsEnrolled.length > 0) {
                             data.workshopsEnrolled.map(item => {
                                 if (this.props.id === item._id) {
@@ -74,98 +88,259 @@ export class ExploreEvents extends Component {
                             // this.setState({isWorkshopRegistered:true})
                         }
                         // setCompleteUser(data)
-    
+
                     }
                 });
             }
-            
+
         }
 
     }
 
-    Transition = React.forwardRef(function Transition(props, ref) {
-        return <Slide direction="up" ref={ref} {...props} />;
-    });
     
 
-    handleClickOpen = () => {
-        this.setState({ open: true })
-    }
-    handleClose = () => {
-        if(this.state.addTeam){
-            let teamMembers=[];
-            registerInEventAsTeam(this.state.memberId,this.state.token,this.props.content._id,)
-            .then(response=>{
-                console.log(response)
-                console.log(this.state.memberId)
-                    if(response.status != 200){
-                        this.setState({openSnackbar:true,error:response.error})
-                    }else{
+    isDuplicate = (data, obj) =>
+    data.some((el) =>
+        Object.entries(obj).every(([key, value]) => value === el[key])
+    );
 
-                    }
-                // teamMembers.add(response.data.id)
-                // createTeam(this.state.token,this.teamMembers,this.props.content.eventId,teamMembers.length+1,this.state.completeUser.userId);
-            }).catch(err=>{
-                this.setState({openSnackbar:true,error:err})
-            });
+// HANDLERS
+    handleClickOpen = (dialogType) => {
+        this.setState(prevState=>({
+            dialog:{
+                ...prevState.dialog,
+                open:true
+            },
+        }))
+        switch(dialogType){
+            case 'schedule':
+                this.handleClickViewSchedule();
+                break;           
+            case 'registerForWorkshop':
+            case 'registerForEvent':
+                this.handleRegisterOpen()
+                break;
+            default:
+                console.log('DEFAULT BLOCK') 
         }
-        this.setState({ open: false, openTeamDialog: false, addTeam: false })
+        console.log(this.dialog.current.name)
+    }
+    handleClose = (dialogType) => {
+        switch(dialogType){
+            case 'register':
+                this.handleRegisterClose()
+                break;
+            case 'schedule':
+                this.handleClickCloseViewSchedule()
+                break;
+            case 'openAddTeam':
+                this.handleClickAddTeam()
+                break;
+            case 'addTeamMember':
+                this.getMemberId("harsimran.sliet@gmail.com",this.state.token,this.props.content._id)
+                break;
+            case 'confirmTeam':
+                this.confirmTeamRegistration()
+                break;
+            default:
+                this.setState({
+                    dialog:{
+                        open:false,
+                        register:false,
+                        openTeamDialog:false,
+                        viewSchedule:false,
+                        addTeam:false,
+                        data:{},
+                        popUpMessage:'',
+                        positiveAction:'',      
+                    }
+                })
+
+        }
+        
+        
+        
+        // if(this.state.addTeam){
+        //     registerInEventAsTeam(this.state.memberId,this.state.token,this.props.content._id,)
+        //     .then(response=>{
+        //         console.log(response)
+        //         // teamMembers.add(response.data.id)
+        //         // createTeam(this.state.token,this.teamMembers,this.props.content.eventId,teamMembers.length+1,this.state.completeUser.userId);
+        //     }).catch(err=>{
+        //         this.setState({openSnackbar:true,error:err})
+        //     });
+        // }
+        // this.setState({ open: false, openTeamDialog: false, addTeam: false })
+    }
+    handleRegisterOpen=()=>{
+        this.setState(prevState=>({
+            dialog:{
+                ...prevState.dialog,
+                register:true,
+            }
+        }))
+    }
+    handleRegisterClose=()=>{
+        this.setState(prevState=>({
+            dialog:{
+                ...prevState.dialog,
+                register:false,
+                open:false
+            }
+        }))
+    }
+    updatemyTeam=(obj)=>{
+        if(!this.isDuplicate(this.state.myTeam,obj)){
+            this.setState(prevState=>({
+                myTeam:[...prevState.myTeam,obj]
+            }))
+        }
+        
+    }
+    handleOpenTeamDialog = (obj) => {
+        this.updatemyTeam(obj)
+        this.setState(prevState=>({
+            dialog:{
+                ...prevState.dialog,
+                openTeamDialog:true,
+                open:true,
+                data:{
+                    domainName:this.props.heading,
+                    event:this.props.content,
+                    myTeam:this.state.myTeam
+                },
+                
+            },
+            
+        }))
     }
     handleClickViewSchedule = () => {
         this.loadWorkshop(this.props.id)
-        this.setState({ viewSchedule: true })
-    }
+    }    
     handleClickCloseViewSchedule = () => {
-        this.setState({ viewSchedule: false, openTeamDialog: false, addTeam: false })
+        this.setState(prevState=>({
+            dialog:{
+                ...prevState.dialog,
+                viewSchedule:false,
+                open:false
+            }
+        }))
     }
     handleClickAddTeam = () => {
-        this.setState({ addTeam: true, positiveAction: 'Add Team Member' })
+        this.setState(prevState=>({
+            dialog:{
+                ...prevState.dialog,
+                openTeamDialog:false,
+                addTeam:true,
+            }
+        }))
     }
-    _handleTextFieldChange = (e) => {
-        this.setState({ memberId: e.target.value })
+    handleCloseTeam=()=>{
+        this.setState(prevState=>({
+            dialog:{
+                ...prevState.dialog,
+                addTeam:false
+            }
+        }))
     }
-    closeSnackbar=()=>{
-        this.setState({openSnackbar:false})
+    handleTextFieldChange = (e) => {
+        console.log(e.target.value)
+        // this.setState({ memberId: e.target.value })
+    }
+    handleCloseTeamDialog=()=>{
+        this.setState({
+            open:false,
+            openTeamDialog:false
+        })
+    }
+    closeSnackbar = () => {
+        this.setState({ openSnackbar: false })
     }
 
+    getMemberId=(emailId,token,eventId)=>{
+        registerInEventAsTeam(emailId,token,eventId)
+        .then(response=>{
+            if(response.statusCode!=400){
+                const obj={
+                    name:response.data.name,
+                    id:response.data.userId
+                }
+            this.handleCloseTeam()
+            this.handleOpenTeamDialog(obj)
+            }
+        }).catch(err=>{
+            console.log(err)
+        })
+    }
+    confirmTeamRegistration=()=>{
+        let teamId=[]
+        this.state.myTeam.map(item=>teamId.push(item.id))
+        console.log(teamId)
+        createTeam(this.state.token,teamId,this.props.content._id,this.props.content.participantCountMax,this.state.completeUser.userId)
+        .then(response=>{
+            this.handleCloseTeamDialog()
+            this.handleRegisterOpen()
+            if(response.statusCode == 400){
+                this.setState({openSnackbar:true,error:response.error})
+            }
+        }).catch(err=>{
+            this.setState({openSnackbar:true,error:err})
+        })
+    }
 
 
     loadWorkshop = (workshopId) => {
-        getWorkshop(workshopId).then(data => {
-            if (data.error) {
-                this.setState({error:data.error,openSnackbar:true});
+        getWorkshop(workshopId).then(response => {
+            if (response.error) {
+                this.setState({ error: response.error, openSnackbar: true });
             } else {
-                this.setState({ currentWorkshop: data })
-                console.log(data)
+                console.log(response)
+                this.setState(prevState=>({
+                    currentWorkshop:response,
+                    dialog:{
+                        ...prevState.dialog,
+                        viewSchedule:true,
+                        data:{
+                            content:this.props.content,
+                            sessions:response.sessions
+                        }
+                    }
+
+                }))
             }
+        }).catch(err=>{
+            this.setState({ error: err, openSnackbar: true });
         });
     };
 
 
     registerWorkshop = (workshopId) => {
 
-        this.handleClickOpen();
+        // this.handleClickOpen();
         if (!this.state.user) {
-            var status = !this.state.user
-            console.log(status)
-            this.setState({ popUpMessage: 'You are not Logged in. Please Log in first', positiveAction: 'Log in' })
+            this.setState({ error: 'You are not Logged in. Please Log in first', openSnackbar: true })
         } else {
-            console.log(this.state.currentWorkshop)
-            console.log(this.state.completeUser)
             registerInWorkshop(this.state.user._id, this.state.token, workshopId).then(
                 data => {
                     console.log(data)
                     if (data.error) {
                         console.log(data.error)
-                        this.setState({ popUpMessage: data.error, positiveAction: 'OK' })
+                        this.setState({ error: data.error, openSnackbar: true })
                     } else {
-                        console.log("registered success")
-                        this.setState({ isWorkshopRegistered: true, popUpMessage: 'Registration Successful', positiveAction: 'OK' })
+                        this.handleClickOpen('registerForWorkshop')
+                        this.setState(prevState=>({
+                            isWorkshopRegistered:true,
+                            dialog:{
+                                ...prevState.dialog,
+                                popUpMessage:"Registration Successful",
+                                positiveAction:'OK'
+                            }
+                        }))
+                        
                     }
                 }
             ).catch(err => {
-                console.log(err)
-                this.setState({ isWorkshopRegistered: false, popUpMessage: err, positiveAction: 'OK' })
+                this.setState({ isWorkshopRegistered: false, error: err, openSnackbar: true })
             })
         }
 
@@ -175,38 +350,37 @@ export class ExploreEvents extends Component {
         this.getUserData()
     }
 
-    registerAsTeam = () => {
-        console.log('register as team')
-        this.setState({ openTeamDialog: true, positiveAction: 'Confirm' })
-    }
+    
+
+
 
     registerEvent = (eventId) => {
-        this.handleClickOpen();
         if (!this.state.user) {
-            var status = !this.state.user
-            console.log(status)
-            this.setState({ popUpMessage: 'You are not Logged in. Please Log in first', positiveAction: 'LogIn' })
+            this.setState({ error: 'You are not Logged in. Please Log in first', openSnackbar: true })
         } else {
-            console.log(this.state.user)
             console.log(this.props.content.participantCountMax)
             {
-                this.props.content.participantCountMax > 1 ? this.registerAsTeam()
+                this.props.content.participantCountMax > 1 ? this.handleOpenTeamDialog(this.state.myTeam[0])
                     :
-
                     registerInEvent(this.state.user._id, this.state.token, eventId).then(
                         data => {
-                            console.log(data)
                             if (data.error) {
-                                console.log(data.error)
-                                this.setState({ popUpMessage: data.error, positiveAction: 'OK' })
+                                this.setState({ error: data.error, openSnackbar: true })
                             } else {
-                                console.log("registered success")
-                                this.setState({ isEventRegistered: true, popUpMessage: 'Registration Successful', positiveAction: 'OK' })
+                                this.handleClickOpen('registerForEvent');
+                                this.setState(prevState=>({
+                                    isEventRegistered:true,
+                                    dialog:{
+                                        ...prevState.dialog,
+                                        popUpMessage:'Registration Succesful',
+                                        positiveAction:'OK'
+                                    }
+                                }))
                             }
                         }
                     ).catch(err => {
                         console.log(err)
-                        this.setState({ isEventRegistered: false, popUpMessage: err, positiveAction: 'OK' })
+                        this.setState({ isEventRegistered: false, error: err, openSnackbar: true })
                     })
             }
         }
@@ -220,12 +394,14 @@ export class ExploreEvents extends Component {
                         <img src={`${BASE_API}${this.props.content.photo}`} alt='' className={classes.image} />
                         {
                             this.props.heading === 'Precula' ?
-                                <div className={classes.eventDeadline}>
-                                    <Calendar color='white' size={16} />
-                                    <p>{`Register Before : `} </p>
-                                    <Clock color='white' size={16} />
-                                    <p>{`Time : `}</p>
-                                </div>
+                                null
+                                // <div className={classes.eventDeadline}>
+                                //     {console.log(this.props)}
+                                //     <Calendar color='white' size={16} />
+                                //     <p>{`Register Before : `} </p>
+                                //     <Clock color='white' size={16} />
+                                //     <p>{`Time : `}</p>
+                                // </div>
                                 :
                                 <div className={classes.eventDeadline}>
                                     <Calendar color='white' size={16} />
@@ -242,19 +418,19 @@ export class ExploreEvents extends Component {
                                 <section className={classes.eventInfoData}>
                                     <h1>{this.props.content.workshoptName}</h1>
                                     <p>{this.props.content.workshopDescription}</p>
-                                    {console.log(this.props.content)}
-                                    <strong>Start Date : DD/MM/YYYY     </strong><br />
-                                    <strong>End Date : DD/MM/YYYY   </strong>
+                                    {console.log(this.props.content.startDate)}
+                                    <strong>{`Start Date : ${this.props.content.startDate?this.props.content.startDate.split('T')[0]:null}`}   </strong><br />
+                                    <strong>{`End Date : ${this.props.content.endDate?this.props.content.endDate.split('T')[0]:null}`}   </strong>
                                 </section>
                                 {
                                     this.state.isWorkshopRegistered ?
                                         <div className={classes.buttonContainer}>
-                                            <button disabled='true' className={classes.btnRegister} style={{backgroundColor: 'rgba(255,255,255,0.5)'}}>Registered!</button>
-                                            <button className={classes.btnStatement} onClick={() => this.handleClickViewSchedule()}>View Schedule</button>
+                                            <button disabled={true} className={classes.btnRegister} style={{ backgroundColor: 'rgba(255,255,255,0.5)' }}>Registered!</button>
+                                            <button className={classes.btnStatement} name={'schedule'} ref={this.dialog} onClick={() => this.handleClickOpen('schedule')}>View Schedule</button>
                                         </div>
                                         :
                                         <div className={classes.buttonContainer}>
-                                            <button className={classes.btnRegister} onClick={() => { this.registerWorkshop(this.props.content._id) }}>Register Now</button>
+                                            <button className={classes.btnRegister} name={'registerForWorkshop'} ref={this.dialog} onClick={() => { this.registerWorkshop(this.props.content._id) }}>Register Now</button>
                                         </div>
                                 }
                             </div>
@@ -267,12 +443,12 @@ export class ExploreEvents extends Component {
                                 {
                                     this.state.isEventRegistered ?
                                         <div className={classes.buttonContainer}>
-                                            <button disabled='true' className={classes.btnRegister} style={{ backgroundColor: 'rgba(255,255,255,0.5)' }}>Registered!</button>
+                                            <button disabled={true} className={classes.btnRegister} style={{ backgroundColor: 'rgba(255,255,255,0.5)' }}>Registered!</button>
                                             <button className={classes.btnStatement} >Problem Statement</button>
                                         </div>
                                         :
                                         <div className={classes.buttonContainer}>
-                                            <button className={classes.btnRegister} onClick={() => { this.registerEvent(this.props.content._id) }}>Register Now</button>
+                                            <button className={classes.btnRegister} name={'registerForEvent'} ref={this.dialog} onClick={() => { this.registerEvent(this.props.content._id) }}>Register Now</button>
                                             <button className={classes.btnStatement} >Problem Statement</button>
                                         </div>
                                 }
@@ -296,7 +472,18 @@ export class ExploreEvents extends Component {
                         <section className={classes.eventCoordinators}>
                             {
                                 this.props.heading === 'Precula' ?
-                                    null
+                                    this.props.content.studentCoordinator.map((item, pos) => {
+                                        return (
+                                            <section key={pos} className={classes.coordinatorData}>
+                                                <div className={classes.coordinatorDetails}>
+                                                    <p>{item.coordinatorName}</p>
+                                                    <p>{`+91 ${item.coordinatorPhone}`}</p>
+                                                </div>
+
+                                                <img src={`${BASE_API}${item.photo}`} alt='' className={classes.coordinatorImage} />
+                                            </section>
+                                        )
+                                    })
                                     :
                                     this.props.content.eventCoordinator.map((item, pos) => {
                                         return (
@@ -314,152 +501,30 @@ export class ExploreEvents extends Component {
                         </section>
                     </div>
                 </main>
-                <Dialog
-                    open={this.state.open}
-                    keepMounted
-                    TransitionComponent={this.Transition}
-                    onClose={this.handleClose}
-                    aria-labelledby="alert-dialog-slide-title"
-                    aria-describedby="alert-dialog-slide-description"
-                >
-
-                    {
-                        this.state.openTeamDialog ?
-                            this.state.addTeam ?
-                                <DialogContent>
-                                    <DialogTitle id="alert-dialog-slide-title">{"Attention!!"}</DialogTitle>
-                                    <TextField
-                                        autoFocus
-                                        margin="dense"
-                                        id="userEmail"
-                                        label="Enter email of User"
-                                        type="email"
-                                        fullWidth
-                                        onChange={this._handleTextFieldChange}
-                                    />
-                                </DialogContent> : <DialogContent>
-                                    <div className={classes.scheduleName}>
-                                        <div>
-                                            <DialogContentText>
-                                                <strong>Domain Name</strong><br />
-                                                <sub>{this.props.heading}</sub>
-                                            </DialogContentText>
-
-                                        </div>
-                                        <div>
-                                            <DialogContentText>
-                                                <strong>Competition Name</strong><br />
-                                                <sub>{this.props.content.eventName}</sub>
-                                            </DialogContentText>
-                                        </div>
-                                    </div>
-                                    <div className={classes.scheduleHeading}>
-                                        <strong>My Team</strong>
-                                        <hr />
-                                        <PersonPlus size={24} cursor='pointer' onClick={() => { this.handleClickAddTeam() }} />
-                                    </div>
-                                    <div>
-                                        <DialogContentText className={classes.sessions}>
-
-                                            <strong>{this.state.completeUser.name}</strong>
-                                            <strong>{this.state.completeUser.userId}</strong>
-                                            {console.log(this.state.completeUser)}
-
-
-                                        </DialogContentText>
-                                    </div>
-                                </DialogContent>
-
-                            :
-                            <main>
-                                <DialogTitle id="alert-dialog-slide-title">{"Attention!!"}</DialogTitle>
-                                <DialogContent>
-                                    <DialogContentText id="alert-dialog-slide-description">
-                                        {this.state.popUpMessage}
-                                    </DialogContentText>
-                                </DialogContent>
-                            </main>
-
-                    }
-                    <DialogActions>
-                        <Button onClick={this.handleClose} color="primary">
-                            Cancel
-                        </Button>
-                        
-                        <Button onClick={this.handleClose} color="primary">
-                            {
-                                this.state.positiveAction === 'LogIn' ?
-                                    <strong><Link to="/signin">{this.state.positiveAction}</Link></strong>
-                                    
-                                    :
-                                    this.state.positiveAction
-                            }
-
-
-                        </Button>
-                    </DialogActions>
-                </Dialog>
-                <Dialog
-                    open={this.state.viewSchedule}
-                    keepMounted
-                    TransitionComponent={this.Transition}
-                    onClose={this.handleClickCloseViewSchedule}
-                    aria-labelledby="alert-dialog-slide-title"
-                    aria-describedby="alert-dialog-slide-description"
-                >
-                    <DialogContent>
-                        <div className={classes.scheduleName}>
-                            <div>
-                                <DialogContentText>
-                                    <strong>Workshop Name</strong><br />
-                                    <sub>{this.props.content.workshopName}</sub>
-                                </DialogContentText>
-
-                            </div>
-                            <div>
-                                <DialogContentText>
-                                    <strong>Tenure</strong><br />
-                                    <sub>15/07 to 20/07 (5 DAYS)</sub>
-                                </DialogContentText>
-                            </div>
-                        </div>
-                        <div className={classes.scheduleHeading}>
-                            <strong>Schedule</strong>
-                            <hr />
-                        </div>
-                        <div>
-                            {
-                                this.state.currentWorkshop.sessions.map(item => {
-                                    return (
-                                        <DialogContentText>
-                                            <div className={classes.sessions}>
-                                                <strong>{item.workshopSessionName}</strong>
-                                                <sub>{item.dateTime.split('T')[0]}</sub>
-
-
-                                            </div>
-                                        </DialogContentText>
-
-                                    )
-                                })
-                                // this.state.currentWorkshop.sessions.map(item=>{console.log(item)})
-                            }
-                            <strong>Note:Attendance on all days is mandatory for Successful completion.</strong>
-                        </div>
-                    </DialogContent>
-
-
-                    <DialogActions>
-                        <Button onClick={this.handleClickCloseViewSchedule} color="primary">
-                            Join WhatsApp Group
-                        </Button>
-                    </DialogActions>
-                </Dialog>
+                    
+                <DialogComponent  
+                    open={this.state.dialog.open} 
+                    close={this.handleClose} 
+                    openTeamDialog={this.state.dialog.openTeamDialog}
+                    addTeam={this.state.dialog.addTeam} 
+                    register={this.state.dialog.register}
+                    viewSchedule={this.state.dialog.viewSchedule}
+                    popUpMessage={this.state.dialog.popUpMessage}
+                    data={this.state.dialog.data}
+                    positiveAction={this.state.dialog.positiveAction}
+                />
                 <Snackbar open={this.state.openSnackbar} autoHideDuration={6000} onClose={this.closeSnackbar}>
-                    <Alert onClose={this.closeSnackbar} severity="error" >
+                    <Alert 
+                        onClose={this.closeSnackbar} 
+                        severity="error"
+                        action={
+                            !this.state.user?
+                            <Link style={{color:'cyan'}}  to="/signin">LogIn</Link>:null}
+                    >
                         {this.state.error}
                     </Alert>
                 </Snackbar>
+
             </div>
         )
     }

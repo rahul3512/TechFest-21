@@ -1,13 +1,14 @@
 import styled from 'styled-components';
 import { FaMagento } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-import img4 from '../../../assets/images/img6.jpg'
 
 export const FooterContainer = styled.div`
-  background: #000;
+  /* background: #000; */
+  background: #0E0604;
+background: -moz-linear-gradient(45deg, #0E0604 0%, #0B1D41 100%, #2D210D 100%);
+background: -webkit-linear-gradient(45deg, #0E0604 0%, #0B1D41 100%, #2D210D 100%);
+background: linear-gradient(45deg, #0E0604 0%, #0B1D41 100%, #2D210D 100%);
 
-  /* background-image: linear-gradient(90deg, #020024 0%, #090979 35%, #00d4ff 100%); */
-  /* background-image: url(${img4}); */
   padding: 0rem 0 2rem 0;
   display: flex;
   flex-direction: column;

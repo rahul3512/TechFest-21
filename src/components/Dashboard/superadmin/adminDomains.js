@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
-import { API } from '../../../Utils/backend';
+// import { API } from '../../../Utils/backend';
 
 import { getdomains } from './helper/domainApiCalls';
 import Base from '../Base'
@@ -13,6 +13,7 @@ function AdminDomains() {
         getdomains().then(data => {
             if (data.error) {
                 seterror(data.error);
+                console.log(error);
             } else {
                 setDomains(data);
             }

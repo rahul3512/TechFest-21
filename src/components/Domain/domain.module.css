@@ -272,11 +272,17 @@
         font-size: 10px;
     }
     .coordinatorImage{
-        width: 30px;
-        height:30px;
+        width: 26px;
+        height:26px;
+    }
+    .studentCoordinatorContainer{
+        justify-content: space-between;
     }
     .eventCoordinatorData{
-        width: 85%;
+        width: 90%;
+    }
+    .coordinatorDetails p{
+        font-size: 8px;
     }
      
   }

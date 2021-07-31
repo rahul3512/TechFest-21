@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
-import { API } from '../../../Utils/backend';
+// import { API } from '../../../Utils/backend';
 
 import Base from '../Base'
 import { getCoordinators } from './helper/coordinatorApiCalls';
@@ -13,6 +13,7 @@ function AdminCoordinators() {
         getCoordinators().then(data => {
             if (data.error) {
                 seterror(data.error);
+                console.log(error);
             } else {
                 setCoordinators(data);
             }

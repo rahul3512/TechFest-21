@@ -7,7 +7,7 @@ const FaqContainer = () => {
   return (
     <div className="container mt-3" id="faq-container">
       <div id="faq-header row" >
-        <h1 className="heading text-white text-center mb-5 mt-3">
+        <h1 className="heading text-white text-center mb-5 mt-5">
           Frequently Asked Question
         </h1>
       </div>
@@ -16,14 +16,15 @@ const FaqContainer = () => {
         <h4 className="text-white text-center mb-4 mt-3">
           Don't Think Twice
           <br />
-          write us at &nbsp;
+          <br />
+          Contact Us - &nbsp;
           <a
-            href="mailto:support@techfestsliet.com"
+            href="mailto:techfest@sliet.ac.in"
             target="_blank"
             rel="noreferrer"
             className="text-white text-decoration-underline"
           >
-            support@techfestsliet.com
+            techfest@sliet.ac.in
           </a>
         </h4>
         <h4 className="text-white my-3 text-center">Stay Updated Here!</h4>
