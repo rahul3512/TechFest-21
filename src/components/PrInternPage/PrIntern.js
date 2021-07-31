@@ -1,12 +1,9 @@
 import React from "react";
-import vr from "../../assets/images/VR.png";
 import Recognised from '../../assets/images/Recognised.png';
 import Leader from '../../assets/images/Leader.png';
 import Headphones from '../../assets/images/Headphones.png';
-// import mobile from '../../assets/images/mobile.jpg';
 import Concession from '../../assets/images/Concession.jpg';
 import Rocket from '../../assets/images/Rocket.png';
-import Speaker from '../../assets/images/Speaker.png';
 import SkillsRocket from '../../assets/images/SkillsRocket.png'
 
 
@@ -39,11 +36,11 @@ function PrInternPage() {
                                     <img className="image-size" src={SkillsRocket} alt="printernimage" />
                                 </div>
                                 <div>
-                                <h4 className="card-title">Alpha Sponsor</h4>
-                                <p className="card-text">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                                    do eiusmod tempor
-                                </p>
+                                    <h4 className="card-title">Alpha Sponsor</h4>
+                                    <p className="card-text">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                                        do eiusmod tempor
+                                    </p>
                                 </div>
                             </div>
                         </div>

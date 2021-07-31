@@ -34,7 +34,7 @@ const WorkshopSession = () => {
         scheduledLink,
 
 
-        workshopId, loading, error, createdWorkshopSession, formData
+        workshopId, error, createdWorkshopSession, formData
     } = values;
 
 

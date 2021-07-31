@@ -1,8 +1,6 @@
 import React from 'react';
-import { homeObjOne } from './Data';
-import { Footer, InfoSection } from '../../components';
+import { Footer } from '../../components';
 import HeroSection from '../../components/HomePage/MainSection/HeroSection';
-import HomeSponsor from '../../components/HomePage/SponsorSection/Sponsor';
 
 function Home() {
   return (

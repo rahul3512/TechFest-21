@@ -1,4 +1,4 @@
-import React, { useState,  useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { isAuthenticated } from '../../../auth/helper';
 import Base from '../Base';
 import { getCoordinators } from './helper/coordinatorApiCalls';
