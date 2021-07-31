@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { isAuthenticated } from '../../../auth/helper';
 import Base from '../Base';
 import { getCoordinators } from './helper/coordinatorApiCalls';
@@ -39,11 +39,13 @@ const Workshop = () => {
     const {
         workshopName,
         workshopDescription,
-        studentCoordinator,
+        // studentCoordinator,
         hostName,
         hostDescription, startDate,
         endDate,
-        whatsappGroupLink, photo, loading, error, createdWorkshop, formData
+        whatsappGroupLink,
+        // photo, loading,
+        error, createdWorkshop, formData
     } = values;
 
 

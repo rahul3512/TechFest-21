@@ -258,7 +258,7 @@ class DomainPage extends Component {
                                             <img src={`${BASE_API}${item.photo}`} alt='' className={classes.cardImage} />
                                             <div className={classes.cardData}>
                                                 <h4>{item.domainName}</h4>
-                                                <p>{item.domainDescription.length>100?item.domainDescription.slice(0,100)+'...':item.domainDescription}</p>
+                                                <p>{item.domainDescription.length>70?item.domainDescription.slice(0,70)+'...':item.domainDescription}</p>
                                             </div>
                                         </div>
                                     </div>

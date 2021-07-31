@@ -46,17 +46,41 @@ export const registerInEvent = (userId, token, eventId) => {
         .catch(err => console.log(err));
 };
 
-export const registerInEventAsTeam=(userId, token, eventId)=>{
+export const registerInEventAsTeam=(emailId,token, eventId)=>{
     return fetch(`${API}/user/get-id`,{
         method:"POST",
         headers:{
             Accept:"application/json",
-            Authorization:`Bearer ${token}`
+            Authorization:`Bearer ${token}`          
+        },
+        body:JSON.stringify({
             
-        }
+            "email":emailId,
+            "eventId":eventId
+        
+        })
     }).then(response=>{
         return response.json();
     }).catch(err=>{
         console.log(err);
+    });
+}
+export const createTeam=(token,teamMembers,eventId,totalTeamMember,teamLeader)=>{
+    return fetch(`${API}/user/create-team`,{
+        method:"POST",
+        headers:{
+            Accept:"application/json",
+            Authorization:`Bearer ${token}` 
+        },
+        body:JSON.stringify({
+            "teamMembers":teamMembers,
+            "eventId":eventId,
+            "totalTeamMember":totalTeamMember,
+            "teamLeader":teamLeader
+        })
+    }).then(response=>{
+        return response.json()
+    }).catch(err=>{
+        console.log(err)
     })
 }

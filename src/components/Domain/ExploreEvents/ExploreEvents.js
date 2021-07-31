@@ -13,8 +13,10 @@ import TextField from '@material-ui/core/TextField';
 import Slide from '@material-ui/core/Slide';
 import { Link } from 'react-router-dom';
 import { getUser } from '../../Dashboard/user/helper/userapicalls';
-import { getWorkshop, registerInEventAsTeam, registerInEvent, registerInWorkshop } from '../../../auth/helper/DomainRegistration';
+import { createTeam, getWorkshop, registerInEvent, registerInEventAsTeam, registerInWorkshop } from '../../../auth/helper/DomainRegistration';
 import image from '../../../assets/images/backgroundDomains.png'
+import { Snackbar } from '@material-ui/core';
+import { Alert } from '../Alert';
 
 
 export class ExploreEvents extends Component {
@@ -36,42 +38,47 @@ export class ExploreEvents extends Component {
         completeUser: null,
         viewSchedule: false,
         isEventRegistered: false,
-        openTeamDialog: false,
-        addTeam: false,
-        memberId: ''
+        openTeamDialog:false,
+        addTeam:false,
+        memberId:'',
+        openSnackbar:false,
+        error:''
     }
 
     getUserData = () => {
         if (this.state.completeUser === null) {
-            getUser(this.state.user._id, this.state.token).then((data) => {
-                console.log(`GET USER DATA:`);
-                console.log(data)
-                if (data.error) {
-                    // setValues({ ...values, error: data.error });
-                    console.log(data.error);
-                } else {
-                    this.setState({ completeUser: data })
-                    if (data.workshopsEnrolled.length > 0) {
-                        data.workshopsEnrolled.map(item => {
-                            if (this.props.id === item._id) {
-                                this.setState({ isWorkshopRegistered: true })
-                            }
-                        })
-                        // this.setState({isWorkshopRegistered:true})
+            if(this.state.user){
+                getUser(this.state.user._id, this.state.token).then((data) => {
+                    console.log(`GET USER DATA:`);
+                    console.log(data)
+                    if (data.error) {
+                        // setValues({ ...values, error: data.error });
+                        this.setState({openSnackbar:true,error:data.error})
+                    } else {
+                        this.setState({ completeUser: data })
+                        if (data.workshopsEnrolled.length > 0) {
+                            data.workshopsEnrolled.map(item => {
+                                if (this.props.id === item._id) {
+                                    this.setState({ isWorkshopRegistered: true })
+                                }
+                            })
+                            // this.setState({isWorkshopRegistered:true})
+                        }
+                        if (data.eventRegIn.length > 0) {
+                            data.eventRegIn.map(item => {
+                                console.log(item)
+                                if (this.props.id === item._id) {
+                                    this.setState({ isEventRegistered: true })
+                                }
+                            })
+                            // this.setState({isWorkshopRegistered:true})
+                        }
+                        // setCompleteUser(data)
+    
                     }
-                    if (data.eventRegIn.length > 0) {
-                        data.eventRegIn.map(item => {
-                            console.log(item)
-                            if (this.props.id === item._id) {
-                                this.setState({ isEventRegistered: true })
-                            }
-                        })
-                        // this.setState({isWorkshopRegistered:true})
-                    }
-                    // setCompleteUser(data)
-
-                }
-            });
+                });
+            }
+            
         }
 
     }
@@ -79,13 +86,21 @@ export class ExploreEvents extends Component {
     Transition = React.forwardRef(function Transition(props, ref) {
         return <Slide direction="up" ref={ref} {...props} />;
     });
+    
 
     handleClickOpen = () => {
         this.setState({ open: true })
     }
     handleClose = () => {
-        if (this.state.addTeam) {
-            registerInEventAsTeam(this.state.memberId);
+        if(this.state.addTeam){
+            let teamMembers=[];
+            registerInEventAsTeam(this.state.memberId,this.state.token,this.props.content._id,)
+            .then(response=>{
+                teamMembers.add(response.data.id)
+                createTeam(this.state.token,this.teamMembers,this.props.content.eventId,teamMembers.length+1,this.state.completeUser.userId);
+            }).catch(err=>{
+                this.setState({openSnackbar:true,error:err})
+            });
         }
         this.setState({ open: false, openTeamDialog: false, addTeam: false })
     }
@@ -102,13 +117,16 @@ export class ExploreEvents extends Component {
     _handleTextFieldChange = (e) => {
         this.setState({ memberId: e.target.value })
     }
+    closeSnackbar=()=>{
+        this.setState({openSnackbar:false})
+    }
 
 
 
     loadWorkshop = (workshopId) => {
         getWorkshop(workshopId).then(data => {
             if (data.error) {
-                alert(data.error);
+                this.setState({error:data.error,openSnackbar:true});
             } else {
                 this.setState({ currentWorkshop: data })
                 console.log(data)
@@ -118,6 +136,7 @@ export class ExploreEvents extends Component {
 
 
     registerWorkshop = (workshopId) => {
+
         this.handleClickOpen();
         if (!this.state.user) {
             var status = !this.state.user
@@ -146,7 +165,7 @@ export class ExploreEvents extends Component {
     }
 
     componentDidMount = () => {
-        this.getUserData();
+        this.getUserData()
     }
 
     registerAsTeam = () => {
@@ -159,7 +178,7 @@ export class ExploreEvents extends Component {
         if (!this.state.user) {
             var status = !this.state.user
             console.log(status)
-            this.setState({ popUpMessage: 'You are not Logged in. Please Log in first', positiveAction: 'Log in' })
+            this.setState({ popUpMessage: 'You are not Logged in. Please Log in first', positiveAction: 'LogIn' })
         } else {
             console.log(this.state.user)
             console.log(this.props.content.participantCountMax)
@@ -222,7 +241,7 @@ export class ExploreEvents extends Component {
                                 {
                                     this.state.isWorkshopRegistered ?
                                         <div className={classes.buttonContainer}>
-                                            <button disabled='true' className={classes.btnRegister}>Registered!</button>
+                                            <button disabled='true' className={classes.btnRegister} style={{backgroundColor: 'rgba(255,255,255,0.5)'}}>Registered!</button>
                                             <button className={classes.btnStatement} onClick={() => this.handleClickViewSchedule()}>View Schedule</button>
                                         </div>
                                         :
@@ -360,7 +379,7 @@ export class ExploreEvents extends Component {
                         </Button>
                         <Button onClick={this.handleClose} color="primary">
                             {
-                                this.state.positiveAction === 'Log in' ?
+                                this.state.positiveAction === 'LogIn' ?
                                     <Link to="/signin">{this.state.positiveAction}</Link>
                                     :
                                     this.state.positiveAction
@@ -426,6 +445,11 @@ export class ExploreEvents extends Component {
                         </Button>
                     </DialogActions>
                 </Dialog>
+                <Snackbar open={this.state.openSnackbar} autoHideDuration={6000} onClose={this.closeSnackbar}>
+                    <Alert onClose={this.closeSnackbar} severity="error" >
+                        {this.state.error}
+                    </Alert>
+                </Snackbar>
             </div>
         )
     }

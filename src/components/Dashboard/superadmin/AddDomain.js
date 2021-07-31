@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { isAuthenticated } from '../../../auth/helper';
 import Base from '../Base';
 import { getCoordinators } from './helper/coordinatorApiCalls';
@@ -34,8 +34,9 @@ const Domain = () => {
     const {
         domainName,
         domainDescription,
-        studentCoordinator,
-        facultyCoordinator, photo, loading, error, createdDomain, formData
+        // studentCoordinator,
+        // facultyCoordinator, photo, loading,
+        error, createdDomain, formData
     } = values;
 
 
