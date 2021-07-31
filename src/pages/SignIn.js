@@ -26,7 +26,7 @@ function SignIn() {
         body: JSON.stringify(variable),
       })
         .then((response) => {
-          if (response.status == 200) return response.json();
+          if (response.status === 200) return response.json();
           else return Promise.reject("Incorrect verification code");
         })
         .then((data) => {

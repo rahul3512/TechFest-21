@@ -139,6 +139,9 @@
     font-size: 2rem;
 
 }
+.fab:hover{
+    color:white;
+}
 .graphics{
     width:100%;
     height:50vh;

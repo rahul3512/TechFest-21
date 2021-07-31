@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import classes from './exploreEvents.module.css'
-import { API, BASE_API } from '../../../Utils/backend';
+import { BASE_API } from '../../../Utils/backend';
 import { Calendar, Clock, PersonPlus } from 'react-bootstrap-icons'
 import { isAuthenticated } from '../../../auth/helper/index.js'
 import Button from '@material-ui/core/Button';
@@ -14,7 +14,6 @@ import Slide from '@material-ui/core/Slide';
 import { Link } from 'react-router-dom';
 import { getUser } from '../../Dashboard/user/helper/userapicalls';
 import { createTeam, getWorkshop, registerInEvent, registerInEventAsTeam, registerInWorkshop } from '../../../auth/helper/DomainRegistration';
-import image from '../../../assets/images/backgroundDomains.png'
 import { Snackbar } from '@material-ui/core';
 import { Alert } from '../Alert';
 
@@ -38,22 +37,22 @@ export class ExploreEvents extends Component {
         completeUser: null,
         viewSchedule: false,
         isEventRegistered: false,
-        openTeamDialog:false,
-        addTeam:false,
-        memberId:'',
-        openSnackbar:false,
-        error:''
+        openTeamDialog: false,
+        addTeam: false,
+        memberId: '',
+        openSnackbar: false,
+        error: ''
     }
 
     getUserData = () => {
         if (this.state.completeUser === null) {
-            if(this.state.user){
+            if (this.state.user) {
                 getUser(this.state.user._id, this.state.token).then((data) => {
                     console.log(`GET USER DATA:`);
                     console.log(data)
                     if (data.error) {
                         // setValues({ ...values, error: data.error });
-                        this.setState({openSnackbar:true,error:data.error})
+                        this.setState({ openSnackbar: true, error: data.error })
                     } else {
                         this.setState({ completeUser: data })
                         if (data.workshopsEnrolled.length > 0) {
@@ -74,11 +73,11 @@ export class ExploreEvents extends Component {
                             // this.setState({isWorkshopRegistered:true})
                         }
                         // setCompleteUser(data)
-    
+
                     }
                 });
             }
-            
+
         }
 
     }
@@ -86,21 +85,21 @@ export class ExploreEvents extends Component {
     Transition = React.forwardRef(function Transition(props, ref) {
         return <Slide direction="up" ref={ref} {...props} />;
     });
-    
+
 
     handleClickOpen = () => {
         this.setState({ open: true })
     }
     handleClose = () => {
-        if(this.state.addTeam){
-            let teamMembers=[];
-            registerInEventAsTeam(this.state.memberId,this.state.token,this.props.content._id,)
-            .then(response=>{
-                teamMembers.add(response.data.id)
-                createTeam(this.state.token,this.teamMembers,this.props.content.eventId,teamMembers.length+1,this.state.completeUser.userId);
-            }).catch(err=>{
-                this.setState({openSnackbar:true,error:err})
-            });
+        if (this.state.addTeam) {
+            let teamMembers = [];
+            registerInEventAsTeam(this.state.memberId, this.state.token, this.props.content._id,)
+                .then(response => {
+                    teamMembers.add(response.data.id)
+                    createTeam(this.state.token, this.teamMembers, this.props.content.eventId, teamMembers.length + 1, this.state.completeUser.userId);
+                }).catch(err => {
+                    this.setState({ openSnackbar: true, error: err })
+                });
         }
         this.setState({ open: false, openTeamDialog: false, addTeam: false })
     }
@@ -117,8 +116,8 @@ export class ExploreEvents extends Component {
     _handleTextFieldChange = (e) => {
         this.setState({ memberId: e.target.value })
     }
-    closeSnackbar=()=>{
-        this.setState({openSnackbar:false})
+    closeSnackbar = () => {
+        this.setState({ openSnackbar: false })
     }
 
 
@@ -126,7 +125,7 @@ export class ExploreEvents extends Component {
     loadWorkshop = (workshopId) => {
         getWorkshop(workshopId).then(data => {
             if (data.error) {
-                this.setState({error:data.error,openSnackbar:true});
+                this.setState({ error: data.error, openSnackbar: true });
             } else {
                 this.setState({ currentWorkshop: data })
                 console.log(data)
@@ -241,7 +240,7 @@ export class ExploreEvents extends Component {
                                 {
                                     this.state.isWorkshopRegistered ?
                                         <div className={classes.buttonContainer}>
-                                            <button disabled='true' className={classes.btnRegister} style={{backgroundColor: 'rgba(255,255,255,0.5)'}}>Registered!</button>
+                                            <button disabled='true' className={classes.btnRegister} style={{ backgroundColor: 'rgba(255,255,255,0.5)' }}>Registered!</button>
                                             <button className={classes.btnStatement} onClick={() => this.handleClickViewSchedule()}>View Schedule</button>
                                         </div>
                                         :
