@@ -123,46 +123,12 @@
     border-radius: 50%;
 }
 
-.scheduleName{
-    width:inherit;
-    height:fit-content;
-    display:flex;
-    justify-content: space-between;
-}
-.scheduleName div{
-    margin-left: 30px;
-    margin-right: 30px;
-}
-.scheduleName div sub{
-    font-family: VBI;
-    color: gray;
-}
-.scheduleName div strong{
-    font-family: EXO;
-    color: black;
-}
-.scheduleHeading{
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-    margin-top: 20px;
-}
-.scheduleHeading hr{
-    width: 70%;
-    border:0.5px solid black;
-}
-.sessions{
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    border-bottom: 0.5px solid black;
-}
-.sessions sub{
-    color: gray;
-}
+
 @media screen and (max-width:780px) {
     .eventContent{
         flex-wrap: wrap;
+        padding-left: 12px;
+        padding-right: 12px;
     }
     .eventImage{
         width: 30%;
@@ -182,11 +148,16 @@
     }
     .eventInfoData{
         height:80%;
+    }
+    .coordinatorData{
+        width: 50%;
     } 
 }
 @media screen and (max-width:480px){
     .eventContainer{
         min-height: 150vh;
+        padding-left: 12px;
+        padding-right: 12px;
     }
     .eventContent{
         flex-direction: column;
@@ -230,17 +201,18 @@
         height: 30%;
     }
     .coordinatorImage{
-        width: 48px;
-        height: 48px;
+        width: 36px;
+        height: 36px;
     }
     .coordinatorData{
-        width: 45%;
+        width: 92%;
+        height: fit-content;
     }
     .eventCoordinators{
         flex-direction: column;
-
+        height: fit-content;
     }
     .coordinatorDetails p{
-        font-size: 10px;
+        font-size: 12px;
     }
 }

@@ -67,6 +67,7 @@ class DomainPage extends Component {
             events: []
         },
 
+
         currentSelected: -1,
         exploreEvents: false,
         animate: false,
@@ -137,11 +138,12 @@ class DomainPage extends Component {
     getSingleDomain = (id, pos) => {
         axios.get(`${API}/domain/${id}`)
             .then(response => {
-                this.setState({ currentDomain: response.data, precula: false, exploreEvents: true, animate: true, currentSelected: pos })
+                console.log(response)
+                this.setState({currentDomain:response.data,precula:false,exploreEvents:true,animate:true,currentSelected:pos})
+                // this.setState({ currentDomain: response.data, precula: false, exploreEvents: true, animate: true, currentSelected: pos })
                 if (response.data.domain.domainName === 'Precula') {
                     this.getWorkshops();
                 }
-                console.log(this.state.currentDomain);
             }).catch(err => {
                 // alert("error")
                 console.log(err.response)
