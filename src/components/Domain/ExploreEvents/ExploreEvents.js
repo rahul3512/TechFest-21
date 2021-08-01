@@ -3,14 +3,6 @@ import classes from './exploreEvents.module.css'
 import { BASE_API } from '../../../Utils/backend';
 import { Calendar, Clock, PersonPlus } from 'react-bootstrap-icons'
 import { isAuthenticated } from '../../../auth/helper/index.js'
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import TextField from '@material-ui/core/TextField';
-import Slide from '@material-ui/core/Slide';
 import { Link } from 'react-router-dom';
 import { getUser } from '../../Dashboard/user/helper/userapicalls';
 import { createTeam, getWorkshop, registerInEvent, registerInEventAsTeam, registerInWorkshop } from '../../../auth/helper/DomainRegistration';
@@ -57,8 +49,6 @@ export class ExploreEvents extends Component {
         if (this.state.completeUser === null) {
             if (this.state.user) {
                 getUser(this.state.user._id, this.state.token).then((data) => {
-                    console.log(`GET USER DATA:`);
-                    console.log(data)
                     if (data.error) {
                         // setValues({ ...values, error: data.error });
                         this.setState({ openSnackbar: true, error: data.error })
@@ -80,7 +70,7 @@ export class ExploreEvents extends Component {
                         }
                         if (data.eventRegIn.length > 0) {
                             data.eventRegIn.map(item => {
-                                console.log(item)
+                                
                                 if (this.props.id === item._id) {
                                     this.setState({ isEventRegistered: true })
                                 }
@@ -123,9 +113,9 @@ export class ExploreEvents extends Component {
             default:
                 console.log('DEFAULT BLOCK') 
         }
-        console.log(this.dialog.current.name)
+        
     }
-    handleClose = (dialogType) => {
+    handleClose = (dialogType,memberId=null) => {
         switch(dialogType){
             case 'register':
                 this.handleRegisterClose()
@@ -137,7 +127,7 @@ export class ExploreEvents extends Component {
                 this.handleClickAddTeam()
                 break;
             case 'addTeamMember':
-                this.getMemberId("harsimran.sliet@gmail.com",this.state.token,this.props.content._id)
+                this.getMemberId(memberId,this.state.token,this.props.content._id)
                 break;
             case 'confirmTeam':
                 this.confirmTeamRegistration()
@@ -156,26 +146,13 @@ export class ExploreEvents extends Component {
                     }
                 })
 
-        }
-        
-        
-        
-        // if(this.state.addTeam){
-        //     registerInEventAsTeam(this.state.memberId,this.state.token,this.props.content._id,)
-        //     .then(response=>{
-        //         console.log(response)
-        //         // teamMembers.add(response.data.id)
-        //         // createTeam(this.state.token,this.teamMembers,this.props.content.eventId,teamMembers.length+1,this.state.completeUser.userId);
-        //     }).catch(err=>{
-        //         this.setState({openSnackbar:true,error:err})
-        //     });
-        // }
-        // this.setState({ open: false, openTeamDialog: false, addTeam: false })
+        }   
     }
     handleRegisterOpen=()=>{
         this.setState(prevState=>({
             dialog:{
                 ...prevState.dialog,
+                openTeamDialog:false,
                 register:true,
             }
         }))
@@ -244,7 +221,7 @@ export class ExploreEvents extends Component {
         }))
     }
     handleTextFieldChange = (e) => {
-        console.log(e.target.value)
+        
         // this.setState({ memberId: e.target.value })
     }
     handleCloseTeamDialog=()=>{
@@ -267,15 +244,17 @@ export class ExploreEvents extends Component {
                 }
             this.handleCloseTeam()
             this.handleOpenTeamDialog(obj)
+            }else{
+                this.setState({openSnackbar:true,error:response.error})
             }
         }).catch(err=>{
-            console.log(err)
+            this.setState({openSnackbar:true,error:err})
         })
     }
     confirmTeamRegistration=()=>{
         let teamId=[]
         this.state.myTeam.map(item=>teamId.push(item.id))
-        console.log(teamId)
+        
         createTeam(this.state.token,teamId,this.props.content._id,this.props.content.participantCountMax,this.state.completeUser.userId)
         .then(response=>{
             this.handleCloseTeamDialog()
@@ -294,7 +273,7 @@ export class ExploreEvents extends Component {
             if (response.error) {
                 this.setState({ error: response.error, openSnackbar: true });
             } else {
-                console.log(response)
+                
                 this.setState(prevState=>({
                     currentWorkshop:response,
                     dialog:{
@@ -322,9 +301,9 @@ export class ExploreEvents extends Component {
         } else {
             registerInWorkshop(this.state.user._id, this.state.token, workshopId).then(
                 data => {
-                    console.log(data)
+
                     if (data.error) {
-                        console.log(data.error)
+                        
                         this.setState({ error: data.error, openSnackbar: true })
                     } else {
                         this.handleClickOpen('registerForWorkshop')
@@ -358,7 +337,7 @@ export class ExploreEvents extends Component {
         if (!this.state.user) {
             this.setState({ error: 'You are not Logged in. Please Log in first', openSnackbar: true })
         } else {
-            console.log(this.props.content.participantCountMax)
+            
             {
                 this.props.content.participantCountMax > 1 ? this.handleOpenTeamDialog(this.state.myTeam[0])
                     :
@@ -379,7 +358,7 @@ export class ExploreEvents extends Component {
                             }
                         }
                     ).catch(err => {
-                        console.log(err)
+                        
                         this.setState({ isEventRegistered: false, error: err, openSnackbar: true })
                     })
             }
@@ -418,7 +397,7 @@ export class ExploreEvents extends Component {
                                 <section className={classes.eventInfoData}>
                                     <h1>{this.props.content.workshoptName}</h1>
                                     <p>{this.props.content.workshopDescription}</p>
-                                    {console.log(this.props.content.startDate)}
+                                    
                                     <strong>{`Start Date : ${this.props.content.startDate?this.props.content.startDate.split('T')[0]:null}`}   </strong><br />
                                     <strong>{`End Date : ${this.props.content.endDate?this.props.content.endDate.split('T')[0]:null}`}   </strong>
                                 </section>
