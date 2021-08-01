@@ -3,16 +3,19 @@ function SponsorCard2() {
   return (
     <div>
       <div className="container">
-        <div className="row sponsordesc text-center">
+        <div className="row sponsordesc text-center  d-flex justify-content-center align-items-center flex-column text-justify">
           <h1 className="heading text-center">Partner with us</h1>
-          <p className="text">
-            orem ipsum dolor sit amet,orem ipsum dolor sit amet,
-            <br />
-            orem ipsum dolor sit amet,orem ipsum dolor sit amet,
+          <p className="text-justify w-50">
+          techFEST’21 offers the best platform to reach out to more people with your cause.
+           Partner with us and grab the opportunity to address students and let them take home
+            memories named after you! We are open to custom partnerships that are tailor-made to
+             suit your necessities! Become a partner today!
           </p>
+          </div>
+          <div className="row text-center">
           <div className="col-lg-3 col-sm-12 col-md-12">
             <div className="card card2">
-              <h6 className="card-title">join Our Telegram </h6>
+              <h6 className="card-title">Custom Partnership</h6>
             </div>
           </div>
 
@@ -23,12 +26,12 @@ function SponsorCard2() {
           </div>
           <div className="col-lg-3 col-sm-12">
             <div className="card card2">
-              <h6 className="card-title">Goodies and Coupon</h6>
+              <h6 className="card-title">Goodies and Coupon Partner</h6>
             </div>
           </div>
           <div className="col-lg-3 col-sm-12">
             <div className="card card2">
-              <h6 className="card-title">Training and Internship</h6>
+              <h6 className="card-title">Training and Internship Partner</h6>
             </div>
           </div>
         </div>
