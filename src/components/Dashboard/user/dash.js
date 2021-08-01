@@ -30,6 +30,9 @@ import { Button, TextField, IconButton, Fade, Backdrop, makeStyles } from '@mate
 import Modal from "@material-ui/core/Modal";
 import { useAlert } from 'react-alert';
 import { API } from '../../../backend';
+import {
+  FaTelegram, FaTwitter
+} from 'react-icons/fa';
 
 function Dash() {
   const alert = useAlert();
@@ -572,26 +575,28 @@ function Dash() {
             Copyright © 2021. All Rights Reserved.
           </div>
           <div className="footer-cta">
-            <Link to="#" className="dashboard-dash-Link-a dashboard-dash-cursor">
+            <Link to={{ pathname: 'https://t.me/joinchat/D6puheMtqWI2M2Jl'}} target=  '_blank' className="dashboard-dash-Link-a dashboard-dash-cursor">
+              <FaTelegram />
               Join our Telegram Commuity
             </Link>
           </div>
           <div className="footer-sm">
-            <Link to="#" className="dashboard-dash-Link-a">
+            <Link to={{ pathname : "https://www.facebook.com/techfestsliet/" }} target="_blank" className="dashboard-dash-Link-a">
               <img src={Facebook} alt="facebook" />
             </Link>
-            <Link to="#" className="dashboard-dash-Link-a">
+            <Link to={{ pathname: 'https://instagram.com/techfestsliet_' }} target="_blank" className="dashboard-dash-Link-a">
               <img src={Instagram} alt="instagram" />
             </Link>
-            <Link to="#" className="dashboard-dash-Link-a">
+            <Link to={{ pathname: 'https://www.linkedin.com/company/techfest-sliet' }} target="_blank"  className="dashboard-dash-Link-a">
               <img src={Linkedin} alt="linkedin" />
             </Link>
-            <a href={
-              '//www.youtube.com/channel/UCsKsymTY_4BYR-wytLjex7A?view_as=subscriber'
-            } className="dashboard-dash-Link-a"
-            target = '_blank'>
+            <Link to={{ pathname: 'https://twitter.com/techfestsliet' }} target="_blank"  className="dashboard-dash-Link-a">
+              <FaTwitter />
+            </Link>
+            <Link to={{ pathname: '//www.youtube.com/channel/UCsKsymTY_4BYR-wytLjex7A?view_as=subscriber' }} className="dashboard-dash-Link-a" target = '_blank'>
               <img src={Youtube} alt="youtube" />
-            </a>
+            </Link>
+            
           </div>
         </div>
 
