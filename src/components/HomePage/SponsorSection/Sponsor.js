@@ -15,7 +15,7 @@ const breakPoints = [
 
 function HomeSponsor() {
     return (
-        <div className='home-sponsor' style={{ marginTop: '-39px' }}>
+        <div className='home-sponsor'>
             <h1 style={{ textAlign: "center", fontFamily: 'EXO', fontSize: '46px', paddingBottom: '17px' }}>
                 <span>Sponsors</span>
 

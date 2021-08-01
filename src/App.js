@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import GlobalStyle from './globalStyles';
 import Home from './pages/HomePage/Home';
@@ -12,7 +12,7 @@ import Sponsor from './pages/Sponsor';
 import ContactUs from './pages/ContactUs';
 import ScrollToTop from './components/ScrollToTop';
 import Resetpassword from './pages/Resetpassword';
-
+import vid from './assets/01FINALBlue.mp4'
 
 import { Navbar } from './components';
 import SignIn from './pages/SignIn';
@@ -29,7 +29,7 @@ import AddEvent from './components/Dashboard/superadmin/AddEvent'
 import AddWorkshop from './components/Dashboard/superadmin/AddWorkshop'
 import AddWorkshopSession from './components/Dashboard/superadmin/AddWorkshopSession'
 import UpdateDomain from './components/Dashboard/superadmin/UpdateDomain';
-import AdminDomains from './components/Dashboard/superadmin/adminDomains';
+import AdminDomains from './components/Dashboard/superadmin/AdminDomains';
 import AdminCoordinators from './components/Dashboard/superadmin/AdminCoodinators';
 import UpdateCoordinator from './components/Dashboard/superadmin/UpdateCoordinator';
 import UpdateWorkshop from './components/Dashboard/superadmin/UpdateWorkshop';
@@ -40,7 +40,9 @@ import AdminEvents from './components/Dashboard/superadmin/AdminEvents';
 import AdminWorkshopSessions from './components/Dashboard/superadmin/AdminWorkshopSessions';
 
 
+
 function App() {
+  
   return (
     <Router>
       <GlobalStyle />
@@ -119,9 +121,6 @@ function App() {
         <AlertProvider template={AlertTemplate}>
           <PrivateRoute path="/user/dashboard" exact component={UserDashboard} />
         </AlertProvider>
-
-
-
 
       </Switch>
       {/* <Footer /> */}
