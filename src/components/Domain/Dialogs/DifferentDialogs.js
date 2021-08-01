@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { DialogContent,Dialog, DialogTitle, DialogActions, Button, Slide, TextField, DialogContentText } from '@material-ui/core'
 import classes from './Dialogs.module.css'
 import { PersonPlus } from 'react-bootstrap-icons'
@@ -23,6 +23,8 @@ export const Register=(props)=>{
 }
 
 export const AddTeam=(props)=>{
+    const textinput=useRef();
+
     return (
         <main>
             <DialogContent>{console.log(props.heading)}
@@ -34,14 +36,15 @@ export const AddTeam=(props)=>{
                 label="Enter email of User"
                 type="email"
                 fullWidth
-                required={true}
+                inputRef={textinput}
             />
             </DialogContent>
             <DialogActions>
             <Button onClick={()=>props.close()} color="primary">
                         Cancel
             </Button>
-            <Button onClick={()=>{props.close('addTeamMember')}} color='primary'>
+            {/* onClick={()=>{props.close('addTeamMember')}} */}
+            <Button onClick={()=>{props.close('addTeamMember',textinput.current.value)}} color='primary'>
                 Add Team Member
             </Button>   
             </DialogActions>
@@ -166,7 +169,7 @@ export const ViewSchedule=(props)=>{
                 </div>
             </DialogContent>
             <DialogActions>
-                    <Link to={props.data.content.whatsappGroupLink?props.data.content.whatsappGroupLink:''} target='_blank' rel='noopener' component={Button} style={{color:'darkBlue'}} onClick={()=>{props.close('schedule')}}>Join Telegram Group</Link>
+                    <Link to={props.data.content.whatsappGroupLink?props.data.content.whatsappGroupLink:'/'} target='_blank' rel='noopener' component={Button} style={{color:'darkBlue'}} onClick={()=>{props.close('schedule')}}>Join Telegram Group</Link>
             </DialogActions>                
         </div>
     )

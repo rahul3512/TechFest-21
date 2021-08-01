@@ -1,11 +1,15 @@
 import { DialogContent,Dialog, DialogTitle, DialogActions, Button, Slide, TextField } from '@material-ui/core'
-import React from 'react'
+import React,{useState, useEffect} from 'react'
 import { Team, ViewSchedule,Register,AddTeam } from './DifferentDialogs';
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
+
+
+
+
 
 export const DialogComponent=(props)=>{
     return(
@@ -27,7 +31,7 @@ export const DialogComponent=(props)=>{
             }
             {
                 props.addTeam?
-                <AddTeam data={props.data} close={props.close}/>:null
+                <AddTeam data={props.data} close={props.close} />:null
             }
             {
                 props.viewSchedule?

@@ -8,6 +8,8 @@ import "slick-carousel/slick/slick-theme.css";
 import { CSSTransition } from 'react-transition-group';
 import { ExploreEvents } from './ExploreEvents/ExploreEvents';
 import axios from 'axios';
+import { Snackbar } from '@material-ui/core';
+import { Alert } from './Alert';
 // import * as Scroll from "react-scroll";
 
 class DomainPage extends Component {
@@ -73,7 +75,9 @@ class DomainPage extends Component {
         animate: false,
         workshops: [],
         precula: false,
-        loading: true
+        loading: true,
+        openSnackbar:false,
+        error:''
 
     }
 
@@ -93,14 +97,16 @@ class DomainPage extends Component {
         );
     };
 
+    closeSnackbar=()=>{
+        this.setState({openSnackbar:false})
+    }
+
     getDomains = () => {
         axios.get(`${API}/domains`)
             .then(response => {
                 this.setState({ domains: response.data, loading: false })
-                console.log(this.state.domains)
 
                 if (this.props.detail.name === 'workshops') {
-                    console.log(true)
                     this.state.domains.map((item, pos) => {
                         return (
                             item.domainName === 'Precula' ? this.getSingleDomain(item._id, pos) : null
@@ -111,7 +117,6 @@ class DomainPage extends Component {
                     }, 3000)
                 }
                 if (this.props.detail.name === 'events') {
-                    console.log(false)
                     // console.log(this.props)
                     this.state.domains.map((item, pos) => {
                         // console.log(this.props.detail.id , item._id)
@@ -119,7 +124,6 @@ class DomainPage extends Component {
                             item._id === this.props.detail.id ? this.getSingleDomain(item._id, pos) : null
                         )
                     })
-                    console.log(this.props)
                     setTimeout(() => {
                         window.location.replace(`${window.location.pathname}#${this.props.detail.secId}`)
                     }, 3000)
@@ -138,7 +142,6 @@ class DomainPage extends Component {
     getSingleDomain = (id, pos) => {
         axios.get(`${API}/domain/${id}`)
             .then(response => {
-                console.log(response)
                 this.setState({currentDomain:response.data,precula:false,exploreEvents:true,animate:true,currentSelected:pos})
                 // this.setState({ currentDomain: response.data, precula: false, exploreEvents: true, animate: true, currentSelected: pos })
                 if (response.data.domain.domainName === 'Precula') {
@@ -146,7 +149,7 @@ class DomainPage extends Component {
                 }
             }).catch(err => {
                 // alert("error")
-                console.log(err.response)
+                this.setState({openSnackbar:true,error:err.response})
             })
     }
 
@@ -155,7 +158,7 @@ class DomainPage extends Component {
             .then(response => {
                 this.setState({ workshops: response.data, precula: true })
             }).catch(err => {
-                console.log(err.response)
+                this.setState({openSnackbar:true,error:err.response})
             })
     }
 
@@ -178,7 +181,7 @@ class DomainPage extends Component {
                             </p>
                         </div>
                     </CSSTransition>
-                    {this.state.exploreEvents ? <button className={classes.btnExploreEvents} onClick={() => { this.eventRef.current.scrollIntoView() }}>Explore Events</button> : null}
+                    {this.state.exploreEvents ? <button className={classes.btnExploreEvents} onClick={() => { this.eventRef.current.scrollIntoView() }}>{this.state.currentDomain.domain.domainName === 'Precula'?'Explore Workshops':'Explore Events'}</button> : null}
                     {
                         this.state.exploreEvents ?
                             <div className={classes.coordinators}>
@@ -214,34 +217,6 @@ class DomainPage extends Component {
                             :
                             null
                     }
-                    {/* {this.state.exploreEvents ?
-                        <div className={classes.coordinators}>
-                            {this.state.currentDomain.domain.facultyCoordinator.map(item => {
-                                return (
-                                    <div className={classes.facultyCoordinator}>
-                                        <img src={`${BASE_API}${item?.photo}`} alt='' className={classes.facultyCoordinatorImage} />
-                                        <div>
-                                            <h6>{item.coordinatorName}</h6>
-                                            <p>{item.coordinatorDesignation}</p>
-                                        </div>
-                                    </div>
-                                )
-                            })}
-                            <div className={classes.domainCoordinator}>
-                                {this.state.currentDomain.domain.studentCoordinator.map((item, pos) => {
-                                    return (
-                                        <div className={classes.facultyCoordinator}>
-                                            <div>
-                                                <h6>{item.coordinatorName}</h6>
-                                                <p>{item.coordinatorPhone}</p>
-                                            </div>
-                                            <img src={`${BASE_API}${item?.photo}`} alt='' className={classes.facultyCoordinatorImage} />
-                                        </div>
-                                    )
-                                })}
-                            </div>
-                        </div>
-                        : null} */}
                     <div className={classes.cardContainer}>
                         <div className={classes.cardHeadingContainer}>
                             <p>Domains</p>
@@ -282,6 +257,43 @@ class DomainPage extends Component {
                     }
                 </div> : null}
 
+                <Snackbar open={this.state.openSnackbar} autoHideDuration={6000} onClose={this.closeSnackbar}>
+                    <Alert 
+                        onClose={this.closeSnackbar} 
+                        severity="error"
+                    >
+                        {this.state.error}
+                    </Alert>
+                </Snackbar>
+                {/* <footer className={classes.footer}>
+                
+                    <div className="footer-copyright-text">
+                        Copyright © 2021. All Rights Reserved.
+                    </div>
+                    <div className="footer-cta">
+                        <Link to="#" className="dashboard-dash-Link-a dashboard-dash-cursor">
+                        Join our Telegram Commuity
+                        </Link>
+                    </div>
+                    <div className="footer-sm">
+                        <Link to="#" className="dashboard-dash-Link-a">
+                        <img src={Facebook} alt="facebook" />
+                        </Link>
+                        <Link to="#" className="dashboard-dash-Link-a">
+                        <img src={Instagram} alt="instagram" />
+                        </Link>
+                        <Link to="#" className="dashboard-dash-Link-a">
+                        <img src={Linkedin} alt="linkedin" />
+                        </Link>
+                        <a href={
+                        '//www.youtube.com/channel/UCsKsymTY_4BYR-wytLjex7A?view_as=subscriber'
+                        } className="dashboard-dash-Link-a"
+                        target = '_blank'>
+                        <img src={Youtube} alt="youtube" />
+                        </a>
+                    </div>
+                    
+                </footer> */}
             </div>
         );
     }
