@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import GlobalStyle from './globalStyles';
 import Home from './pages/HomePage/Home';
@@ -12,7 +12,7 @@ import Sponsor from './pages/Sponsor';
 import ContactUs from './pages/ContactUs';
 import ScrollToTop from './components/ScrollToTop';
 import Resetpassword from './pages/Resetpassword';
-
+import vid from './assets/01FINALBlue.mp4'
 
 import { Navbar } from './components';
 import SignIn from './pages/SignIn';
@@ -40,7 +40,9 @@ import AdminEvents from './components/Dashboard/superadmin/AdminEvents';
 import AdminWorkshopSessions from './components/Dashboard/superadmin/AdminWorkshopSessions';
 
 
+
 function App() {
+  
   return (
     <Router>
       <GlobalStyle />
@@ -119,9 +121,6 @@ function App() {
         <AlertProvider template={AlertTemplate}>
           <PrivateRoute path="/user/dashboard" exact component={UserDashboard} />
         </AlertProvider>
-
-
-
 
       </Switch>
       {/* <Footer /> */}
