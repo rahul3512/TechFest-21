@@ -38,6 +38,7 @@ import UpdateWorkshopSession from './components/Dashboard/superadmin/UpdateWorks
 import AdminWorkshops from './components/Dashboard/superadmin/AdminWorkshops';
 import AdminEvents from './components/Dashboard/superadmin/AdminEvents';
 import AdminWorkshopSessions from './components/Dashboard/superadmin/AdminWorkshopSessions';
+import Payment from './pages/Payment';
 
 
 
@@ -124,6 +125,10 @@ function App() {
 
       </Switch>
       {/* <Footer /> */}
+
+      <Route exact path='/payment' component={Payment} />
+
+
     </Router>
   );
 }
