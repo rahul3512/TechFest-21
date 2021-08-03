@@ -1,6 +1,6 @@
 import React, { useState, useEffect  } from 'react';
 import './assets/css/dashres.css';
-import ProfileInformation from './Profile';
+import ProfileI from './Profile';
 import { Link } from 'react-router-dom';
 import * as Scroll from "react-scroll";
 import Leffect from "./assets/images/Group 1left-bar-background.png";
@@ -10,9 +10,10 @@ import TechIcon from "./assets/images/tech icon.svg";
 import Profile from "./assets/images/profile.svg";
 // import Techfest21 from "./assets/images/__techFEST 21.svg";
 import Home from "./assets/images/home.svg";
-// import Payments from "./assets/images/payments.svg";
+import Payments from "./assets/images/payments.svg";
 // import Editbutton from "./assets/images/edit-button.svg";
 import Certificate from "./assets/images/certificate.svg";
+
 import Event from "./assets/images/event.svg";
 // import Line23 from "./assets/images/Line 23.svg";
 import Solid from "./assets/images/solid.svg";
@@ -23,7 +24,7 @@ import Linkedin from './assets/Icons/linkedinicon.svg';
 import Youtube from './assets/Icons/youtubeicon.svg';
 import Password from './assets/Icons/password.svg';
 import moment from 'moment';
-import { getUser } from './helper/userapicalls';
+import { getUser, updateUser } from './helper/userapicalls';
 import { isAuthenticated } from '../../../auth/helper';
 import {  Close as CloseIcon } from '@material-ui/icons';
 import { Button, TextField, IconButton, Fade, Backdrop, makeStyles } from '@material-ui/core';
@@ -61,11 +62,32 @@ function Dash() {
 
   });
   // const [completeUser, setCompleteUser] = useState(null);
+  const {
+    name,
+    lastName,
+    // userID,
+    email,
+    phone,
+    dob,
+    designation,
+    collegeName,
+    collegeAddress,
+    courseEnrolled,
+    branchOfStudy,
+    yearOfStudy,
+    whatsappPhoneNumber,
+    telegramPhoneNumber,
+    loading,
+    // updated,
+
+    error,
+  } = values;
 
 
   const preload = (userId, token) => {
+    console.log("hiii")
     getUser(userId, token).then(data => {
-      console.log(data)
+      // console.log(data)
       if (data.error) {
         setValues({ ...values, error: data.error });
 
@@ -181,7 +203,61 @@ function Dash() {
   const handleChange = (key) => (event) => {
     setVariables({ ...variables, error: false, [key]: event.target.value });
   };
+  
+  const onPaySubmit = (event) => {
+    event.preventDefault();
+    setValues({ ...values, error: "", loading: true, updated: false });
 
+    updateUser(user._Id, token, {
+      name,
+      lastName,
+      email,
+      phone,
+      dob,
+      designation,
+      collegeName,
+      collegeAddress,
+      courseEnrolled,
+      branchOfStudy,
+      yearOfStudy,
+      whatsappPhoneNumber,
+      telegramPhoneNumber,
+    })
+      .then((data) => {
+        if (data.error) {
+          setValues({
+            ...values,
+            error: data.error,
+            loading: false,
+          });
+          alert.show(`${error}`, {
+            type: 'error',
+            timeout: '3000'
+          })
+        } else {
+          alert.show("Profile Updated ! ", {
+            timeout: '3000',
+            type: 'success'
+          })
+
+
+          setValues({
+            ...values,
+            loading: false,
+            error: "",
+            updated: true,
+
+          });
+        }
+      })
+      .catch(() => {
+        alert.show("user not updated", {
+          timeout: '3000',
+          type: 'error'
+        })
+      });
+    handleClose();
+  }
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -337,9 +413,17 @@ function Dash() {
     )
   }
 
+  const [updated, setUpdated] = useState(false);
+
   useEffect(() => {
     preload(user._id, token);
   }, [])
+  useEffect(() => {
+    preload(user._id, token);
+    
+  }, [updated])
+
+  
 
   // const style = {
   //   body :{
@@ -411,6 +495,13 @@ function Dash() {
             <img src={Password} alt="password change" style={{ fill: 'white' }} />
             Change Password
           </Link>
+          {values.designation === 'Student' ?
+            <Link className="dashboard-dash-dlink dashboard-dash-cursor" onClick={handleShow} to='#'>
+              <img src={Payments} alt="payment" style={{ fill: 'white' }} />
+              Pay Now
+            </Link>
+            :
+            null}
 
 
 
@@ -493,7 +584,7 @@ function Dash() {
 
         {/* <!-- PROFILE --> */}
         
-        <ProfileInformation />
+        <ProfileI  />
 
 
         {/* <!-- CERTIFICATION AND AWARDS --> */}
