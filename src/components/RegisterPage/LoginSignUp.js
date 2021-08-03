@@ -30,7 +30,7 @@ const LoginSignUp = ({ isLogin }) => {
       </div>
       <div className="loginSignup">
         <div className="lsFormBox ">
-          <h1 className="text-center text-white pt-4">TechFEST'21</h1>
+          <h1 className="text-center text-white pt-4">techFEST'21</h1>
           <p className="tagline">Revitalizing India : Growth Beyond Infinity</p>
           <div className="LSbuttonBox">
             <button

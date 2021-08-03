@@ -83,12 +83,14 @@
     .home-sponsor {
         color: white;
         /* background: linear-gradient(180.89deg, rgba(61, 72, 93, 0) 7.07%, rgba(44, 72, 126, 0.189266) 14.36%, rgba(26, 72, 163, 0.394602) 22.28%, rgba(1, 72, 215, 0.69) 33.66%, #00349C 43.97%, #102C66 63.59%); */
-        background-image: url('../../../assets/images/sponsorback.jpg');
-        background-repeat: no-repeat;
+        /* background-image: url('../../../assets/images/sponsorback.jpg'); */
+        /* background-repeat: no-repeat; */
         /* background-size: 100%; */
-        background-size: cover;
+        /* background-size: cover; */
         /* background-image: linear-gradient(90deg, #020024 0%, #090979 35%, #00d4ff 100%); */
-   
+        /* background: #0e2b65;
+        background:#092e76 */
+        padding-bottom: 55px;
     }
 
     .sponsor-img{

@@ -1,10 +1,11 @@
 .container{
     box-sizing: border-box;
     min-height: 100vh;
-    width: 99vw;
+    width: 98.9vw;
     scroll-behavior: smooth;
     background-color: #02020E;
     padding-top: 16vh;
+    overflow-x: hidden;
 }
 .content{
     width: 90vw;
@@ -173,8 +174,8 @@
     display: flex;
 }
 .coordinatorImage{
-    width: 64px;
-    height: 64px;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
     margin-right: 18px;
 }
@@ -271,11 +272,17 @@
         font-size: 10px;
     }
     .coordinatorImage{
-        width: 30px;
-        height:30px;
+        width: 26px;
+        height:26px;
+    }
+    .studentCoordinatorContainer{
+        justify-content: space-between;
     }
     .eventCoordinatorData{
-        width: 85%;
+        width: 90%;
+    }
+    .coordinatorDetails p{
+        font-size: 8px;
     }
      
   }

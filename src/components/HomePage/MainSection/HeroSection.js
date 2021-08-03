@@ -18,7 +18,9 @@ function HeroSection() {
     return (
         <div className='hero-container'>
             <div>
-                <video src={vid} autoPlay loop muted style={{ width: '100%' }} />
+                <video src={vid} autoPlay loop muted playsInline style={{ width: '100%' }} >
+                    <source type="video/webm" src={vid} />
+                </video>
             </div>
             <div className='hero-details'>
 
