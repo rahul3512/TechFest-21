@@ -1,4 +1,4 @@
-import React, { useState, useEffect  } from 'react';
+import React, { useState, useEffect } from 'react';
 import './assets/css/dashres.css';
 import ProfileI from './Profile';
 import { Link } from 'react-router-dom';
@@ -26,14 +26,18 @@ import Password from './assets/Icons/password.svg';
 import moment from 'moment';
 import { getUser, updateUser } from './helper/userapicalls';
 import { isAuthenticated } from '../../../auth/helper';
-import {  Close as CloseIcon } from '@material-ui/icons';
+import { Close as CloseIcon, CodeSharp } from '@material-ui/icons';
 import { Button, TextField, IconButton, Fade, Backdrop, makeStyles } from '@material-ui/core';
 import Modal from "@material-ui/core/Modal";
 import { useAlert } from 'react-alert';
 import { API } from '../../../backend';
+import StripeCheckout from "react-stripe-checkout";
 import {
   FaTelegram, FaTwitter
 } from 'react-icons/fa';
+
+import { Payment } from '../../../backend';
+
 
 function Dash() {
   const alert = useAlert();
@@ -83,13 +87,25 @@ function Dash() {
     error,
   } = values;
 
-
+  const loadingMessage = () => {
+    return (
+      values.loading && (
+        <div className=" text-center my-2">
+          <div className="spinner-border text-light " role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      )
+    );
+  };
   const preload = (userId, token) => {
-    console.log("hiii")
+    console.log(user)
+    console.log(token)
+    setValues({ ...values, loading: true })
     getUser(userId, token).then(data => {
       // console.log(data)
       if (data.error) {
-        setValues({ ...values, error: data.error });
+        setValues({ ...values, error: data.error, loading: false });
 
       } else {
 
@@ -112,6 +128,7 @@ function Dash() {
           dob: moment(data?.dob).format('YYYY-MM-DD'),
           eventRegIn: data?.eventRegIn ? data?.eventRegIn : "",
           workshopsEnrolled: data?.workshopsEnrolled ? data?.workshopsEnrolled : "",
+          loading: false
         });
         // if (values.lastName == undefined) {
 
@@ -185,25 +202,25 @@ function Dash() {
     loading: false,
     success: false,
   });
-  const loadingMessage = () => {
-    return (
-      variables.loading && (
-        <div className=" text-center my-2">
-          <div className="spinner-border text-light " role="status">
-            <span className="visually-hidden">Loading...</span>
-          </div>
-        </div>
-      )
-    );
-  };
- 
+  // const loadingMessage = () => {
+  //   return (
+  //     variables.loading && (
+  //       <div className=" text-center my-2">
+  //         <div className="spinner-border text-light " role="status">
+  //           <span className="visually-hidden">Loading...</span>
+  //         </div>
+  //       </div>
+  //     )
+  //   );
+  // };
+
   // const { oldPassword, newPassword, confirmPassword, loading , error , success } =
   //   variables;
 
   const handleChange = (key) => (event) => {
     setVariables({ ...variables, error: false, [key]: event.target.value });
   };
-  
+
   const onPaySubmit = (event) => {
     event.preventDefault();
     setValues({ ...values, error: "", loading: true, updated: false });
@@ -343,7 +360,7 @@ function Dash() {
               >
                 <CloseIcon fontSize="large" />
               </IconButton>
-              
+
               {loadingMessage()}
               <h3
                 id="transition-modal-title"
@@ -420,10 +437,10 @@ function Dash() {
   }, [])
   useEffect(() => {
     preload(user._id, token);
-    
+
   }, [updated])
 
-  
+
 
   // const style = {
   //   body :{
@@ -437,8 +454,81 @@ function Dash() {
 
   //   }
   // }
-  
-  
+
+  const [product, setProduct] = useState({
+    name: "React from FB",
+    price: 5,
+    productBy: "facebook"
+  });
+
+  const makePayment = tokenPay => {
+    const body = {
+      token: tokenPay,
+      product
+    };
+    const headers = {
+      "Content-Type": "application/json"
+    };
+
+    return fetch(`${API}/payment`, {
+      method: "POST",
+      headers,
+      body: JSON.stringify(body)
+    })
+      .then(response => response.text())
+      .then(data => {
+        if (data != 'Success') {
+          alert.show("Payment Failed", {
+            type: 'error',
+            timeout: '3000'
+          })
+          return
+        }
+
+        updateUser(user._id, token, {
+          hasPaidEntry: true
+
+        })
+          .then((data) => {
+            console.log(data)
+            if (data.error) {
+              setValues({
+                ...values,
+                error: data.error,
+                loading: false,
+              });
+              alert.show(`${error}`, {
+                type: 'error',
+                timeout: '3000'
+              })
+            } else {
+              alert.show("Payment Success ! ", {
+                timeout: '3000',
+                type: 'success'
+              })
+
+
+              setValues({
+                ...values,
+                loading: false,
+                error: "",
+                updated: true,
+
+              });
+            }
+          })
+          .catch(() => {
+            alert.show("error", {
+              timeout: '3000',
+              type: 'error'
+            })
+          });
+        handleClose();
+      }
+      )
+      .catch(error => console.log(error));
+  };
+  console.log(Payment)
   return (
     <main className="dashboard-dash-main-body">
       {PasswordChange()}
@@ -461,7 +551,7 @@ function Dash() {
             duration={20}
             to="dashboard"
             spy={true}
-            activeClass ='dashboard-dash-active'
+            activeClass='dashboard-dash-active'
             className={"dashboard-dash-dlink dashboard-dash-cursor "}
           >
             <img src={Home} alt="techFEST-profile-icon" />
@@ -472,7 +562,7 @@ function Dash() {
             duration={10}
             to="profile"
             spy={true}
-            activeClass= 'dashboard-dash-active'
+            activeClass='dashboard-dash-active'
             className={"dashboard-dash-dlink dashboard-dash-cursor "}
           >
             <img src={Profile} alt="techFEST-profile-icon" />
@@ -491,15 +581,24 @@ function Dash() {
           </ScrollLink>
 
           {/* password change link */}
-          <Link  className="dashboard-dash-dlink dashboard-dash-cursor" onClick={handleShow} to='#'>
+          <Link className="dashboard-dash-dlink dashboard-dash-cursor" onClick={handleShow} to='#'>
             <img src={Password} alt="password change" style={{ fill: 'white' }} />
             Change Password
           </Link>
           {values.designation === 'Student' ?
-            <Link className="dashboard-dash-dlink dashboard-dash-cursor" onClick={handleShow} to='#'>
-              <img src={Payments} alt="payment" style={{ fill: 'white' }} />
-              Pay Now
-            </Link>
+            <StripeCheckout
+              stripeKey={Payment}
+              tokenPay={makePayment}
+              name="Register"
+              amount={product.price * 100}
+              shippingAddress
+              billingAddress
+            >
+              <Link className="dashboard-dash-dlink dashboard-dash-cursor" style={{ marginTop: '2rem' }} to='#'>
+                <img src={Payments} alt="payment" style={{ fill: 'white' }} />
+                Registeration Fee {product.price} Rs
+              </Link>
+            </StripeCheckout>
             :
             null}
 
@@ -513,6 +612,7 @@ function Dash() {
       </div>
       {/* <!-- MAIN CONTENT according to the option clicked in leftbar --> */}
       <div className="dashboard-dash-main-content">
+        {loadingMessage()}
         {/* <!-- DASHBOARD --> */}
         <div className="dashboard-dash-dashboard" id="dashboard" >
           <div className="dashboard-dash-user-profile-display">
@@ -565,7 +665,7 @@ function Dash() {
               {values?.workshopsEnrolled.length > 0 ?
                 <div className="dashboard-dash-event-card_events-list">
                   {values?.workshopsEnrolled.map((row) => (
-                    <div className="dashboard-dash-event" key = {row._id}>
+                    <div className="dashboard-dash-event" key={row._id}>
                       <span className="dashboard-dash-event-name">{row.workshopName}</span>
                       <Link to={{ pathname: `/domain`, state: { name: "workshops", id: row._id } }} id={row._id} message={'redirected from dashboard'} className='btn  btn-outline-primary btn-sm'>View detail</Link>
                     </div>
@@ -583,8 +683,8 @@ function Dash() {
         </div>
 
         {/* <!-- PROFILE --> */}
-        
-        <ProfileI  />
+
+        <ProfileI />
 
 
         {/* <!-- CERTIFICATION AND AWARDS --> */}
@@ -666,28 +766,28 @@ function Dash() {
             Copyright © 2021. All Rights Reserved.
           </div>
           <div className="footer-cta">
-            <Link to={{ pathname: 'https://t.me/joinchat/D6puheMtqWI2M2Jl'}} target=  '_blank' className="dashboard-dash-Link-a dashboard-dash-cursor">
+            <Link to={{ pathname: 'https://t.me/joinchat/D6puheMtqWI2M2Jl' }} target='_blank' className="dashboard-dash-Link-a dashboard-dash-cursor">
               <FaTelegram />
               Join our Telegram Commuity
             </Link>
           </div>
           <div className="footer-sm">
-            <Link to={{ pathname : "https://www.facebook.com/techfestsliet/" }} target="_blank" className="dashboard-dash-Link-a">
+            <Link to={{ pathname: "https://www.facebook.com/techfestsliet/" }} target="_blank" className="dashboard-dash-Link-a">
               <img src={Facebook} alt="facebook" />
             </Link>
             <Link to={{ pathname: 'https://instagram.com/techfestsliet_' }} target="_blank" className="dashboard-dash-Link-a">
               <img src={Instagram} alt="instagram" />
             </Link>
-            <Link to={{ pathname: 'https://www.linkedin.com/company/techfest-sliet' }} target="_blank"  className="dashboard-dash-Link-a">
+            <Link to={{ pathname: 'https://www.linkedin.com/company/techfest-sliet' }} target="_blank" className="dashboard-dash-Link-a">
               <img src={Linkedin} alt="linkedin" />
             </Link>
-            <Link to={{ pathname: 'https://twitter.com/techfestsliet' }} target="_blank"  className="dashboard-dash-Link-a">
+            <Link to={{ pathname: 'https://twitter.com/techfestsliet' }} target="_blank" className="dashboard-dash-Link-a">
               <FaTwitter />
             </Link>
-            <Link to={{ pathname: '//www.youtube.com/channel/UCsKsymTY_4BYR-wytLjex7A?view_as=subscriber' }} className="dashboard-dash-Link-a" target = '_blank'>
+            <Link to={{ pathname: '//www.youtube.com/channel/UCsKsymTY_4BYR-wytLjex7A?view_as=subscriber' }} className="dashboard-dash-Link-a" target='_blank'>
               <img src={Youtube} alt="youtube" />
             </Link>
-            
+
           </div>
         </div>
 
@@ -697,5 +797,6 @@ function Dash() {
 
   );
 }
+
 
 export default Dash
