@@ -4,7 +4,7 @@ import StripeCheckout from "react-stripe-checkout";
 function Payment() {
     const [product, setProduct] = useState({
         name: "React from FB",
-        price: 10,
+        price: 5,
         productBy: "facebook"
     });
 
@@ -32,24 +32,16 @@ function Payment() {
 
     return (
         <div    style={{ marginTop: '10%' }}>
-            <a
-                className="App-link"
-                href="#"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                Learn React
-            </a>
             <StripeCheckout
-                stripeKey="pk_live_51ILhyyK2faB59yIQiMX6h3plk4DJgRQrJWqb2mtEeDiMWuZ4aF0d3ituNa3mtFV4xmGPnq1hnNuZ3BO4pnc6w6sS00mpC62de5"
+                stripeKey={process.env.Payment}
                 token={makePayment}
-                name="Buy React"
+                name="Register"
                 amount={product.price * 100}
                 shippingAddress
                 billingAddress
             >
                 <button className="btn-large blue">
-                    Buy react is just {product.price}
+                Registeration Fee {product.price} Rs
                 </button>
             </StripeCheckout>
         </div>
