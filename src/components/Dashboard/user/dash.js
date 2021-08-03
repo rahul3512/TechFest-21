@@ -63,7 +63,7 @@ function Dash() {
     loading: false,
     updated: false,
     error: "",
-
+    hasPaidEntry: false
   });
   // const [completeUser, setCompleteUser] = useState(null);
   const {
@@ -83,7 +83,7 @@ function Dash() {
     telegramPhoneNumber,
     loading,
     // updated,
-
+    hasPaidEntry,
     error,
   } = values;
 
@@ -99,8 +99,8 @@ function Dash() {
     );
   };
   const preload = (userId, token) => {
-    console.log(user)
-    console.log(token)
+    // console.log(user)
+    // console.log(token)
     setValues({ ...values, loading: true })
     getUser(userId, token).then(data => {
       // console.log(data)
@@ -112,6 +112,7 @@ function Dash() {
         // setCompleteUser(data);
         setValues({
           ...values,
+          hasPaidEntry: data?.hasPaidEntry ? data?.hasPaidEntry : false,
           name: data?.name ? data?.name : "",
           lastName: data?.lastName ? data?.lastName : "",
           userID: data?.userId ? data?.userId : "",
@@ -507,9 +508,9 @@ function Dash() {
                 type: 'success'
               })
 
-
               setValues({
                 ...values,
+                hasPaidEntry: true,
                 loading: false,
                 error: "",
                 updated: true,
@@ -585,14 +586,13 @@ function Dash() {
             <img src={Password} alt="password change" style={{ fill: 'white' }} />
             Change Password
           </Link>
-          {values.designation === 'Student' ?
+          {console.log(values.hasPaidEntry)}
+          {values.designation === 'Student' && values.hasPaidEntry === false ?
             <StripeCheckout
               stripeKey={Payment}
-              tokenPay={makePayment}
+              token={makePayment}
               name="Register"
               amount={product.price * 100}
-              shippingAddress
-              billingAddress
             >
               <Link className="dashboard-dash-dlink dashboard-dash-cursor" style={{ marginTop: '2rem' }} to='#'>
                 <img src={Payments} alt="payment" style={{ fill: 'white' }} />
