@@ -20,7 +20,7 @@ export const DialogComponent=(props)=>{
             aria-labelledby="alert-dialog-slide-title"
             aria-describedby="alert-dialog-slide-description"
             onClose={props.close}
-        >{console.log(props)}
+        >
             {
                 props.register?
                 <Register close={props.close} popUpMessage={props.data.popUpMessage}/>:null
