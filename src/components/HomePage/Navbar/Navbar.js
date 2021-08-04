@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -30,6 +30,8 @@ import { isAuthenticated, signout } from '../../../auth/helper';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import teclogo from '../../../assets/images/techFESTlogo.png';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import ChangePassword from '../../Dashboard/user/ChangePassword';
+import LockOpenIcon from '@material-ui/icons/LockOpen';
 
 const drawerWidth = 240;
 
@@ -191,7 +193,16 @@ const Nav = props => {
       }
     })
   } else {
+
     itemsList.push(
+      {
+        text: "Change Password",
+        icon: <LockOpenIcon />,
+        onClick: () => {
+          handleShow()
+          handleDrawerClose()
+        }
+      },
       {
         text: "Sign out",
         icon: <ExitToAppIcon />,
@@ -201,8 +212,26 @@ const Nav = props => {
         })
       }
     )
+
   }
 
+  const [show, setShow] = useState(false);
+
+
+  const handleShow = () => setShow(true);
+  const handleClose = useCallback(() => {
+    setShow(false);
+  }, [show])
+
+  const ChangeP = () => {
+    return (
+      <>
+        {show ?
+          <ChangePassword handleClose={handleClose} /> : null}
+      </>
+
+    )
+  }
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -212,86 +241,91 @@ const Nav = props => {
   };
 
   return (
-    <div className={classes.root}>
-      <CssBaseline />
-      <AppBar
-        position="fixed"
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: open,
-        })}
-      >
-        <Toolbar>
-          <Typography variant="h6" noWrap className={classes.title}>
-            <Box className='logo' component={Link} to='/'>
-              {/* techFEST'21 */}
-              <img src={teclogo} alt='tec-logo' className='logo-img' />
-            </Box>
+    <>
+      {ChangeP()}
+      <div className={classes.root}>
 
-          </Typography>
-          <div className="appbar">
-
-            <MenuItem className="navmenu" component={Link} to="/pr-intern">PR Intern</MenuItem>
-
-            {
-              !isAuthenticated() && (
-                <MenuItem className="navmenu" component={Link} to="/register">Register</MenuItem>
-
-              )
-            }
-
-            {
-              isAuthenticated() && (
-                <MenuItem className="navmenu" onClick={() => signout(() => {
-                  history.push("/")
-                })}>Sign out</MenuItem>
-
-              )
-            }
-          </div>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="end"
-            onClick={handleDrawerOpen}
-            className={clsx(open && classes.hide)}
-          >
-            <MenuIcon />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
-
-
-      <Drawer
-        className={classes.drawer}
-        variant="persistent"
-        anchor="right"
-        open={open}
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-      >
-        <div className={classes.drawerHeader}>
-          <IconButton onClick={handleDrawerClose} className="closeicon">
-            {theme.direction === 'rtl' ? <CloseIcon /> : <CloseIcon />}
-          </IconButton>
-        </div>
-        <Divider />
-        <List>
-          {itemsList.map((item, index) => {
-            const { text, icon, onClick } = item;
-            return (
-              <ListItem button key={text} onClick={onClick}>
-                {icon && <ListItemIcon>{icon}</ListItemIcon>}
-                <ListItemText primary={text} />
-              </ListItem>
-            );
+        <CssBaseline />
+        <AppBar
+          position="fixed"
+          className={clsx(classes.appBar, {
+            [classes.appBarShift]: open,
           })}
-        </List>
+        >
 
-        <Divider />
+          <Toolbar>
+            <Typography variant="h6" noWrap className={classes.title}>
+              <Box className='logo' component={Link} to='/'>
+                {/* techFEST'21 */}
+                <img src={teclogo} alt='tec-logo' className='logo-img' />
+              </Box>
 
-      </Drawer>
-    </div>
+            </Typography>
+            <div className="appbar">
+
+              <MenuItem className="navmenu" component={Link} to="/pr-intern">PR Intern</MenuItem>
+
+              {
+                !isAuthenticated() && (
+                  <MenuItem className="navmenu" component={Link} to="/register">Register</MenuItem>
+
+                )
+              }
+
+              {
+                isAuthenticated() && (
+                  <MenuItem className="navmenu" onClick={() => signout(() => {
+                    history.push("/")
+                  })}>Sign out</MenuItem>
+
+                )
+              }
+            </div>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="end"
+              onClick={handleDrawerOpen}
+              className={clsx(open && classes.hide)}
+            >
+              <MenuIcon />
+            </IconButton>
+          </Toolbar>
+        </AppBar>
+
+
+        <Drawer
+          className={classes.drawer}
+          variant="persistent"
+          anchor="right"
+          open={open}
+          classes={{
+            paper: classes.drawerPaper,
+          }}
+        >
+          <div className={classes.drawerHeader}>
+            <IconButton onClick={handleDrawerClose} className="closeicon">
+              {theme.direction === 'rtl' ? <CloseIcon /> : <CloseIcon />}
+            </IconButton>
+          </div>
+          <Divider />
+          <List>
+            {itemsList.map((item, index) => {
+              const { text, icon, onClick } = item;
+              return (
+                <ListItem button key={text} onClick={onClick}>
+                  {icon && <ListItemIcon>{icon}</ListItemIcon>}
+                  <ListItemText primary={text} />
+                </ListItem>
+              );
+            })}
+          </List>
+
+          <Divider />
+
+        </Drawer>
+      </div>
+    </>
   );
 }
 

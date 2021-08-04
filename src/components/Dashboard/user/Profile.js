@@ -8,7 +8,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
-import { TextField, FormControlLabel,FormControl , Button, Checkbox, IconButton , MenuItem , Select , InputLabel} from "@material-ui/core";
+import { TextField, FormControlLabel, FormControl, Button, Checkbox, IconButton, MenuItem, Select, InputLabel } from "@material-ui/core";
 import CloseIcon from '@material-ui/icons/Close';
 import { isAuthenticated } from "../../../auth/helper";
 import './assets/css/dashres.css';
@@ -17,7 +17,7 @@ import { useAlert } from 'react-alert';
 
 
 const ProfileI = () => {
-   
+
     const alert = useAlert();
     const [values, setValues] = useState({
         name: "",
@@ -75,7 +75,7 @@ const ProfileI = () => {
                 setValues({ ...values, error: data.error });
                 alert.show(`${error}`, {
                     timeout: '3000',
-                    type : 'error'
+                    type: 'error'
                 })
             } else {
                 // setCompleteUser(data)
@@ -108,7 +108,7 @@ const ProfileI = () => {
         preload(user._id, token);
         setUserId(user._id);
     }, []);
-    
+
 
 
     const loadingMessage = () => {
@@ -186,14 +186,14 @@ const ProfileI = () => {
                     });
                     alert.show(`${error}`, {
                         type: 'error',
-                        timeout :'3000'
+                        timeout: '3000'
                     })
                 } else {
                     alert.show("Profile Updated ! ", {
                         timeout: '3000',
                         type: 'success'
                     })
-                    
+
 
                     setValues({
                         ...values,
@@ -202,13 +202,13 @@ const ProfileI = () => {
                         updated: true,
 
                     });
-                    // setUpdated(true);
+
                 }
             })
             .catch(() => {
                 alert.show("user not updated", {
                     timeout: '3000',
-                    type :'error'
+                    type: 'error'
                 })
             });
         handleClose();
@@ -466,13 +466,13 @@ const ProfileI = () => {
                             <FormControl className={classes.fontstyle} variant="outlined">
                                 <InputLabel id="designation" className={classes.inputLabel}>Designation</InputLabel>
                                 <Select
-                                    labelId="designation"                               
+                                    labelId="designation"
                                     value={designation}
                                     type="text"
-                                    className = {classes.input}
+                                    className={classes.input}
                                     onChange={handleChange("designation")}
-                                >       
-                                    <MenuItem  value='Student' >Student</MenuItem>
+                                >
+                                    <MenuItem value='Student' >Student</MenuItem>
                                     <MenuItem value='Others' >Others</MenuItem>
                                 </Select>
                             </FormControl>
@@ -555,7 +555,7 @@ const ProfileI = () => {
                                         }}
                                         onChange={handleChange("yearOfStudy")}
                                     />
-                                    
+
                                 </> :
                                 <>
                                     <TextField
@@ -579,7 +579,7 @@ const ProfileI = () => {
                                         label="Home Address"
                                         value={collegeAddress}
                                         variant="outlined"
-                                        style={{ width: (designation=='Others' ? "90%" : "" )}}
+                                        style={{ width: (designation == 'Others' ? "90%" : "") }}
                                         InputLabelProps={{
                                             className: classes.inputLabel,
                                         }}
@@ -588,8 +588,8 @@ const ProfileI = () => {
                                         }}
                                         onChange={handleChange("collegeAddress")}
                                     />
-                                    </>
-                                }
+                                </>
+                            }
                             <br />
                             <div style={{ textAlign: 'center' }}>
                                 <Button
