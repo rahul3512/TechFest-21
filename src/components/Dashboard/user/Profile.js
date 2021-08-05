@@ -8,7 +8,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
-import { TextField, FormControlLabel, Button, Checkbox, IconButton } from "@material-ui/core";
+import { TextField, FormControlLabel,FormControl , Button, Checkbox, IconButton , MenuItem , Select , InputLabel} from "@material-ui/core";
 import CloseIcon from '@material-ui/icons/Close';
 import { isAuthenticated } from "../../../auth/helper";
 import './assets/css/dashres.css';
@@ -16,7 +16,8 @@ import './assets/css/dashres.css';
 import { useAlert } from 'react-alert';
 
 
-const Profile = () => {
+const ProfileI = () => {
+   
     const alert = useAlert();
     const [values, setValues] = useState({
         name: "",
@@ -61,7 +62,7 @@ const Profile = () => {
         whatsappPhoneNumber,
         telegramPhoneNumber,
         loading,
-        // updated,
+        updated,
         error,
     } = values;
 
@@ -107,6 +108,7 @@ const Profile = () => {
         preload(user._id, token);
         setUserId(user._id);
     }, []);
+    
 
 
     const loadingMessage = () => {
@@ -191,7 +193,7 @@ const Profile = () => {
                         timeout: '3000',
                         type: 'success'
                     })
-
+                    
 
                     setValues({
                         ...values,
@@ -200,6 +202,7 @@ const Profile = () => {
                         updated: true,
 
                     });
+                    // setUpdated(true);
                 }
             })
             .catch(() => {
@@ -432,7 +435,7 @@ const Profile = () => {
                                 label="Same as Phone"
                                 style={{ margin: "0.625rem" }}
                             />
-                            <TextField
+                            {/* <TextField
                                 className={classes.fontstyle}
                                 type="text"
                                 label="Designation"
@@ -445,7 +448,7 @@ const Profile = () => {
                                     className: classes.input,
                                 }}
                                 onChange={handleChange("designation")}
-                            />
+                            /> */}
                             <TextField
                                 className={classes.fontstyle}
                                 type="date"
@@ -460,83 +463,133 @@ const Profile = () => {
                                     className: classes.input,
                                 }}
                             />
-                            <TextField
-                                className={classes.fontstyle}
-                                type="text"
-                                label="College Name"
-                                value={collegeName}
-                                onChange={handleChange("collegeName")}
-                                variant="outlined"
-                                style={{ width: "90%" }}
-                                InputLabelProps={{
-                                    className: classes.inputLabel,
-                                }}
-                                InputProps={{
-                                    className: classes.input,
-                                }}
-                            />
-                            <TextField
-                                className={classes.fontstyle}
-                                type="text"
-                                label="College Address"
-                                value={collegeAddress}
-                                variant="outlined"
-                                InputLabelProps={{
-                                    className: classes.inputLabel,
-                                }}
-                                InputProps={{
-                                    className: classes.input,
-                                }}
-                                onChange={handleChange("collegeAddress")}
-                            />
-                            <TextField
-                                className={classes.fontstyle}
-                                type="text"
-                                label="Course Enrolled"
-                                value={courseEnrolled}
-                                variant="outlined"
-                                InputLabelProps={{
-                                    className: classes.inputLabel,
-                                }}
-                                InputProps={{
-                                    className: classes.input,
-                                }}
-                                onChange={handleChange("courseEnrolled")}
-                            />
-                            <TextField
-                                className={classes.fontstyle}
-                                type="text"
-                                label="Branch Of Study"
-                                value={branchOfStudy}
-                                variant="outlined"
-                                InputLabelProps={{
-                                    className: classes.inputLabel,
-                                }}
-                                InputProps={{
-                                    className: classes.input,
-                                }}
-                                onChange={handleChange("branchOfStudy")}
-                            />
-                            <TextField
-                                className={classes.fontstyle}
+                            <FormControl className={classes.fontstyle} variant="outlined">
+                                <InputLabel id="designation" className={classes.inputLabel}>Designation</InputLabel>
+                                <Select
+                                    labelId="designation"                               
+                                    value={designation}
+                                    type="text"
+                                    className = {classes.input}
+                                    onChange={handleChange("designation")}
+                                >       
+                                    <MenuItem  value='Student' >Student</MenuItem>
+                                    <MenuItem value='Others' >Others</MenuItem>
+                                </Select>
+                            </FormControl>
+                            {designation == 'Student' ?
+                                <>
+                                    <TextField
+                                        className={classes.fontstyle}
+                                        type="text"
+                                        label="College Name"
+                                        value={collegeName}
+                                        onChange={handleChange("collegeName")}
+                                        variant="outlined"
+                                        style={{ width: "90%" }}
+                                        InputLabelProps={{
+                                            className: classes.inputLabel,
+                                        }}
+                                        InputProps={{
+                                            className: classes.input,
+                                        }}
+                                    />
+                                    <TextField
+                                        className={classes.fontstyle}
+                                        type="text"
+                                        label="College Address"
+                                        value={collegeAddress}
+                                        variant="outlined"
+                                        InputLabelProps={{
+                                            className: classes.inputLabel,
+                                        }}
+                                        InputProps={{
+                                            className: classes.input,
+                                        }}
+                                        onChange={handleChange("collegeAddress")}
+                                    />
+                                    <TextField
+                                        className={classes.fontstyle}
+                                        type="text"
+                                        label="Course Enrolled"
+                                        value={courseEnrolled}
+                                        variant="outlined"
+                                        InputLabelProps={{
+                                            className: classes.inputLabel,
+                                        }}
+                                        InputProps={{
+                                            className: classes.input,
+                                        }}
+                                        onChange={handleChange("courseEnrolled")}
+                                    />
+                                    <TextField
+                                        className={classes.fontstyle}
+                                        type="text"
+                                        label="Branch Of Study"
+                                        value={branchOfStudy}
+                                        variant="outlined"
+                                        InputLabelProps={{
+                                            className: classes.inputLabel,
+                                        }}
+                                        InputProps={{
+                                            className: classes.input,
+                                        }}
+                                        onChange={handleChange("branchOfStudy")}
+                                    />
+                                    <TextField
+                                        className={classes.fontstyle}
 
-                                type="number"
+                                        type="number"
 
-                                label="Year Of Study"
-                                value={yearOfStudy}
-                                variant="outlined"
-                                InputLabelProps={{
-                                    className: classes.inputLabel,
-                                }}
-                                InputProps={{
-                                    className: classes.input,
-                                    inputProps: {
-                                        min: 1,
-                                        max: 7
-                                    }
-                                }}
-                                onChange={handleChange("yearOfStudy")}
-                            />
+                                        label="Year Of Study"
+                                        value={yearOfStudy}
+                                        variant="outlined"
+                                        InputLabelProps={{
+                                            className: classes.inputLabel,
+                                        }}
+                                        InputProps={{
+                                            className: classes.input,
+                                            inputProps: {
+                                                min: 1,
+                                                max: 7
+                                            }
+                                        }}
+                                        onChange={handleChange("yearOfStudy")}
+                                    />
+                                    
+                                </> :
+                                <>
+                                    <TextField
+                                        className={classes.fontstyle}
+                                        type="text"
+                                        label="Organization Name"
+                                        value={collegeName}
+                                        onChange={handleChange("collegeName")}
+                                        variant="outlined"
+                                        style={{ width: "90%" }}
+                                        InputLabelProps={{
+                                            className: classes.inputLabel,
+                                        }}
+                                        InputProps={{
+                                            className: classes.input,
+                                        }}
+                                    />
+                                    <TextField
+                                        className={classes.fontstyle}
+                                        type="text"
+                                        label="Home Address"
+                                        value={collegeAddress}
+                                        variant="outlined"
+                                        style={{ width: (designation=='Others' ? "90%" : "" )}}
+                                        InputLabelProps={{
+                                            className: classes.inputLabel,
+                                        }}
+                                        InputProps={{
+                                            className: classes.input,
+                                        }}
+                                        onChange={handleChange("collegeAddress")}
+                                    />
+                                    </>
+                                }
                             <br />
                             <div style={{ textAlign: 'center' }}>
                                 <Button
@@ -670,4 +723,4 @@ const Profile = () => {
     );
 };
 
-export default Profile;
+export default ProfileI;
