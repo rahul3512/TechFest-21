@@ -587,18 +587,16 @@ function Dash() {
             Change Password
           </Link>
           {console.log(values.hasPaidEntry)}
-          {values.designation === 'Student' && values.hasPaidEntry === false ?
-            <StripeCheckout
-              stripeKey={Payment}
-              token={makePayment}
-              name="Register"
-              amount={product.price * 100}
-            >
-              <Link className="dashboard-dash-dlink dashboard-dash-cursor" style={{ marginTop: '2rem' }} to='#'>
+          {values.designation === 'Student' && values.hasPaidEntry == false ?
+            <div>
+              <form className="dashboard-dash-dlink dashboard-dash-cursor" style={{ marginTop: '2rem' }} action="https://api.techfestsliet.com/api/create-checkout-session" method="POST">
                 <img src={Payments} alt="payment" style={{ fill: 'white' }} />
-                Registeration Fee {product.price} Rs
-              </Link>
-            </StripeCheckout>
+                <input type="hidden" name="id" value={user._id} />
+                <button className="checkOutBtn" type="submit">
+                  Checkout
+                </button>
+              </form>
+            </div>
             :
             null}
 
