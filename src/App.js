@@ -29,7 +29,7 @@ import AddEvent from './components/Dashboard/superadmin/AddEvent'
 import AddWorkshop from './components/Dashboard/superadmin/AddWorkshop'
 import AddWorkshopSession from './components/Dashboard/superadmin/AddWorkshopSession'
 import UpdateDomain from './components/Dashboard/superadmin/UpdateDomain';
-import AdminDomains from './components/Dashboard/superadmin/AdminDomains';
+import AdminDomains from './components/Dashboard/superadmin/adminDomains';
 import AdminCoordinators from './components/Dashboard/superadmin/AdminCoodinators';
 import UpdateCoordinator from './components/Dashboard/superadmin/UpdateCoordinator';
 import UpdateWorkshop from './components/Dashboard/superadmin/UpdateWorkshop';
@@ -48,7 +48,11 @@ function App() {
     <Router>
       <GlobalStyle />
       <ScrollToTop />
-      <Navbar />
+
+      <AlertProvider template={AlertTemplate}>
+        <Navbar />
+      </AlertProvider>
+
       <Switch>
         <Route exact path='/pr-intern' component={PrIntern} />
         <Route exact path='/register' component={Register} />

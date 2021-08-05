@@ -27,7 +27,7 @@ export const AddTeam=(props)=>{
 
     return (
         <main>
-            <DialogContent>{console.log(props.heading)}
+            <DialogContent>
             <DialogTitle id="alert-dialog-slide-title">Add Team</DialogTitle>
             <TextField
                 autoFocus

@@ -138,7 +138,7 @@ Reusable Elements
   border-right: calc(var(--length) * 0.6rem) solid #ffffff;
 } */
 
-.dashboard-dash-active{
+.dashboard-dash-active {
   border-right: calc(var(--length) * 0.6rem) solid #ffffff;
   color: #0a58ca;
 }
@@ -154,6 +154,11 @@ Reusable Elements
 /* --------------------------------------------
  -----------------MAIN CONTENT-----------------
 -------------------------------------------- */
+.passwordChange {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  display: none;
+}
 
 .dashboard-dash-main-content {
   margin-left: calc(var(--length) * 40.5rem);
@@ -528,7 +533,6 @@ Reusable Elements
   margin-bottom: calc(var(--length) * 9rem);
 }
 
-
 .grid-colum-template-3-1 {
   grid-template-columns: 3fr 1fr;
 }
@@ -670,6 +674,9 @@ Reusable Elements
 @media only screen and (max-width: 950px) {
   .dashboard-dash-leftbar {
     display: none;
+  }
+  .passwordChange {
+    display: block;
   }
   .dashboard-dash-nav {
     display: block;
