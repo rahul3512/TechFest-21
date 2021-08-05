@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router';
 // import vid from '../../../assets/images/home.webp';
-import vid from '../../../assets/images/Headvideo.webm';
+import vid from '../../../assets/images/Headvideo.mp4';
 import './HeroSection.css';
 import { homeObjOne } from '../../../pages/HomePage/Data';
 import InfoSection from '../../HomePage/InfoSection/InfoSection'

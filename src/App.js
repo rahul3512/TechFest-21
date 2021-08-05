@@ -12,7 +12,7 @@ import Sponsor from './pages/Sponsor';
 import ContactUs from './pages/ContactUs';
 import ScrollToTop from './components/ScrollToTop';
 import Resetpassword from './pages/Resetpassword';
-import vid from './assets/01FINALBlue.mp4'
+import vid from './assets/blue.mp4';
 
 import { Navbar } from './components';
 import SignIn from './pages/SignIn';
@@ -42,7 +42,7 @@ import AdminWorkshopSessions from './components/Dashboard/superadmin/AdminWorksh
 
 
 function App() {
-  
+
   return (
     <Router>
       <GlobalStyle />
