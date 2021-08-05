@@ -311,7 +311,7 @@ function Dash() {
             />
             Change Password
           </Link>
-          {values.designation === "Student" && values.hasPaidEntry === false ? (
+          {/* {values.designation === "Student" && values.hasPaidEntry === false ? (
             <StripeCheckout
               stripeKey={Payment}
               token={makePayment}
@@ -329,6 +329,23 @@ function Dash() {
                 Registeration Fee {product.price} Rs
               </Link>
             </StripeCheckout>
+          ) : null} */}
+          {console.log(values.hasPaidEntry)}
+          {values.designation === "Student" && values.hasPaidEntry == false ? (
+            <div>
+              <form
+                className="dashboard-dash-dlink dashboard-dash-cursor"
+                style={{ marginTop: "2rem" }}
+                action="https://api.techfestsliet.com/api/create-checkout-session"
+                method="POST"
+              >
+                <img src={Payments} alt="payment" style={{ fill: "white" }} />
+                <input type="hidden" name="id" value={user._id} />
+                <button className="checkOutBtn" type="submit">
+                  Checkout
+                </button>
+              </form>
+            </div>
           ) : null}
         </div>
       </div>

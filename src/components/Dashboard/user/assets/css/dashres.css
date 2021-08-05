@@ -609,6 +609,17 @@ Reusable Elements
   opacity: 1;
 }
 
+/* checkout btn */
+.checkOutBtn{
+  background: transparent;
+  color: white;
+  border: 0;
+}
+
+.checkOutBtn:hover{
+  color: #0d6efd;
+}
+
 /* ----------------------------------------
 ------------ Media Querries -----------------
 ----------------------------------------*/
