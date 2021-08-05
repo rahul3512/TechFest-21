@@ -372,7 +372,7 @@ export class ExploreEvents extends Component {
                     <div className={classes.eventImage}>
                         <img src={`${BASE_API}${this.props.content.photo}`} alt='' className={classes.image} />
                         {
-                            this.props.heading === 'Precula' ?
+                            this.props.heading === 'Precuela' ?
                                 null
                                 // <div className={classes.eventDeadline}>
                                 //     {console.log(this.props)}
@@ -392,7 +392,7 @@ export class ExploreEvents extends Component {
                     </div>
                     {/* SECTION 2 */}
                     {
-                        this.props.heading === 'Precula' ?
+                        this.props.heading === 'Precuela' ?
                             <div className={classes.eventInfo}>
                                 <section className={classes.eventInfoData}>
                                     <h1>{this.props.content.workshoptName}</h1>
@@ -436,7 +436,7 @@ export class ExploreEvents extends Component {
 
                     <div className={classes.eventPrize}>
                         <section className={classes.eventAmount}>
-                            {this.props.heading === 'Precula' ?
+                            {this.props.heading === 'Precuela' ?
                                 <div className={classes.prizeMoney}>
                                     <p>Registration Fees</p>
                                     <p>Free</p>
@@ -450,7 +450,7 @@ export class ExploreEvents extends Component {
                         </section>
                         <section className={classes.eventCoordinators}>
                             {
-                                this.props.heading === 'Precula' ?
+                                this.props.heading === 'Precuela' ?
                                     this.props.content.studentCoordinator.map((item, pos) => {
                                         return (
                                             <section key={pos} className={classes.coordinatorData}>
