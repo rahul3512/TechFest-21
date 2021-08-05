@@ -43,12 +43,16 @@ import Payment from './pages/Payment';
 
 
 function App() {
-  
+
   return (
     <Router>
       <GlobalStyle />
       <ScrollToTop />
-      <Navbar />
+
+      <AlertProvider template={AlertTemplate}>
+        <Navbar />
+      </AlertProvider>
+
       <Switch>
         <Route exact path='/pr-intern' component={PrIntern} />
         <Route exact path='/register' component={Register} />
