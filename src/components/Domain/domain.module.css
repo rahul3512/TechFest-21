@@ -4,13 +4,13 @@
     width: 98.9vw;
     scroll-behavior: smooth;
     background-color: #02020E;
-    padding-top: 15vh;
+    padding-top: 12vh;
     overflow-x: hidden;
 }
 .content{
     width: 90vw;
     padding-top: 5vh;
-    height: 80vh;
+    height: 84vh;
     margin-left: auto;
     margin-right: auto;
     position: relative;
@@ -18,7 +18,7 @@
 .text{
     color: white;
     min-width: 16vw;
-    max-width: 35vw;
+    max-width: 40vw;
     overflow: hidden;
     height:28vh;
 }
@@ -206,10 +206,19 @@
     transition: opacity 200ms;
   }
   /* MEDIA QUERIES */
-  @media screen  and (max-width:768px){
+  @media screen  and (max-width:1024px){
+    .container{
+        padding-top: 12vh;
+    }
+    .content{
+        height: 87vh;
+    }
     .text{
-        max-width: 60vw;
-        max-height: 25vh;
+        max-width: 62vw;
+        height: auto;
+    }
+    .text p{
+        font-size: 14px;
     }
     .btnExploreEvents{
         padding: 10px 22px;
@@ -248,10 +257,11 @@
   @media screen and (max-width:480px){
       .container{
           overflow-x: hidden;
-          padding-top: 10vh;
+          padding-top: 6vh;
       }
+
       .content{
-            height:87vh;
+            height:92vh;
       }
       .displayImage{
           width: auto;
@@ -265,18 +275,22 @@
         word-wrap: break-word;
         max-height: 25vh;
     }
+    .text p{
+        font-size: 12px;
+    }
     .btnExploreEvents{
         padding: 8px 20px;
         font-size: 12px;
-        margin-bottom: 18px;
+        margin-top: 20px;
+        margin-bottom: 15px;
     }
     .facultyCoordinator{
-        flex-direction: column;
+        /* flex-direction: column; */
         width: 100%;
     }
     .facultyCoordinatorImage{
-        width: 50px;
-        height:50px;
+        width: 40px;
+        height:40px;
     }
     
     .cardData h4{
@@ -291,8 +305,11 @@
         height:40px;
     }
     .studentCoordinatorContainer{
-        width: 52%;
+        width: auto;
         flex-direction: column;
+    }
+    .facultyCoordinatorContainer{
+        padding-top: 12px;
     }
     .studentCoordinator{
         width: 100%;
