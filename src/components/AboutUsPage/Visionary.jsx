@@ -60,7 +60,7 @@ function Visionary() {
               <div className="card-item">
                 <img className="teacherimage" src={FacultyAdvisorTech} alt="hello" />
               </div>
-              <h5 className="card-title">Dr. Preetpal Sing</h5>
+              <h5 className="card-title">Dr. Preetpal Kaur</h5>
               <p className="card-text">Faculty Advisor techFEST</p>
             </div>
 

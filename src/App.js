@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Redirect, Switch, Route } from 'react-router-dom';
 import GlobalStyle from './globalStyles';
 import Home from './pages/HomePage/Home';
 // import SignUp from './pages/SignUp/SignUp';
@@ -38,7 +38,7 @@ import UpdateWorkshopSession from './components/Dashboard/superadmin/UpdateWorks
 import AdminWorkshops from './components/Dashboard/superadmin/AdminWorkshops';
 import AdminEvents from './components/Dashboard/superadmin/AdminEvents';
 import AdminWorkshopSessions from './components/Dashboard/superadmin/AdminWorkshopSessions';
-import Payment from './pages/Payment';
+import NotFound from './pages/NotFound';
 
 
 
@@ -65,6 +65,7 @@ function App() {
         {/* <Route path='/sign-up' component={SignUp} /> */}
         <Route exact path='/' component={Home} />
         <Route exact path='/ForgetPassword' component={Resetpassword} />
+
 
         <SuperAdminRoutes path="/superadmin/dashboard" exact component={SuperAdminDashboard} />
         <SuperAdminRoutes path="/superadmin/coordinator" exact component={Coordinator} />
@@ -126,13 +127,8 @@ function App() {
         <AlertProvider template={AlertTemplate}>
           <PrivateRoute path="/user/dashboard" exact component={UserDashboard} />
         </AlertProvider>
-
       </Switch>
       {/* <Footer /> */}
-
-      <Route exact path='/payment' component={Payment} />
-
-
     </Router>
   );
 }

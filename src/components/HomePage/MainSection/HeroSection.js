@@ -1,7 +1,8 @@
 import React from 'react';
 import { useHistory } from 'react-router';
 // import vid from '../../../assets/images/home.webp';
-import vid from '../../../assets/images/Headvideo.mp4';
+import vidPc from '../../../assets/video/Headvideo.mp4';
+import vidMobile from '../../../assets/video/HeadVideoPhone.webm';
 import './HeroSection.css';
 import { homeObjOne } from '../../../pages/HomePage/Data';
 import InfoSection from '../../HomePage/InfoSection/InfoSection'
@@ -15,10 +16,25 @@ function HeroSection() {
     //     history.push("/domain");
     // }
 
+    let vid = vidPc;
+
+    function getWindowDimensions() {
+        const { innerWidth: width, innerHeight: height } = window;
+        return {
+            width,
+            height
+        };
+    }
+    let { height, width } = getWindowDimensions()
+
+    if (width < 700) {
+        vid = vidMobile
+    }
+
     return (
         <div className='hero-container'>
             <div>
-                <video src={vid} autoPlay loop muted playsInline style={{ width: '100%' }} >
+                <video src={vid} autoPlay loop muted playsInline style={{ height, width: '100%', 'object-fit': 'fill' }} >
                     <source type="video/webm" src={vid} />
                 </video>
             </div>

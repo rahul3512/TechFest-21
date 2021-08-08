@@ -2,12 +2,12 @@ import React from 'react'
 
 function GoogleMap() {
     return (
-        <div style={{ paddingTop: '100px' }}>
+        <div style={{ paddingTop: '100px', paddingBottom: '100px' }}>
             {/* <!--Section: Regular maps--> */}
             <section>
 
                 {/* <!--Grid row--> */}
-                <div className="row">
+                <div className="row address">
 
                     {/* <!--Grid column--> */}
                     <div className="col-md-6 mb-4">
@@ -41,12 +41,12 @@ function GoogleMap() {
                         <div className="card">
 
                             {/* <!--Card content--> */}
-                            <div className="card-body text-center">
+                            {/*<div className="card-body text-center"> */}
 
-                                <h4 className="font-up font-bold deep-purple-text mb-3"><strong>Custom map</strong></h4>
+                                {/* <h4 className="font-up font-bold deep-purple-text mb-3"><strong>Custom map</strong></h4> */}
 
                                 {/* <!--Google map--> */}
-                                <div id="map-container-2" className="z-depth-1" style={{ height: '100%' }}>
+                                {/* <div id="map-container-2" className="z-depth-1" style={{ height: '100%' }}>
                                     <h3 className="mb-4 text-uppercase">Delivery Info</h3>
 
                                     <div className="row">
@@ -111,13 +111,14 @@ function GoogleMap() {
 
                                 </div>
 
-                            </div>
+                            </div> */}
                             {/* <!--/.Card content--> */}
 
                         </div>
                         {/* <!--/.Card--> */}
 
                     </div>
+                    
                     {/* <!--Grid column--> */}
 
                 </div>

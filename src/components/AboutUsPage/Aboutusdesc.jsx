@@ -18,7 +18,7 @@ function Aboutusdesc() {
           </Link>
         </div>
       </section>
-      <div className="row mt-5">
+      <div className="row mt-5 aboutText">
         <div className="col-sm-12 text-center d-flex justify-content-center align-items-center flex-column text-justify ">
           <h1 className="heading">techFEST'21</h1>
           <p className="text-justify  w-50">

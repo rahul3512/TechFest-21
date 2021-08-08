@@ -2,6 +2,7 @@ import React from "react";
 import Carousel from "react-elastic-carousel";
 import Item from "./Item";
 import '../Navbar/Navbar.css';
+import './SponsorSection.css';
 import sponsor from '../../../assets/images/slietlogo.png';
 import sponsor1 from '../../../assets/sponsor/sponsor1.jpeg';
 import sponsor2 from '../../../assets/sponsor/sponsor2.png';
