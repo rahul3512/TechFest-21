@@ -7,6 +7,7 @@ import sponsor1 from '../../../assets/sponsor/sponsor1.jpeg';
 import sponsor2 from '../../../assets/sponsor/sponsor2.png';
 import sponsor3 from '../../../assets/sponsor/sponsor3.png';
 import sponsor4 from '../../../assets/sponsor/sponsor4.jpg';
+import sponsor5 from '../../../assets/images/Rados.png';
 
 import { fontSize } from "@material-ui/system";
 
@@ -32,6 +33,8 @@ function HomeSponsor() {
                     <Item><img src={sponsor3} alt='sponsor' className='sponsor-img' /></Item>
                     <Item><img src={sponsor4} alt='sponsor' className='sponsor-img' /></Item>
                     <Item><img src={sponsor} alt='sponsor' className='sponsor-img' /></Item>
+                    <Item><img src={sponsor5} alt='sponsor' className='sponsor-img' /></Item>
+
                 </Carousel>
             </div>
         </div>
