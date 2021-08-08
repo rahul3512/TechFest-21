@@ -610,13 +610,13 @@ Reusable Elements
 }
 
 /* checkout btn */
-.checkOutBtn{
+.checkOutBtn {
   background: transparent;
   color: white;
   border: 0;
 }
 
-.checkOutBtn:hover{
+.checkOutBtn:hover {
   color: #0d6efd;
 }
 
@@ -656,9 +656,9 @@ Reusable Elements
   }
 }
 
-@media only screen and (max-width: 1000px) {
+@media only screen and (max-width: 1076px) {
   .dashboard-dash-leftbar {
-    width: calc(var(--length) * 59%);
+    width: calc(var(--length) * 50%);
   }
   .dashboard-dash-dlink {
     padding-left: calc(var(--length) * 2rem);
@@ -669,9 +669,12 @@ Reusable Elements
   .dashboard-dash-main-content {
     margin-left: calc(var(--length) * 30rem);
   }
+  .footer-sm .dashboard-dash-Link-a:not(:last-of-type) {
+    margin-right: calc(var(--length) * 1rem);
+  }
 }
 
-@media only screen and (max-width: 950px) {
+@media only screen and (max-width: 964px) {
   .dashboard-dash-leftbar {
     display: none;
   }
@@ -718,5 +721,11 @@ Reusable Elements
   .dashboard-dash-main_left-bottom_bg,
   .dashboard-dash-main_left-bar_bg {
     display: none;
+  }
+}
+
+@media only screen and (max-width: 320px) {
+  :root {
+    --length: 0.3;
   }
 }

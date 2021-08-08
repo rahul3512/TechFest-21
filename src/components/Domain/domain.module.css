@@ -4,13 +4,13 @@
     width: 98.9vw;
     scroll-behavior: smooth;
     background-color: #02020E;
-    padding-top: 16vh;
+    padding-top: 12vh;
     overflow-x: hidden;
 }
 .content{
     width: 90vw;
     padding-top: 5vh;
-    height: 80vh;
+    height: 84vh;
     margin-left: auto;
     margin-right: auto;
     position: relative;
@@ -18,7 +18,7 @@
 .text{
     color: white;
     min-width: 16vw;
-    max-width: 35vw;
+    max-width: 40vw;
     overflow: hidden;
     height:28vh;
 }
@@ -83,6 +83,7 @@
 .cardImage{
     width: 40%;
     height: 100%;
+    object-fit: cover;
     border-top-left-radius: inherit;
     border-bottom-left-radius: inherit;
 }
@@ -118,7 +119,7 @@
     width: auto;
     height: 100%;
     position: absolute;
-    right: 16px;
+    right: 0px;
     top: 0;
     z-index: 0;
 }
@@ -145,7 +146,7 @@
 }
 .coordinators{
     width: 100%;
-    height: 9vh;
+    min-height: 9vh;
     margin-top: 5px;
     display: flex;
     margin-bottom: 10px;
@@ -154,23 +155,24 @@
     justify-content: space-between;
 }
 .facultyCoordinatorContainer{
-    width: 35%;
-    height: 100%;
+    min-width: 45%;
+    display: flex;
 }
 .studentCoordinatorContainer{
-    width: 40%;
-    height: 100%;
+    width: 35%;
+    height: inherit;
     display: flex;
-    flex-flow: column wrap;
     align-content: flex-end;
-}
-.eventCoordinatorData{
-    width: 40%;
-    height: 100%;
-    display: flex;
+    flex-wrap: nowrap;
     justify-content: space-between;
 }
+.studentCoordinator{
+    width:40%;
+    display: flex;
+    word-wrap: normal;
+}
 .facultyCoordinator{
+    width: fit-content;
     display: flex;
 }
 .coordinatorImage{
@@ -187,7 +189,7 @@
     color: white;
     margin-top: 7vh;
     font-family: VBI;
-    font-size: 3.3rem;
+    font-size: auto;
 }
 .animate-enter {
     opacity: 0;
@@ -204,10 +206,19 @@
     transition: opacity 200ms;
   }
   /* MEDIA QUERIES */
-  @media screen  and (max-width:768px){
+  @media screen  and (max-width:1024px){
+    .container{
+        padding-top: 12vh;
+    }
+    .content{
+        height: 87vh;
+    }
     .text{
-        max-width: 60vw;
-        max-height: 25vh;
+        max-width: 62vw;
+        height: auto;
+    }
+    .text p{
+        font-size: 14px;
     }
     .btnExploreEvents{
         padding: 10px 22px;
@@ -215,11 +226,17 @@
         margin-bottom: 18px;
     }
     .facultyCoordinatorImage{
-        width: 40px;
-        height:40px;
+        width: 50px;
+        height:50px;
     }
     .facultyCoordinator{
-        width: 10vw;
+        width: fit-content;
+    }
+    .studentCoordinatorContainer{
+        width: 45%;
+    }
+    .studentCoordinator{
+        width: 47%;
     }
     .coordinators h6{
         font-size: 12px;
@@ -240,6 +257,11 @@
   @media screen and (max-width:480px){
       .container{
           overflow-x: hidden;
+          padding-top: 6vh;
+      }
+
+      .content{
+            height:92vh;
       }
       .displayImage{
           width: auto;
@@ -253,18 +275,24 @@
         word-wrap: break-word;
         max-height: 25vh;
     }
+    .text p{
+        font-size: 12px;
+    }
     .btnExploreEvents{
         padding: 8px 20px;
         font-size: 12px;
-        margin-bottom: 18px;
+        margin-top: 20px;
+        margin-bottom: 15px;
+    }
+    .facultyCoordinator{
+        /* flex-direction: column; */
+        width: 100%;
     }
     .facultyCoordinatorImage{
         width: 40px;
         height:40px;
     }
-    .facultyCoordinator{
-        width: 10vw;
-    }
+    
     .cardData h4{
         font-size: 18px;
     }
@@ -272,11 +300,19 @@
         font-size: 10px;
     }
     .coordinatorImage{
-        width: 26px;
-        height:26px;
+        margin:6px;
+        width: 40px;
+        height:40px;
     }
     .studentCoordinatorContainer{
-        justify-content: space-between;
+        width: auto;
+        flex-direction: column;
+    }
+    .facultyCoordinatorContainer{
+        padding-top: 12px;
+    }
+    .studentCoordinator{
+        width: 100%;
     }
     .eventCoordinatorData{
         width: 90%;

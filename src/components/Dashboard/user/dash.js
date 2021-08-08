@@ -162,11 +162,19 @@ function Dash() {
     setVariables({ ...variables, error: false, [key]: event.target.value });
   };
 
-  const [updated, updatedChange] = useState(false);
+  const [updated, setUpdated] = useState(false);
+
+  const updateFunction = useCallback(() => {
+    setUpdated(!updated);
+  }, [updated]);
 
   useEffect(() => {
     preload(user._id, token);
   }, []);
+
+  useEffect(() => {
+    preload(user._id, token);
+  }, [updated]);
 
   const [product, setProduct] = useState({
     name: "React from FB",
@@ -311,25 +319,6 @@ function Dash() {
             />
             Change Password
           </Link>
-          {/* {values.designation === "Student" && values.hasPaidEntry === false ? (
-            <StripeCheckout
-              stripeKey={Payment}
-              token={makePayment}
-              name="Register"
-              amount={product.price * 100}
-              shippingAddress
-              billingAddress
-            >
-              <Link
-                className="dashboard-dash-dlink dashboard-dash-cursor"
-                style={{ marginTop: "2rem" }}
-                to="#"
-              >
-                <img src={Payments} alt="payment" style={{ fill: "white" }} />
-                Registeration Fee {product.price} Rs
-              </Link>
-            </StripeCheckout>
-          ) : null} */}
           {console.log(values.hasPaidEntry)}
           {values.designation === "Student" && values.hasPaidEntry == false ? (
             <div>
@@ -449,29 +438,26 @@ function Dash() {
         </div>
         {console.log(values)}
         <div className="passwordChange">
-          {values.designation === "Student" && values.hasPaidEntry === false ? (
-            <StripeCheckout
-              stripeKey={Payment}
-              token={makePayment}
-              name="Register"
-              amount={product.price * 100}
-              shippingAddress
-              billingAddress
-            >
-              <Link
+          {values.designation === "Student" && values.hasPaidEntry == false ? (
+            <div>
+              <form
                 className="dashboard-dash-dlink dashboard-dash-cursor"
                 style={{ marginTop: "2rem" }}
-                to="#"
+                action="https://api.techfestsliet.com/api/create-checkout-session"
+                method="POST"
               >
                 <img src={Payments} alt="payment" style={{ fill: "white" }} />
-                Registeration Fee {product.price} Rs
-              </Link>
-            </StripeCheckout>
+                <input type="hidden" name="id" value={user._id} />
+                <button className="checkOutBtn" type="submit">
+                  Checkout
+                </button>
+              </form>
+            </div>
           ) : null}
         </div>
         {/* <!-- PROFILE --> */}
 
-        <ProfileI />
+        <ProfileI updateFunction={updateFunction} />
 
         {/* <!-- CERTIFICATION AND AWARDS --> */}
 
