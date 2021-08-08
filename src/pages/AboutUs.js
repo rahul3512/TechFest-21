@@ -4,6 +4,7 @@ import CoreTeam from '../components/AboutUsPage/CoreTeam'
 import Visionary from '../components/AboutUsPage/Visionary'
 import '../components/AboutUsPage/AboutUs.css';
 import { Footer } from '../components';
+import GoogleMap from '../components/AboutUsPage/GoogleMap';
 
 function AboutUs() {
     return (
@@ -13,9 +14,9 @@ function AboutUs() {
         >
             <Aboutusdesc />
             <Visionary />
-            <CoreTeam />
-            <CoreTeam />
-            <CoreTeam />
+            {/* <CoreTeam /> */}
+            <GoogleMap />
+
             <Footer />
         </div>
     )
