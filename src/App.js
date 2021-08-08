@@ -12,7 +12,7 @@ import Sponsor from './pages/Sponsor';
 import ContactUs from './pages/ContactUs';
 import ScrollToTop from './components/ScrollToTop';
 import Resetpassword from './pages/Resetpassword';
-import vid from './assets/blue.mp4';
+// import vid from './assets/blue.mp4';
 
 import { Navbar } from './components';
 import SignIn from './pages/SignIn';
@@ -29,7 +29,7 @@ import AddEvent from './components/Dashboard/superadmin/AddEvent'
 import AddWorkshop from './components/Dashboard/superadmin/AddWorkshop'
 import AddWorkshopSession from './components/Dashboard/superadmin/AddWorkshopSession'
 import UpdateDomain from './components/Dashboard/superadmin/UpdateDomain';
-import AdminDomains from './components/Dashboard/superadmin/adminDomains';
+import AdminDomains from './components/Dashboard/superadmin/AdminDomains';
 import AdminCoordinators from './components/Dashboard/superadmin/AdminCoodinators';
 import UpdateCoordinator from './components/Dashboard/superadmin/UpdateCoordinator';
 import UpdateWorkshop from './components/Dashboard/superadmin/UpdateWorkshop';

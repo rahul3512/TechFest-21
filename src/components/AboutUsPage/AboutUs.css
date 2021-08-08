@@ -30,8 +30,10 @@ body {
 }
 .aboutus-card {
   background: transparent;
-  margin-top: 12px;
   border: transparent;
+  margin: auto;
+  margin-top: 12px;
+
 }
 .hr-center {
   width: 100%;
@@ -60,6 +62,7 @@ body {
   .aboutus-card {
     width: 20%;
   }
+
   .aboutus-background {
     background: url('../../assets/images/background.png'), black;
     background-repeat: no-repeat;
@@ -74,4 +77,13 @@ body {
   .aboutusbox{
     padding-top: 10%;
   }
+}
+
+@media (max-width: 768px) {
+
+.teacherimage{
+  width: 300px;
+  height: 300px;
+  
+}
 }
