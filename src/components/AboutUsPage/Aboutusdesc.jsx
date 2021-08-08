@@ -14,7 +14,7 @@ function Aboutusdesc() {
         </div>
         <div className="image-block margin">
           <Link to='/'>
-            <img className="logoimage" src={techfestlogo} alt="Logo" />
+            <img className="logoimage" src={techfestlogo} style={{ marginTop: '10px' }} alt="Logo" />
           </Link>
         </div>
       </section>

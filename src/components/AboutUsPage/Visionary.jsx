@@ -17,7 +17,7 @@ function Visionary() {
           </div>
         </div>
       </div>
-      <div className="container">
+      <div className="container" style={{ marginTop: '-92px' }}>
         <div className="row mt-5">
 
           <div className="aboutus-card text-center" style={{ margin: "auto" }}>
@@ -27,7 +27,7 @@ function Visionary() {
             <h5 className="card-title">Dr. Shailendra Jain</h5>
             <p className="card-text">Director</p>
           </div>
-          <div className="d-flex flex-wrap text-center">
+          <div className="d-flex flex-wrap text-center" style={{ marginRight: '70px' }}>
             <div className="aboutus-card text-center">
               <div className="card-item">
                 <img className="teacherimage" src={DeanSW} alt="hello" />
