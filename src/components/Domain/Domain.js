@@ -36,6 +36,13 @@ class DomainPage extends Component {
                 }
             },
             {
+                breakpoint: 1025,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 2,
+                }
+            },
+            {
                 breakpoint: 580,
                 settings: {
                     slidesToShow: 1,
