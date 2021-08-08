@@ -56,7 +56,7 @@ export const registerInEventAsTeam=(emailId,token, eventId)=>{
         },
         body:JSON.stringify({
             
-            "email":'harsimran.sliet@gmail.com',
+            "email":emailId,
             "eventId":eventId,
         
         })

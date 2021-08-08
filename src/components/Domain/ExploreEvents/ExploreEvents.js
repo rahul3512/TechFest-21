@@ -423,12 +423,12 @@ export class ExploreEvents extends Component {
                                     this.state.isEventRegistered ?
                                         <div className={classes.buttonContainer}>
                                             <button disabled={true} className={classes.btnRegister} style={{ backgroundColor: 'rgba(255,255,255,0.5)' }}>Registered!</button>
-                                            <button className={classes.btnStatement} >Problem Statement</button>
+                                            <button className={classes.btnStatement} onClick={()=>{window.open(this.props.content.eventLink,'_blank')}}>Problem Statement</button>
                                         </div>
                                         :
                                         <div className={classes.buttonContainer}>
                                             <button className={classes.btnRegister} name={'registerForEvent'} ref={this.dialog} onClick={() => { this.registerEvent(this.props.content._id) }}>Register Now</button>
-                                            <button className={classes.btnStatement} >Problem Statement</button>
+                                            <button className={classes.btnStatement} onClick={()=>{window.open(this.props.content.eventLink,'_blank')}}>Problem Statement</button>
                                         </div>
                                 }
                             </div>
