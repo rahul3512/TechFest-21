@@ -427,7 +427,6 @@ export class ExploreEvents extends Component {
                                         </div>
                                         :
                                         <div className={classes.buttonContainer}>
-                                            {console.log(this.props.content)}
                                             <button className={classes.btnRegister} name={'registerForEvent'} ref={this.dialog} onClick={() => { this.registerEvent(this.props.content._id) }}>Register Now</button>
                                             <button className={classes.btnStatement} onClick={()=>{window.open(this.props.content.eventLink,'_blank')}}>Problem Statement</button>
                                         </div>
