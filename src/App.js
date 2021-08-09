@@ -39,6 +39,7 @@ import AdminWorkshops from './components/Dashboard/superadmin/AdminWorkshops';
 import AdminEvents from './components/Dashboard/superadmin/AdminEvents';
 import AdminWorkshopSessions from './components/Dashboard/superadmin/AdminWorkshopSessions';
 import NotFound from './pages/NotFound';
+import Team from './pages/Team';
 
 
 
@@ -59,6 +60,7 @@ function App() {
 
 
           <Route exact path='/signin' component={SignIn} />
+          <Route exact path='/our-team' component={Team} />
 
 
           <Route path='/domain' component={Domain} />

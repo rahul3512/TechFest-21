@@ -73,17 +73,17 @@
     $(document).ready(function () {
       var screenWidth = $(window).width();
       if (screenWidth < 700) {
-        $('video').attr('autoplay','true');
-        $('video').attr('src', '/blue-phone.webm');
+        $('video').attr('src', '/blue-phone.mp4');
       } else {
-        $('video').attr('autoplay','true');
-        $('video').attr('src', '/blue.webm');
+        $('video').attr('src', '/blue.mp4');
       }
     });
   </script>
 
   <div class="preloader">
-    <video playsInline muted width="100%" class="videoBg">
+    <!-- <video playsInline muted autoplay type="video/webm" width="100%" class="videoBg">
+    </video> -->
+    <video height="100%" type="video/mp4" width="100%" class="videoBg" autoplay loop muted playsInline>
     </video>
   </div>
 
