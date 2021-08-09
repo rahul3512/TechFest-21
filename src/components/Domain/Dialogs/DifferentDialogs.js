@@ -86,11 +86,9 @@ export const Team=(props)=>{
                 {
                         props.data.myTeam.map((item,pos) => {
                             return (
-                                <DialogContentText key={pos}>
-                                    <div className={classes.sessions}>
+                                <DialogContentText key={pos} className={classes.sessions}>
                                         <strong>{item.name}</strong>
                                         <sub>{item.id}</sub>
-                                    </div>
                                 </DialogContentText>
 
                             )

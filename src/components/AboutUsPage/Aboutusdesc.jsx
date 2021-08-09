@@ -14,11 +14,11 @@ function Aboutusdesc() {
         </div>
         <div className="image-block margin">
           <Link to='/'>
-            <img className="logoimage" src={techfestlogo} alt="Logo" />
+            <img className="logoimage" src={techfestlogo} style={{ marginTop: '10px' }} alt="Logo" />
           </Link>
         </div>
       </section>
-      <div className="row mt-5">
+      <div className="row mt-5 aboutText">
         <div className="col-sm-12 text-center d-flex justify-content-center align-items-center flex-column text-justify ">
           <h1 className="heading">techFEST'21</h1>
           <p className="text-justify  w-50">

@@ -83,8 +83,8 @@ class DomainPage extends Component {
         workshops: [],
         Precuela: false,
         loading: true,
-        openSnackbar:false,
-        error:''
+        openSnackbar: false,
+        error: ''
 
     }
 
@@ -104,8 +104,8 @@ class DomainPage extends Component {
         );
     };
 
-    closeSnackbar=()=>{
-        this.setState({openSnackbar:false})
+    closeSnackbar = () => {
+        this.setState({ openSnackbar: false })
     }
 
     getDomains = () => {
@@ -149,14 +149,14 @@ class DomainPage extends Component {
     getSingleDomain = (id, pos) => {
         axios.get(`${API}/domain/${id}`)
             .then(response => {
-                this.setState({currentDomain:response.data,Precuela:false,exploreEvents:true,animate:true,currentSelected:pos})
+                this.setState({ currentDomain: response.data, Precuela: false, exploreEvents: true, animate: true, currentSelected: pos })
                 // this.setState({ currentDomain: response.data, Precuela: false, exploreEvents: true, animate: true, currentSelected: pos })
                 if (response.data.domain.domainName === 'Precuela') {
                     this.getWorkshops();
                 }
             }).catch(err => {
                 // alert("error")
-                this.setState({openSnackbar:true,error:err.response})
+                this.setState({ openSnackbar: true, error: err.response })
             })
     }
 
@@ -165,14 +165,14 @@ class DomainPage extends Component {
             .then(response => {
                 this.setState({ workshops: response.data, Precuela: true })
             }).catch(err => {
-                this.setState({openSnackbar:true,error:err.response})
+                this.setState({ openSnackbar: true, error: err.response })
             })
     }
 
 
     render() {
         return (
-            <div className={classes.container}>
+            <div className={classes.container} style={{ width: "100%" }}>
                 <img src={this.state.exploreEvents ? `${BASE_API}${this.state.currentDomain?.domain?.photo}` : gradeintLogo} alt='' className={classes.displayImage} />
                 <div className={classes.content}>
                     <CSSTransition
@@ -188,15 +188,15 @@ class DomainPage extends Component {
                             </p>
                         </div>
                     </CSSTransition>
-                    {this.state.exploreEvents ? <button className={classes.btnExploreEvents} onClick={() => { this.eventRef.current.scrollIntoView() }}>{this.state.currentDomain.domain.domainName === 'Precuela'?'Explore Workshops':'Explore Events'}</button> : null}
+                    {this.state.exploreEvents ? <button className={classes.btnExploreEvents} onClick={() => { this.eventRef.current.scrollIntoView() }}>{this.state.currentDomain.domain.domainName === 'Precuela' ? 'Explore Workshops' : 'Explore Events'}</button> : null}
                     {
                         this.state.exploreEvents ?
                             <div className={classes.coordinators}>
                                 <section className={classes.facultyCoordinatorContainer}>
-                                    {this.state.currentDomain.domain.facultyCoordinator.map((item,pos)=>{
-                                        return(
+                                    {this.state.currentDomain.domain.facultyCoordinator.map((item, pos) => {
+                                        return (
                                             <div key={pos} className={classes.facultyCoordinator}>
-                                                <img src={`${BASE_API}${item?.photo}`} alt='' className={classes.coordinatorImage}/>
+                                                <img src={`${BASE_API}${item?.photo}`} alt='' className={classes.coordinatorImage} />
                                                 <div>
                                                     <h6>{item.coordinatorName}</h6>
                                                     <p>{item.coordinatorDesignation}</p>
@@ -207,8 +207,8 @@ class DomainPage extends Component {
                                 </section>
                                 <section className={classes.studentCoordinatorContainer}>
                                     {
-                                        this.state.currentDomain.domain.studentCoordinator.map((item,pos)=>{
-                                            return(
+                                        this.state.currentDomain.domain.studentCoordinator.map((item, pos) => {
+                                            return (
                                                 <div key={pos} className={classes.studentCoordinator}>
                                                     <img src={`${BASE_API}${item.photo}`} alt='' className={classes.coordinatorImage} />
                                                     <div>
@@ -295,8 +295,8 @@ class DomainPage extends Component {
                 </div> : null}
 
                 <Snackbar open={this.state.openSnackbar} autoHideDuration={6000} onClose={this.closeSnackbar}>
-                    <Alert 
-                        onClose={this.closeSnackbar} 
+                    <Alert
+                        onClose={this.closeSnackbar}
                         severity="error"
                     >
                         {this.state.error}

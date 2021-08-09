@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Button } from '../../../globalStyles';
 import img4 from '../../../assets/images/img6.jpg';
+import './InfoSection.css';
 
 import {
   InfoSec,
@@ -47,7 +48,7 @@ function InfoSection({
 
         <Container>
           <InfoRow imgStart={imgStart}>
-            <InfoColumn>
+            <InfoColumn style={{ "margin-top": "55px" }}>
               <TextWrapper>
                 <Heading lightText={lightText}>{headline}</Heading>
                 <TopLine lightTopLine={lightTopLine}>{topLine}</TopLine>
@@ -70,9 +71,10 @@ function InfoSection({
               </TextWrapper>
             </InfoColumn>
             <InfoColumn>
-              <ImgWrapper start={start}>
-                <Img src={imgf} alt={alt} style={{ borderRadius: '50px' }} />
-              </ImgWrapper>
+              <div>
+                <iframe width="100%" height="300" src="https://www.youtube.com/embed/Nt58vSQqBU8?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" alt={alt} style={{ borderRadius: '50px' }} allowfullscreen></iframe>
+                {/*<Img src={imgf} alt={alt} style={{ borderRadius: '50px' }} /> */}
+              </div>
             </InfoColumn>
           </InfoRow>
         </Container>
