@@ -46,7 +46,8 @@ export class ExploreEvents extends Component {
 
 
     getUserData = () => {
-        if (this.state.completeUser === null) {
+        
+        if(this.state.completeUser === null){
             if (this.state.user) {
                 getUser(this.state.user._id, this.state.token).then((data) => {
                     if (data.error) {
@@ -68,21 +69,37 @@ export class ExploreEvents extends Component {
                             })
                             // this.setState({isWorkshopRegistered:true})
                         }
-                        if (data.eventRegIn.length > 0) {
-                            data.eventRegIn.map(item => {
-
-                                if (this.props.id === item._id) {
-                                    this.setState({ isEventRegistered: true })
+                        
+                        
+                        if(data.eventRegIn.length>0){
+                            data.eventRegIn.map(item=>{
+                                console.log(`${this.props.content.eventName}:${this.props.content._id==item._id}`)
+                                if(this.props.content._id == item._id){
+                                    this.setState({isEventRegistered:true})
+                                }else{
+                                    this.setState({isEventRegistered:false})
                                 }
                             })
-                            // this.setState({isWorkshopRegistered:true})
                         }
+
+                        // if (data.eventRegIn.length > 0) {
+                        //     data.eventRegIn.map(item => {
+                        //         {console.log(item._id)}
+                        //         if (this.props.content._id == item._id) {
+                        //             this.setState({ isEventRegistered: true })
+                        //         }else{
+                        //             this.setState({isEventRegistered:false})
+                        //         }
+                        //     })
+                        //     // this.setState({isWorkshopRegistered:true})
+                        // }
                         // setCompleteUser(data)
 
                     }
                 });
             }
 
+            
         }
 
     }
@@ -326,9 +343,7 @@ export class ExploreEvents extends Component {
 
     }
 
-    componentDidMount = () => {
-        this.getUserData()
-    }
+
 
 
 
@@ -362,6 +377,27 @@ export class ExploreEvents extends Component {
 
                         this.setState({ isEventRegistered: false, error: err, openSnackbar: true })
                     })
+            }
+        }
+    }
+    componentDidMount(){
+        this.getUserData()
+    }
+    componentDidUpdate(prevProps,prevState){
+        if(this.props.content._id != prevProps.content._id){
+            if(this.state.completeUser != null){
+                let eventRegIn=this.state.completeUser.eventRegIn
+                eventRegIn.map(item=>{
+                    if(this.props.content._id == item._id){
+                        if(!prevState.isEventRegistered){
+                            this.setState({isEventRegistered:true})
+                        }
+                    }else{
+                        if(prevState.isEventRegistered){
+                            this.setState({isEventRegistered:false})
+                        }
+                    }
+                })
             }
         }
     }
