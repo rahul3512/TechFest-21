@@ -81,7 +81,7 @@ class DomainPage extends Component {
         exploreEvents: false,
         animate: false,
         workshops: [],
-        Precuela: false,
+        Precula: false,
         loading: true,
         openSnackbar: false,
         error: ''
@@ -116,7 +116,7 @@ class DomainPage extends Component {
                 if (this.props.detail.name === 'workshops') {
                     this.state.domains.map((item, pos) => {
                         return (
-                            item.domainName === 'Precuela' ? this.getSingleDomain(item._id, pos) : null
+                            item.domainName === 'Precula' ? this.getSingleDomain(item._id, pos) : null
                         )
                     })
                     setTimeout(() => {
@@ -149,9 +149,9 @@ class DomainPage extends Component {
     getSingleDomain = (id, pos) => {
         axios.get(`${API}/domain/${id}`)
             .then(response => {
-                this.setState({ currentDomain: response.data, Precuela: false, exploreEvents: true, animate: true, currentSelected: pos })
-                // this.setState({ currentDomain: response.data, Precuela: false, exploreEvents: true, animate: true, currentSelected: pos })
-                if (response.data.domain.domainName === 'Precuela') {
+                this.setState({ currentDomain: response.data, Precula: false, exploreEvents: true, animate: true, currentSelected: pos })
+                // this.setState({ currentDomain: response.data, Precula: false, exploreEvents: true, animate: true, currentSelected: pos })
+                if (response.data.domain.domainName === 'Precula') {
                     this.getWorkshops();
                 }
             }).catch(err => {
@@ -163,7 +163,7 @@ class DomainPage extends Component {
     getWorkshops = () => {
         axios.get(`${API}/workshops`)
             .then(response => {
-                this.setState({ workshops: response.data, Precuela: true })
+                this.setState({ workshops: response.data, Precula: true })
             }).catch(err => {
                 this.setState({ openSnackbar: true, error: err.response })
             })
@@ -188,7 +188,7 @@ class DomainPage extends Component {
                             </p>
                         </div>
                     </CSSTransition>
-                    {this.state.exploreEvents ? <button className={classes.btnExploreEvents} onClick={() => { this.eventRef.current.scrollIntoView() }}>{this.state.currentDomain.domain.domainName === 'Precuela' ? 'Explore Workshops' : 'Explore Events'}</button> : null}
+                    {this.state.exploreEvents ? <button className={classes.btnExploreEvents} onClick={() => { this.eventRef.current.scrollIntoView() }}>{this.state.currentDomain.domain.domainName === 'Precula' ? 'Explore Workshops' : 'Explore Events'}</button> : null}
                     {
                         this.state.exploreEvents ?
                             <div className={classes.coordinators}>
@@ -285,7 +285,7 @@ class DomainPage extends Component {
                     <h1 className={classes.domainHeading}>{this.state.currentDomain.domain.domainName}</h1>
                     {
 
-                        this.state.Precuela ? this.state.workshops.map((item, pos) => {
+                        this.state.Precula ? this.state.workshops.map((item, pos) => {
                             return (<ExploreEvents id={item._id} content={item} key={pos} heading={this.state.currentDomain.domain.domainName} />)
                         }) :
                             this.state.currentDomain.events.map((item, pos) => {
