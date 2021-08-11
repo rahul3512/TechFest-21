@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
 import LoginSignUp from "../components/RegisterPage/LoginSignUp";
 import { API } from "../backend";
+import { useAlert } from 'react-alert';
 
 function SignIn() {
+
+  const alert = useAlert();
+
   const [isVerify, setIsVerify] = useState(false);
   const variable = {
     vf: null,
@@ -26,15 +30,35 @@ function SignIn() {
         body: JSON.stringify(variable),
       })
         .then((response) => {
-          if (response.status === 200) return response.json();
-          else return Promise.reject("Incorrect verification code");
+          console.log(response)
+          return response.json();
+
         })
         .then((data) => {
-          //   console.log(data);
-          setIsVerify(true);
+          console.log(data);
+          if (data.statusCode === 200) {
+
+            alert.show(`${data.message}`, {
+              type: 'success',
+              timeout: '3000'
+            })
+            setIsVerify(true);
+          }
+          else {
+            alert.show(`${data.error}`, {
+              type: 'error',
+              timeout: '3000'
+            })
+            setIsVerify(false);
+          }
+
+
         })
         .catch((error) => {
-          //   console.log(error);
+          alert.show(`${error}`, {
+            type: 'error',
+            timeout: '3000'
+          })
           setIsVerify(false);
         });
     } else {
@@ -43,7 +67,7 @@ function SignIn() {
   };
   useEffect(() => {
     accountVerification();
-  });
+  }, []);
   return (
     { isVerify } ? (<div style={{ backgroundColor: "black" }}>
       <LoginSignUp isLogin={true} />

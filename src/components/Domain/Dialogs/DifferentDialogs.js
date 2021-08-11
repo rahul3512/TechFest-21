@@ -133,7 +133,7 @@ export const ViewSchedule=(props)=>{
                                     props.data.content.startDate && props.data.content.endDate?
                                      
                                     <sub>{
-                                            `${JSON.stringify(getDate(props.data.content.startDate).getDate()-1)}/${JSON.stringify(getDate(props.data.content.startDate).getMonth()+1)} to ${JSON.stringify(getDate(props.data.content.endtDate).getDate()-1)}/${JSON.stringify(getDate(props.data.content.endtDate).getMonth()+1)} (${getDifference(getDate(props.data.content.startDate),getDate(props.data.content.endDate))}DAYS)`
+                                            `${JSON.stringify(getDate(props.data.content.startDate).getDate()-1)}/${JSON.stringify(getDate(props.data.content.startDate).getMonth()+1)} to ${JSON.stringify(getDate(props.data.content.endDate).getDate()-1)}/${JSON.stringify(getDate(props.data.content.endDate).getMonth()+1)} (${getDifference(getDate(props.data.content.startDate),getDate(props.data.content.endDate))} DAYS)`
                                         }
                                     </sub>
                                     :
@@ -155,6 +155,7 @@ export const ViewSchedule=(props)=>{
                                 <DialogContentText>
                                     <div className={classes.sessions}>
                                         <strong>{item.workshopSessionName}</strong>
+                                        <Button color='primary' onClick={()=>{window.open(item.scheduledLink,'_blank')}}>View</Button>
                                         <sub>{item.dateTime.split('T')[0]}</sub>
                                     </div>
                                 </DialogContentText>

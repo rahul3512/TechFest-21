@@ -32,6 +32,7 @@ import teclogo from '../../../assets/images/techFESTlogo.png';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import ChangePassword from '../../Dashboard/user/ChangePassword';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
+import { useAlert } from 'react-alert';
 
 const drawerWidth = 240;
 
@@ -109,6 +110,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Nav = props => {
+  const alert = useAlert();
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -207,6 +209,10 @@ const Nav = props => {
         text: "Sign out",
         icon: <ExitToAppIcon />,
         onClick: () => signout(() => {
+          alert.show("Signout successfully", {
+            type: 'success',
+            timeout: '2000'
+          })
           handleDrawerClose()
           history.push("/")
         })
@@ -275,6 +281,10 @@ const Nav = props => {
               {
                 isAuthenticated() && (
                   <MenuItem className="navmenu" onClick={() => signout(() => {
+                    alert.show("Signout successfully", {
+                      type: 'success',
+                      timeout: '2000'
+                    })
                     history.push("/")
                   })}>Sign out</MenuItem>
 

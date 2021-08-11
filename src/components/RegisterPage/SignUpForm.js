@@ -1,8 +1,11 @@
 import React, { useState } from "react";
+import { useAlert } from "react-alert";
 // import Base from "../core/Base";
 import { Link } from "react-router-dom";
 import { signup } from "../../auth/helper";
+
 function SignUpForm() {
+  const alert = useAlert();
   const [values, setValues] = useState({
     name: "",
     email: "",
@@ -19,8 +22,8 @@ function SignUpForm() {
 
   const handlePasswordToogle = (e) => {
     const password = document.getElementById("userPassword");
-    const type = password.getAttribute('type')==='password' ? 'text' : 'password';
-    password.setAttribute('type' , type);
+    const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+    password.setAttribute('type', type);
     e.target.classList.toggle("fa-eye-slash");
     // console.log(e);
   };
@@ -48,12 +51,17 @@ function SignUpForm() {
           });
         }
       })
-      .catch(console.log("Error in signup"));
+      .catch(() => {
+        alert.show("Error in signup", {
+          type: 'error',
+          timeout: '2000'
+        })
+      });
   };
 
   const SignUpForm1 = () => {
     return (
-      
+
       <form
         id="signup"
         className="input-group"
@@ -115,7 +123,7 @@ function SignUpForm() {
               </button>
             </div>
           </div>
-          
+
           <input type="submit" value="Submit" className="btn btn-primary" onClick={onSubmit} />
         </div>
       </form>

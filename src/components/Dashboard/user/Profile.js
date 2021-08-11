@@ -16,7 +16,7 @@ import './assets/css/dashres.css';
 import { useAlert } from 'react-alert';
 
 
-const ProfileI = () => {
+const ProfileI = ({ updateFunction }) => {
 
     const alert = useAlert();
     const [values, setValues] = useState({
@@ -194,6 +194,7 @@ const ProfileI = () => {
                         type: 'success'
                     })
 
+                    updateFunction();
 
                     setValues({
                         ...values,

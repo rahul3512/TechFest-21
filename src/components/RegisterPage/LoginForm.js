@@ -1,8 +1,11 @@
 import React, { useState } from "react";
+import { useAlert } from "react-alert";
 // import Base from '../core/Base'
 import { Link, Redirect } from "react-router-dom";
 import { signin, authenticate, isAuthenticated } from "../../auth/helper";
+
 function LoginForm() {
+  const alert = useAlert();
   const [values, setValues] = useState({
     email: "",
     password: "",
@@ -88,7 +91,12 @@ function LoginForm() {
               error: "",
               didRedirect: true,
             });
+            alert.show("Login Successfully !", {
+              type: 'success',
+              timeout: '3000'
+            })
           });
+
         }
       })
       .catch("Some error Ocuured");
@@ -168,13 +176,13 @@ function LoginForm() {
             </div> */}
             <div className="mb-3">
               <label htmlFor="userEmail" className="form-label lsLabel">
-                <Link to = "/ForgetPassword" 
-                  
+                <Link to="/ForgetPassword"
+
                   rel="noreferrer"
                   className="text-white"
                 >
                   Forget Password ?
-                  </Link>
+                </Link>
               </label>
             </div>
           </div>
