@@ -196,14 +196,14 @@
   }
   .animate-enter-active {
     opacity: 1;
-    transition: opacity 200ms;
+    transition: 'opacity' 200ms;
   }
   .animate-exit {
     opacity: 1;
   }
   .animate-exit-active {
     opacity: 0;
-    transition: opacity 200ms;
+    transition: 'opacity' 200ms;
   }
   /* MEDIA QUERIES */
   @media screen  and (max-width:1024px){
@@ -261,7 +261,7 @@
       }
 
       .content{
-            height:92vh;
+            height:87vh;
       }
       .displayImage{
           width: auto;
