@@ -3,6 +3,7 @@ import { DialogContent,Dialog, DialogTitle, DialogActions, Button, Slide, TextFi
 import classes from './Dialogs.module.css'
 import { PersonPlus } from 'react-bootstrap-icons'
 import { Link } from 'react-router-dom'
+import moment from 'moment'
 
 export const Register=(props)=>{
     return(
@@ -137,7 +138,7 @@ export const ViewSchedule=(props)=>{
                                         }
                                     </sub>
                                     :
-                                    <sub>15/07 to 20/07 (5 DAYS)</sub>
+                                    <sub> </sub>
                                 }
                                 
                             
@@ -156,7 +157,7 @@ export const ViewSchedule=(props)=>{
                                     <div className={classes.sessions}>
                                         <strong>{item.workshopSessionName}</strong>
                                         <Button color='primary' onClick={()=>{window.open(item.scheduledLink,'_blank')}}>View</Button>
-                                        <sub>{item.dateTime.split('T')[0]}</sub>
+                                        <sub>{moment.utc(item.dateTime).format('DD-MM-YYYY HH:mm')}</sub>
                                     </div>
                                 </DialogContentText>
 
@@ -168,7 +169,7 @@ export const ViewSchedule=(props)=>{
                 </div>
             </DialogContent>
             <DialogActions>
-                    <Link to={props.data.content.whatsappGroupLink?props.data.content.whatsappGroupLink:'/'} target='_blank' rel='noopener' component={Button} style={{color:'darkBlue'}} onClick={()=>{props.close('schedule')}}>Join Telegram Group</Link>
+            <Link to={{ pathname: props.data.content.whatsappGroupLink?props.data.content.whatsappGroupLink:'/'}} target='_blank' rel='noopener' component={Button} style={{color:'darkBlue'}} onClick={()=>{props.close('schedule')}}>Join Telegram Group</Link>
             </DialogActions>                
         </div>
     )
