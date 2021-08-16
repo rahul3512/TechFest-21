@@ -73,7 +73,7 @@ export class ExploreEvents extends Component {
                         
                         if(data.eventRegIn.length>0){
                             data.eventRegIn.map(item=>{
-                                console.log(`${this.props.content.eventName}:${this.props.content._id==item._id}`)
+                                
                                 if(this.props.content._id == item._id){
                                     this.setState({isEventRegistered:true})
                                 }else{
@@ -274,7 +274,7 @@ export class ExploreEvents extends Component {
 
         createTeam(this.state.token, teamId, this.props.content._id, this.props.content.participantCountMax, this.state.completeUser.userId)
             .then(response => {
-                console.log(response);
+                
                 this.handleCloseTeamDialog()
                 if (response.statusCode == 400) {
                     this.setState({ openSnackbar: true, error: response.error })
@@ -344,16 +344,11 @@ export class ExploreEvents extends Component {
     }
 
 
-
-
-
-
-
     registerEvent = (eventId) => {
         if (!this.state.user) {
             this.setState({ error: 'You are not Logged in. Please Log in first', openSnackbar: true })
-        } else {
-
+        }
+         else if(this.state.completeUser.designation == 'Student'){
             {
                 this.props.content.participantCountMax > 1 ? this.handleOpenTeamDialog(this.state.myTeam[0])
                     :
@@ -378,6 +373,8 @@ export class ExploreEvents extends Component {
                         this.setState({ isEventRegistered: false, error: err, openSnackbar: true })
                     })
             }
+        }else{
+            this.setState({openSnackbar:true,error:'Available only for Students'})
         }
     }
     componentDidMount(){
