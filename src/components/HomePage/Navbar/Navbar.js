@@ -181,6 +181,14 @@ const Nav = props => {
         handleDrawerClose()
         history.push("/contact-us")
       }
+    },
+    {
+      text: "Our Team",
+      icon: <PeopleIcon />,
+      onClick: () => {
+        handleDrawerClose()
+        history.push("/our-team")
+      }
     }
   ];
 

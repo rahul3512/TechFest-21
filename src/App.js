@@ -26,10 +26,10 @@ import SuperAdminDashboard from './components/Dashboard/superadmin/SuperAdminDas
 import Coordinator from './components/Dashboard/superadmin/Coordinator'
 import AddDomain from './components/Dashboard/superadmin/AddDomain'
 import AddEvent from './components/Dashboard/superadmin/AddEvent'
-import AddWorkshop from './components/Dashboard/superadmin/AddWorkshop'
-import AddWorkshopSession from './components/Dashboard/superadmin/AddWorkshopSession'
+import AddWorkshop from './components/Dashboard/superadmin/AddWorkshop';
+import AddWorkshopSession from './components/Dashboard/superadmin/AddWorkshopSession';
 import UpdateDomain from './components/Dashboard/superadmin/UpdateDomain';
-import AdminDomains from './components/Dashboard/superadmin/AdminDomains';
+import AdminDomains from './components/Dashboard/superadmin/adminDomains';
 import AdminCoordinators from './components/Dashboard/superadmin/AdminCoodinators';
 import UpdateCoordinator from './components/Dashboard/superadmin/UpdateCoordinator';
 import UpdateWorkshop from './components/Dashboard/superadmin/UpdateWorkshop';
