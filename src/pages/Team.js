@@ -4,7 +4,7 @@ import Soham from "../assets/team/soham.jpeg";
 import Harsimran from "../assets/team/harsimran.jpg";
 import Amitoj from "../assets/team/amitoj.jpg";
 import Mansi from "../assets/team/mansi.jpg";
-import Ruchika from "../assets/team/ruchika.jpg";
+import Ruchika from "../assets/team/Ruchika.jpeg";
 import Prabjot from "../assets/team/prabh.JPG";
 import Rahul from "../assets/team/rahul-singh.jpg";
 import Ridham from "../assets/team/ridham-goyal.jpg";
