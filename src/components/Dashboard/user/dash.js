@@ -323,6 +323,7 @@ function Dash() {
           {values.designation === "Student" && values.hasPaidEntry == false ? (
             <div>
               <form
+              target="_blank"
                 className="dashboard-dash-dlink dashboard-dash-cursor"
                 style={{ marginTop: "2rem" }}
                 action="https://api.techfestsliet.com/api/create-checkout-session"
@@ -331,7 +332,7 @@ function Dash() {
                 <img src={Payments} alt="payment" style={{ fill: "white" }} />
                 <input type="hidden" name="id" value={user._id} />
                 <button className="checkOutBtn" type="submit">
-                  Checkout
+                  Payment
                 </button>
               </form>
             </div>
@@ -350,6 +351,7 @@ function Dash() {
               <p>{values?.collegeName}</p>
               <p className="dashboard-dash-user-id">{values?.userID}</p>
             </div>
+
           </div>
 
           <div className="dashboard-dash-events">
@@ -441,15 +443,17 @@ function Dash() {
           {values.designation === "Student" && values.hasPaidEntry == false ? (
             <div>
               <form
+              target="_blank"
                 className="dashboard-dash-dlink dashboard-dash-cursor"
-                style={{ marginTop: "2rem" }}
+                style={{ marginTop: "2rem", border:'1px white solid',borderRadius:'15px',padding: '10px',     display: 'flex',
+                justifyContent: 'center' }}
                 action="https://api.techfestsliet.com/api/create-checkout-session"
                 method="POST"
               >
                 <img src={Payments} alt="payment" style={{ fill: "white" }} />
                 <input type="hidden" name="id" value={user._id} />
                 <button className="checkOutBtn" type="submit">
-                  Checkout
+                  Payment
                 </button>
               </form>
             </div>
@@ -574,7 +578,7 @@ function Dash() {
             <Link
               to={{
                 pathname:
-                  "//www.youtube.com/channel/UCsKsymTY_4BYR-wytLjex7A?view_as=subscriber",
+                'https://www.youtube.com/channel/UCTSrKfF90hZq7reWgd2oyZg',
               }}
               className="dashboard-dash-Link-a"
               target="_blank"

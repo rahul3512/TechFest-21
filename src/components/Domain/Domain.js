@@ -309,7 +309,7 @@ class DomainPage extends Component {
                     </div>
                     <div className="footer-cta">
                         <Link to="#" className="dashboard-dash-Link-a dashboard-dash-cursor">
-                        Join our Telegram Commuity
+                        Join our  Commuity
                         </Link>
                     </div>
                     <div className="footer-sm">

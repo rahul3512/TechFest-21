@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router';
 // import vid from '../../../assets/images/home.webp';
 import vidPc from '../../../assets/video/Headvideo.mp4';
-import vidMobile from '../../../assets/video/HeadVideoPhone.webm';
+import vidMobile from '../../../assets/video/HeadVideoPhone.mp4';
 import './HeroSection.css';
 import { homeObjOne } from '../../../pages/HomePage/Data';
 import InfoSection from '../../HomePage/InfoSection/InfoSection'
@@ -34,8 +34,8 @@ function HeroSection() {
     return (
         <div className='hero-container'>
             <div>
-                <video src={vid} autoPlay loop muted playsInline style={{ height, width: '100%', 'object-fit': 'fill' }} >
-                    <source type="video/webm" src={vid} />
+                <video autoPlay loop muted playsInline style={{ height, width: '100%', 'object-fit': 'fill' }} >
+                    <source type="video/mp4" src={vid} />
                 </video>
             </div>
             <div className='hero-details'>
