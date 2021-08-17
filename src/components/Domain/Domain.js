@@ -143,7 +143,7 @@ class DomainPage extends Component {
             }).catch(err => {
 
                 // alert(err.response)
-                alert(err)
+                this.setState({openSnackbar:true,error:'Network error'})
             })
     }
     getSingleDomain = (id, pos) => {
@@ -221,36 +221,7 @@ class DomainPage extends Component {
                                     }
                                 </section>
                             </div>
-                            // <div className={classes.coordinators}>
-                            //     <section className={classes.facultyCoordinatorContainer}>
-                            //         {this.state.currentDomain.domain.facultyCoordinator.map((item, pos) => {
-                            //             return (
-                            //                 <div key={pos} className={classes.facultyCoordinator}>
-                            //                     <img src={`${BASE_API}${item?.photo}`} alt='' className={classes.coordinatorImage} />
-                            //                     <div>
-                            //                         <h6>{item.coordinatorName}</h6>
-                            //                         <p>{item.coordinatorDesignation}</p>
-                            //                     </div>
-                            //                 </div>
-                            //             )
-                            //         })}
-                            //     </section>
-                            //     <section className={classes.studentCoordinatorContainer}>
-                            //         {
-                            //             this.state.currentDomain.domain.studentCoordinator.map((item, pos) => {
-                            //                 return (
-                            //                     <section key={pos} className={classes.eventCoordinatorData}>
-                            //                         <div className={classes.coordinatorDetails}>
-                            //                             <p>{item.coordinatorName}</p>
-                            //                             <p>{`+91 ${item.coordinatorPhone}`}</p>
-                            //                         </div>
-                            //                         <img src={`${BASE_API}${item.photo}`} alt='' className={classes.coordinatorImage} />
-                            //                     </section>
-                            //                 )
-                            //             })
-                            //         }
-                            //     </section>
-                            // </div>
+                            
                             :
                             null
                     }
@@ -302,35 +273,7 @@ class DomainPage extends Component {
                         {this.state.error}
                     </Alert>
                 </Snackbar>
-                {/* <footer className={classes.footer}>
                 
-                    <div className="footer-copyright-text">
-                        Copyright © 2021. All Rights Reserved.
-                    </div>
-                    <div className="footer-cta">
-                        <Link to="#" className="dashboard-dash-Link-a dashboard-dash-cursor">
-                        Join our  Commuity
-                        </Link>
-                    </div>
-                    <div className="footer-sm">
-                        <Link to="#" className="dashboard-dash-Link-a">
-                        <img src={Facebook} alt="facebook" />
-                        </Link>
-                        <Link to="#" className="dashboard-dash-Link-a">
-                        <img src={Instagram} alt="instagram" />
-                        </Link>
-                        <Link to="#" className="dashboard-dash-Link-a">
-                        <img src={Linkedin} alt="linkedin" />
-                        </Link>
-                        <a href={
-                        '//www.youtube.com/channel/UCsKsymTY_4BYR-wytLjex7A?view_as=subscriber'
-                        } className="dashboard-dash-Link-a"
-                        target = '_blank'>
-                        <img src={Youtube} alt="youtube" />
-                        </a>
-                    </div>
-                    
-                </footer> */}
             </div>
         );
     }
