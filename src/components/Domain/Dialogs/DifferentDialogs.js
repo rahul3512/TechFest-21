@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import { DialogContent,Dialog, DialogTitle, DialogActions, Button, Slide, TextField, DialogContentText } from '@material-ui/core'
 import classes from './Dialogs.module.css'
-import { PersonPlus } from 'react-bootstrap-icons'
+import { Calendar, PersonPlus,TrashFill } from 'react-bootstrap-icons'
 import { Link } from 'react-router-dom'
 import moment from 'moment'
 
@@ -57,6 +57,7 @@ export const AddTeam=(props)=>{
 export const Team=(props)=>{
     return(
         <div>
+            
             <DialogContent>
                 <div className={classes.scheduleName}>
                     <div>
@@ -90,6 +91,7 @@ export const Team=(props)=>{
                                 <DialogContentText key={pos} className={classes.sessions}>
                                         <strong>{item.name}</strong>
                                         <sub>{item.id}</sub>
+                                        <TrashFill color='darkRed' size={18} cursor={'pointer'} onClick={()=>props.close('RemoveUser',item.id)}/>
                                 </DialogContentText>
 
                             )
@@ -99,7 +101,13 @@ export const Team=(props)=>{
                 </div>
             </DialogContent>
             <DialogActions>
-                    <Button color='primary' onClick={()=>{props.close('confirmTeam')}}>Confirm Registration</Button>
+                    {
+                        props.update?
+                        <Button color='primary' onClick={()=>{props.close('updateTeam')}}>Update</Button>
+                        :
+                        <Button color='primary' onClick={()=>{props.close('confirmTeam')}}>Confirm Registration</Button>
+                    }
+                    
             </DialogActions>                
         </div>
         

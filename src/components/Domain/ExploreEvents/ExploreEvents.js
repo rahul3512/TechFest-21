@@ -5,7 +5,7 @@ import { Calendar, Clock, PersonPlus } from 'react-bootstrap-icons'
 import { isAuthenticated } from '../../../auth/helper/index.js'
 import { Link } from 'react-router-dom';
 import { getUser } from '../../Dashboard/user/helper/userapicalls';
-import { createTeam, getWorkshop, registerInEvent, registerInEventAsTeam, registerInWorkshop } from '../../../auth/helper/DomainRegistration';
+import { createTeam, getWorkshop, registerInEvent, registerInEventAsTeam, registerInWorkshop, removeTeam, teamList, updateTeam } from '../../../auth/helper/DomainRegistration';
 import { Snackbar } from '@material-ui/core';
 import { Alert } from '../Alert';
 import { DialogComponent } from '../Dialogs/Dialog';
@@ -34,6 +34,7 @@ export class ExploreEvents extends Component {
             data: {},
             popUpMessage: '',
             positiveAction: '',
+            update:false,
         },
         myTeam: [],
         completeUser: null,
@@ -76,24 +77,11 @@ export class ExploreEvents extends Component {
                                 
                                 if(this.props.content._id == item._id){
                                     this.setState({isEventRegistered:true})
-                                }else{
-                                    this.setState({isEventRegistered:false})
                                 }
                             })
                         }
 
-                        // if (data.eventRegIn.length > 0) {
-                        //     data.eventRegIn.map(item => {
-                        //         {console.log(item._id)}
-                        //         if (this.props.content._id == item._id) {
-                        //             this.setState({ isEventRegistered: true })
-                        //         }else{
-                        //             this.setState({isEventRegistered:false})
-                        //         }
-                        //     })
-                        //     // this.setState({isWorkshopRegistered:true})
-                        // }
-                        // setCompleteUser(data)
+                    
 
                     }
                 });
@@ -110,6 +98,8 @@ export class ExploreEvents extends Component {
         data.some((el) =>
             Object.entries(obj).every(([key, value]) => value === el[key])
         );
+
+    
 
     // HANDLERS
     handleClickOpen = (dialogType) => {
@@ -148,6 +138,12 @@ export class ExploreEvents extends Component {
                 break;
             case 'confirmTeam':
                 this.confirmTeamRegistration()
+                break;
+            case 'RemoveUser':
+                this.removeTeamMember(memberId,this.props.content._id,this.state.token)
+                break;
+            case 'updateTeam':
+                this.updateTeamMembers();
                 break;
             default:
                 this.setState({
@@ -191,8 +187,18 @@ export class ExploreEvents extends Component {
         }
 
     }
-    handleOpenTeamDialog = (obj) => {
-        this.updatemyTeam(obj)
+    handleOpenTeamDialog = (obj,update=true) => {
+        if(update){
+            this.updatemyTeam(obj)
+        }else{
+            this.setState(prevState=>({
+                dialog:{
+                    ...prevState.dialog,
+                    update:true
+                }
+            }))
+        }
+        
         this.setState(prevState => ({
             dialog: {
                 ...prevState.dialog,
@@ -242,13 +248,64 @@ export class ExploreEvents extends Component {
         // this.setState({ memberId: e.target.value })
     }
     handleCloseTeamDialog = () => {
-        this.setState({
-            open: false,
-            openTeamDialog: false
-        })
+        this.setState(prevState=>({
+            dialog:{
+                ...prevState.dialog,
+                open:false,
+                openTeamDialog:false,
+                update:false
+            }
+        }))
     }
     closeSnackbar = () => {
         this.setState({ openSnackbar: false })
+    }
+
+    getTeam=(eventId,userId,token)=>{
+        teamList(token,eventId,userId)
+        .then(response=>{
+            
+            let team=[]
+            response.usersId.map(item=>{
+                
+                let obj={
+                    name: item.userId.name,
+                    id: item.userId.userId
+                }
+                team.push(obj)
+            })
+            
+            this.setState({myTeam:team})
+            this.handleOpenTeamDialog(this.state.myTeam,false)
+
+        })
+    }
+
+    updateTeamMembers=()=>{
+        let team=[]
+        this.state.myTeam.map(item => item.id != this.state.completeUser.userId? team.push(item.id):null)
+        
+        updateTeam(this.state.token,team,this.props.content.participantCountMax,this.props.content._id)
+        .then(response=>{
+            if(response.statusCode != 400){
+                this.handleRegisterOpen()
+            }else{
+                this.setState({openSnackbar:true,error:response.error})
+            }
+        })
+    }
+
+    removeTeamMember=(usertoRemove,eventId,token)=>{
+        
+        
+        removeTeam(token,usertoRemove,eventId)
+        .then(response=>{
+            this.handleCloseTeamDialog()    
+            if(response.statusCode == 400){
+                this.setState({openSnackbar:true,error:response.error})
+            }
+            
+        })
     }
 
     getMemberId = (emailId, token, eventId) => {
@@ -270,7 +327,7 @@ export class ExploreEvents extends Component {
     }
     confirmTeamRegistration = () => {
         let teamId = []
-        this.state.myTeam.map(item => teamId.push(item.id))
+        this.state.myTeam.map(item => item.id != this.state.completeUser.userId? teamId.push(item.id):null)
 
         createTeam(this.state.token, teamId, this.props.content._id, this.props.content.participantCountMax, this.state.completeUser.userId)
             .then(response => {
@@ -455,10 +512,20 @@ export class ExploreEvents extends Component {
                                 </section>
                                 {
                                     this.state.isEventRegistered ?
-                                        <div className={classes.buttonContainer}>
-                                            <button disabled={true} className={classes.btnRegister} style={{ backgroundColor: 'rgba(255,255,255,0.5)' }}>Registered!</button>
-                                            <button className={classes.btnStatement} onClick={() => { window.open(this.props.content.eventLink, '_blank') }}>Problem Statement</button>
-                                        </div>
+                                        this.props.content.participantCountMax > 1?
+                                            
+                                            <div className={classes.buttonContainer}>
+                                                <button className={classes.btnRegister} onClick={()=>{
+                                                    this.getTeam(this.props.content._id,this.state.completeUser._id,this.state.token)
+                                                    
+                                                }}>View Team</button>
+                                                <button className={classes.btnStatement} onClick={() => { window.open(this.props.content.eventLink, '_blank') }}>Problem Statement</button>
+                                            </div>
+                                            :
+                                            <div className={classes.buttonContainer}>
+                                                <button disabled={true} className={classes.btnRegister} style={{ backgroundColor: 'rgba(255,255,255,0.5)' }}>Registered!</button>
+                                                <button className={classes.btnStatement} onClick={() => { window.open(this.props.content.eventLink, '_blank') }}>Problem Statement</button>
+                                            </div>
                                         :
                                         <div className={classes.buttonContainer}>
                                             <button className={classes.btnRegister} name={'registerForEvent'} ref={this.dialog} onClick={() => { this.registerEvent(this.props.content._id) }}>Register Now</button>
@@ -518,6 +585,7 @@ export class ExploreEvents extends Component {
                 <DialogComponent
                     open={this.state.dialog.open}
                     close={this.handleClose}
+                    update={this.state.dialog.update}
                     openTeamDialog={this.state.dialog.openTeamDialog}
                     addTeam={this.state.dialog.addTeam}
                     register={this.state.dialog.register}
