@@ -125,7 +125,7 @@ function Team() {
               </div>
               <div className="back">
                 <div className="inner">
-                  <p>React Developmer</p>
+                  <p>React Developer</p>
                   <span>85277 53759</span>
                 </div>
               </div>
@@ -144,7 +144,7 @@ function Team() {
               </div>
               <div className="back">
                 <div className="inner">
-                  <p>React Developmer</p>
+                  <p>React Developer</p>
                   <span>94789 53771</span>
                 </div>
               </div>
@@ -163,7 +163,7 @@ function Team() {
               </div>
               <div className="back">
                 <div className="inner">
-                  <p>React Developmer</p>
+                  <p>React Developer</p>
                   <span>86518 52427</span>
                 </div>
               </div>
@@ -182,7 +182,7 @@ function Team() {
               </div>
               <div className="back">
                 <div className="inner">
-                  <p>React Developmer</p>
+                  <p>React Developer</p>
                   <span> 97806 24350</span>
                 </div>
               </div>
@@ -203,7 +203,7 @@ function Team() {
               </div>
               <div className="back">
                 <div className="inner">
-                  <p>React Developmer</p>
+                  <p>React Developer</p>
                   <span>98784 51288</span>
                 </div>
               </div>
