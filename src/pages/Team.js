@@ -17,13 +17,20 @@ import Om from "../assets/team/om.jpeg";
 import Tomar from "../assets/team/Tomar.jpeg";
 import Shiva from "../assets/team/shiva.jpg";
 import Footer from "../components/HomePage/Footer/Footer";
+import Shiva from '../assets/team/shiva.JPG';
 
 function Team() {
   return (
     <div className="dev-team" style={{ backgroundColor: "black" }}>
       <div className="wrapper-dev ">
         <h1 className="h1-dev">OUR TEAM</h1>
-          
+          <p className=" text-center">
+            When everyone works in teams, they achieve all the goals on which the organization functions. <br />
+            It makes things easier for every person in an organization. Therefore, working in teams helps each person in the company.<br />
+            n an organization, without teamwork, no work will be accomplished. <br />
+            Everyone works in teams; the amount of work that is accomplished is more than what an individual alone can achieve.
+
+          </p>
        
         <div className="row my-2 py-0">
           <div className="col-lg-3 col-sm-6 my-2" ontouchstart="this.classList.toggle('hover');">
@@ -118,7 +125,7 @@ function Team() {
               </div>
               <div className="back">
                 <div className="inner">
-                  <p>React Developmer</p>
+                  <p>React Developer</p>
                   <span>85277 53759</span>
                 </div>
               </div>
@@ -137,7 +144,7 @@ function Team() {
               </div>
               <div className="back">
                 <div className="inner">
-                  <p>React Developmer</p>
+                  <p>React Developer</p>
                   <span>94789 53771</span>
                 </div>
               </div>
@@ -156,7 +163,7 @@ function Team() {
               </div>
               <div className="back">
                 <div className="inner">
-                  <p>React Developmer</p>
+                  <p>React Developer</p>
                   <span>86518 52427</span>
                 </div>
               </div>
@@ -175,7 +182,7 @@ function Team() {
               </div>
               <div className="back">
                 <div className="inner">
-                  <p>React Developmer</p>
+                  <p>React Developer</p>
                   <span> 97806 24350</span>
                 </div>
               </div>
@@ -196,7 +203,7 @@ function Team() {
               </div>
               <div className="back">
                 <div className="inner">
-                  <p>React Developmer</p>
+                  <p>React Developer</p>
                   <span>98784 51288</span>
                 </div>
               </div>
@@ -311,6 +318,26 @@ function Team() {
                 <div className="inner">
                   <p>HTML CSS Designer</p>
                   <span>94579 81267</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="col-lg-3 col-sm-6 my-2" ontouchstart="this.classList.toggle('hover');">
+            <div className="container">
+              <div
+                className="front"
+                style={{ backgroundImage: `url(${Shiva})` }}
+              >
+                <div className="inner">
+                  <p><span>Shiva</span></p>
+                </div>
+              </div>
+              <div className="back">
+                <div className="inner">
+                  <p>HTML CSS Designer</p>
+                  <span>94933 87372</span>
+                  <span></span>
                 </div>
               </div>
             </div>
