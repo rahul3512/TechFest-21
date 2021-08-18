@@ -24,8 +24,6 @@ function AdminDomains() {
         loadAllDomains();
     }, []);
 
-
-
     return (
         <Base title="Domains">
 

@@ -15,7 +15,7 @@ import Virat from "../assets/team/virat.jpg";
 import Shrawan from "../assets/team/shrawan.jpg";
 import Om from "../assets/team/om.jpeg";
 import Tomar from "../assets/team/Tomar.jpeg";
-import Nilesh from "../assets/team/user-placeholder.jpg";
+import Shiva from "../assets/team/shiva.jpg";
 import Footer from "../components/HomePage/Footer/Footer";
 
 function Team() {
@@ -320,16 +320,16 @@ function Team() {
             <div className="container">
               <div
                 className="front"
-                style={{ backgroundImage: `url(${Nilesh})` }}
+                style={{ backgroundImage: `url(${Shiva})` }}
               >
                 <div className="inner">
-                  <p><span>Nilesh</span></p>
+                  <p><span>Shiva Sai</span></p>
                 </div>
               </div>
               <div className="back">
                 <div className="inner">
                   <p>HTML CSS Designer</p>
-                  <span>83403 08682</span>
+                  <span>94933 87372</span>
                 </div>
               </div>
             </div>
