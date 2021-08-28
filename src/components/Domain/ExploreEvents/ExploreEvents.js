@@ -22,6 +22,7 @@ export class ExploreEvents extends Component {
         user: isAuthenticated().user,
         token: isAuthenticated().token,
         isWorkshopRegistered: false,
+        disable:false,
         currentWorkshop: {
             sessions: []
         },
@@ -370,11 +371,21 @@ export class ExploreEvents extends Component {
 
 
     registerWorkshop = (workshopId) => {
+        let regEndDate = this.props.content.regEndDate
+        regEndDate = regEndDate.split('T')[0]+" "+regEndDate.split('T')[1].split('.')[0]
+
+        let expDate = Date.parse(regEndDate)
+        let currentDate = new Date()
 
         // this.handleClickOpen();
         if (!this.state.user) {
             this.setState({ error: 'You are not Logged in. Please Log in first', openSnackbar: true })
-        } else {
+        }else if(!this.state.completeUser.hasPaidEntry){
+            this.setState({error:'Entry Fees not paid',openSnackbar:true})
+        } else if(currentDate.getTime()>=expDate){
+            this.setState({disable:true,error:"Can't Register anymore",openSnackbar:true})
+        }
+        else {
             registerInWorkshop(this.state.user._id, this.state.token, workshopId).then(
                 data => {
                     if (data.error) {
@@ -402,8 +413,20 @@ export class ExploreEvents extends Component {
 
 
     registerEvent = (eventId) => {
+        let regEndDate = this.props.content.regEndDate
+        regEndDate = regEndDate.split('T')[0]+" "+regEndDate.split('T')[1].split('.')[0]
+
+        let expDate = Date.parse(regEndDate)
+        let currentDate = new Date()
+
+        
+
         if (!this.state.user) {
             this.setState({ error: 'You are not Logged in. Please Log in first', openSnackbar: true })
+        }else if(!this.state.completeUser.hasPaidEntry){
+            this.setState({error:'Entry Fees not paid',openSnackbar:true})
+        }else if(currentDate.getTime()>=expDate){
+            this.setState({disable:true,error:"Can't Register anymore",openSnackbar:true})
         }
          else if(this.state.completeUser.designation == 'Student'){
             {
@@ -436,6 +459,17 @@ export class ExploreEvents extends Component {
     }
     componentDidMount(){
         this.getUserData()
+        
+        let regEndDate = this.props.content.regEndDate
+        regEndDate = regEndDate.split('T')[0]+" "+regEndDate.split('T')[1].split('.')[0]
+
+        let expDate = Date.parse(regEndDate)
+        let currentDate = new Date()
+
+        if(currentDate.getTime()>=expDate){
+            this.setState({disable:true})
+        }
+
     }
     componentDidUpdate(prevProps,prevState){
         if(this.props.content._id != prevProps.content._id){
@@ -453,6 +487,15 @@ export class ExploreEvents extends Component {
                     }
                 })
             }
+        }
+        let regEndDate = this.props.content.regEndDate
+        regEndDate = regEndDate.split('T')[0]+" "+regEndDate.split('T')[1].split('.')[0]
+
+        let expDate = Date.parse(regEndDate)
+        let currentDate = new Date()
+
+        if(currentDate.getTime()>=expDate){
+            this.setState({disable:true})
         }
     }
     render() {
@@ -500,7 +543,7 @@ export class ExploreEvents extends Component {
                                         </div>
                                         :
                                         <div className={classes.buttonContainer}>
-                                            <button className={classes.btnRegister} name={'registerForWorkshop'} ref={this.dialog} onClick={() => { this.registerWorkshop(this.props.content._id) }}>Register Now</button>
+                                            <button className={classes.btnRegister} disabled={this.state.disable} style={this.state.disable?{ backgroundColor: 'rgba(255,255,255,0.5)' }:null} name={'registerForWorkshop'} ref={this.dialog} onClick={() => { this.registerWorkshop(this.props.content._id) }}>Register Now</button>
                                         </div>
                                 }
                             </div>
