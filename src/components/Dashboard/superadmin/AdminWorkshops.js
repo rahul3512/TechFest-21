@@ -46,7 +46,7 @@ function AdminWorkshops() {
                         </Link>
                         <pre>
                             {
-                                JSON.stringify(workshops, null, 2)
+                                JSON.stringify(workshop, null, 2)
                             }</pre>
                     </div>
                 );

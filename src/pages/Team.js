@@ -17,7 +17,6 @@ import Om from "../assets/team/om.jpeg";
 import Tomar from "../assets/team/Tomar.jpeg";
 import Shiva from "../assets/team/shiva.jpg";
 import Footer from "../components/HomePage/Footer/Footer";
-import Shiva from '../assets/team/shiva.JPG';
 
 function Team() {
   return (
@@ -318,26 +317,6 @@ function Team() {
                 <div className="inner">
                   <p>HTML CSS Designer</p>
                   <span>94579 81267</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-lg-3 col-sm-6 my-2" ontouchstart="this.classList.toggle('hover');">
-            <div className="container">
-              <div
-                className="front"
-                style={{ backgroundImage: `url(${Shiva})` }}
-              >
-                <div className="inner">
-                  <p><span>Shiva</span></p>
-                </div>
-              </div>
-              <div className="back">
-                <div className="inner">
-                  <p>HTML CSS Designer</p>
-                  <span>94933 87372</span>
-                  <span></span>
                 </div>
               </div>
             </div>

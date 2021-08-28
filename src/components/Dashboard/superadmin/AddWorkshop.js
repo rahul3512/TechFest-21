@@ -168,7 +168,7 @@ const Workshop = () => {
                 Host Name:
                 <input type="text" placeholder="Enter host name" name="hostName" value={hostName} onChange={handleInputs} />
 
-                Description:
+                Host Description:
                 <textarea name="hostDescription" placeholder="Description" id="description" cols="30"
                     rows="10" onChange={handleInputs} value={hostDescription}></textarea>
 
