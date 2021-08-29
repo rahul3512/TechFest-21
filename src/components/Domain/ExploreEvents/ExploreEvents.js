@@ -371,19 +371,12 @@ export class ExploreEvents extends Component {
 
 
     registerWorkshop = (workshopId) => {
-        let regEndDate = this.props.content.regEndDate
-        regEndDate = regEndDate.split('T')[0]+" "+regEndDate.split('T')[1].split('.')[0]
-
-        let expDate = Date.parse(regEndDate)
-        let currentDate = new Date()
-
+        
         // this.handleClickOpen();
         if (!this.state.user) {
             this.setState({ error: 'You are not Logged in. Please Log in first', openSnackbar: true })
         }else if(!this.state.completeUser.hasPaidEntry){
             this.setState({error:'Entry Fees not paid',openSnackbar:true})
-        } else if(currentDate.getTime()>=expDate){
-            this.setState({disable:true,error:"Can't Register anymore",openSnackbar:true})
         }
         else {
             registerInWorkshop(this.state.user._id, this.state.token, workshopId).then(
@@ -413,11 +406,7 @@ export class ExploreEvents extends Component {
 
 
     registerEvent = (eventId) => {
-        let regEndDate = this.props.content.regEndDate
-        regEndDate = regEndDate.split('T')[0]+" "+regEndDate.split('T')[1].split('.')[0]
-
-        let expDate = Date.parse(regEndDate)
-        let currentDate = new Date()
+        
 
         
 
@@ -425,10 +414,7 @@ export class ExploreEvents extends Component {
             this.setState({ error: 'You are not Logged in. Please Log in first', openSnackbar: true })
         }else if(!this.state.completeUser.hasPaidEntry){
             this.setState({error:'Entry Fees not paid',openSnackbar:true})
-        }else if(currentDate.getTime()>=expDate){
-            this.setState({disable:true,error:"Can't Register anymore",openSnackbar:true})
-        }
-         else if(this.state.completeUser.designation == 'Student'){
+        }else if(this.state.completeUser.designation == 'Student'){
             {
                 this.props.content.participantCountMax > 1 ? this.handleOpenTeamDialog(this.state.myTeam[0])
                     :
@@ -457,20 +443,17 @@ export class ExploreEvents extends Component {
             this.setState({openSnackbar:true,error:'Available only for Students'})
         }
     }
-    componentDidMount(){
+    componentDidMount(prevState,prevProps){
         this.getUserData()
+        let d = new Date()
         
-        let regEndDate = this.props.content.regEndDate
-        regEndDate = regEndDate.split('T')[0]+" "+regEndDate.split('T')[1].split('.')[0]
-
-        let expDate = Date.parse(regEndDate)
-        let currentDate = new Date()
-
-        if(currentDate.getTime()>=expDate){
-            this.setState({disable:true})
+        if(d.getTime()>Date.parse("2021-08-31 23:59:00")){
+            
+                this.setState({disable:true})
+            
         }
-
     }
+
     componentDidUpdate(prevProps,prevState){
         if(this.props.content._id != prevProps.content._id){
             if(this.state.completeUser != null){
@@ -487,16 +470,15 @@ export class ExploreEvents extends Component {
                     }
                 })
             }
+            
+            let d = new Date()
+        if(d.getTime>Date.parse("2021-08-31 23:59:00")){
+                if(prevState.disable != true){
+                    this.setState({disable:true})
+                }
+            }    
         }
-        let regEndDate = this.props.content.regEndDate
-        regEndDate = regEndDate.split('T')[0]+" "+regEndDate.split('T')[1].split('.')[0]
-
-        let expDate = Date.parse(regEndDate)
-        let currentDate = new Date()
-
-        if(currentDate.getTime()>=expDate){
-            this.setState({disable:true})
-        }
+        
     }
     render() {
         return (
@@ -536,6 +518,7 @@ export class ExploreEvents extends Component {
                                     <strong>{`End Date : ${this.props.content.endDate ? this.props.content.endDate.split('T')[0] : null}`}   </strong>
                                 </section>
                                 {
+                                    
                                     this.state.isWorkshopRegistered ?
                                         <div className={classes.buttonContainer}>
                                             <button disabled={true} className={classes.btnRegister} style={{ backgroundColor: 'rgba(255,255,255,0.5)' }}>Registered!</button>
@@ -543,7 +526,7 @@ export class ExploreEvents extends Component {
                                         </div>
                                         :
                                         <div className={classes.buttonContainer}>
-                                            <button className={classes.btnRegister} disabled={this.state.disable} style={this.state.disable?{ backgroundColor: 'rgba(255,255,255,0.5)' }:null} name={'registerForWorkshop'} ref={this.dialog} onClick={() => { this.registerWorkshop(this.props.content._id) }}>Register Now</button>
+                                            <button className={classes.btnRegister}  name={'registerForWorkshop'} ref={this.dialog} onClick={() => { this.registerWorkshop(this.props.content._id) }}>Register Now</button>
                                         </div>
                                 }
                             </div>
@@ -571,7 +554,7 @@ export class ExploreEvents extends Component {
                                             </div>
                                         :
                                         <div className={classes.buttonContainer}>
-                                            <button className={classes.btnRegister} name={'registerForEvent'} ref={this.dialog} onClick={() => { this.registerEvent(this.props.content._id) }}>Register Now</button>
+                                            <button className={classes.btnRegister} disabled={this.state.disable} style={this.state.disable?{ backgroundColor: 'rgba(255,255,255,0.5)' }:null} name={'registerForEvent'} ref={this.dialog} onClick={() => { this.registerEvent(this.props.content._id) }}>{this.state.disable?"Registration Closed":"Register Now"}</button>                   
                                             <button className={classes.btnStatement} onClick={() => { window.open(this.props.content.eventLink, '_blank') }}>Problem Statement</button>
                                         </div>
                                 }
