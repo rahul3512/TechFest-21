@@ -169,6 +169,7 @@ export class ExploreEvents extends Component {
                 ...prevState.dialog,
                 openTeamDialog: false,
                 register: true,
+                open:true,
             }
         }))
     }
@@ -275,6 +276,7 @@ export class ExploreEvents extends Component {
                 let obj={
                     name: item.userId.name,
                     id: item.userId.userId,
+                    isAccepted:item.isAccepted
                 }
                 team.push(obj)
             })
@@ -288,9 +290,7 @@ export class ExploreEvents extends Component {
     updateTeamMembers=()=>{
         let team=[]
         this.state.myTeam.map(item => item.id != this.state.completeUser.userId? team.push(item.id):null)
-        if(this.props.content.participantCountMin<team.length+1){
-            this.setState({openSnackbar:true,error:"Team limit exceeded"})
-        }else{
+        
         updateTeam(this.state.token,team,this.props.content.participantCountMax,this.props.content._id)
         .then(response=>{
             if(response.statusCode != 400){
@@ -299,7 +299,7 @@ export class ExploreEvents extends Component {
                 this.setState({openSnackbar:true,error:response.error})
             }
         })
-        }
+        
     }
 
     removeTeamMember=(usertoRemove,eventId,token)=>{
@@ -345,8 +345,11 @@ export class ExploreEvents extends Component {
     confirmTeamRegistration = () => {
         let teamId = []
         this.state.myTeam.map(item => item.id != this.state.completeUser.userId? teamId.push(item.id):null)
-        if(this.props.content.participantCountMin<teamId.length+1){
-            this.setState({openSnackbar:true,error:"Team specification not fulfilled"})
+        if(this.props.content.participantCountMin>teamId.length){
+            this.setState({openSnackbar:true,error:"Add More members"})
+        }
+        else if(this.props.content.participantCountMax<teamId.length){
+            this.setState({openSnackbar:true,error:"Team Limit exceeded"})
         }else{
         createTeam(this.state.token, teamId, this.props.content._id, this.props.content.participantCountMax, this.state.completeUser.userId)
             .then(response => {
