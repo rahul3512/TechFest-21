@@ -57,7 +57,7 @@ export const AddTeam=(props)=>{
 export const Team=(props)=>{
     return(
         <div>
-            
+            {console.log(props.data)}
             <DialogContent>
                 <div className={classes.scheduleName}>
                     <div>
@@ -85,14 +85,29 @@ export const Team=(props)=>{
                     <PersonPlus size={24} cursor={'pointer'} onClick={()=>props.close('openAddTeam')}/>
                 </div>
                 <div>
+                <DialogContentText className={classes.sessions}>
+                                        <strong>{props.data.teamLeader.name}</strong>
+                                        <sub>{props.data.teamLeader.userId}</sub>
+                                        <sub>Leader</sub>
+                </DialogContentText>
+                {console.log(props.data)}
                 {
+                    
+                    
                         props.data.myTeam.map((item,pos) => {
                             return (
+                                item.name !=null?
                                 <DialogContentText key={pos} className={classes.sessions}>
                                         <strong>{item.name}</strong>
                                         <sub>{item.id}</sub>
-                                        <TrashFill color='darkRed' size={18} cursor={'pointer'} onClick={()=>props.close('RemoveUser',item.id)}/>
-                                </DialogContentText>
+                                        {
+                                            props.data.myTeam.length+1>props.data.participantCountMin?
+                                            <TrashFill color='darkRed' size={18} cursor={'pointer'} onClick={()=>props.close('RemoveUser',item.id)}/>
+                                            :
+                                            null
+                                        }
+                                        
+                                </DialogContentText>:null
 
                             )
                         })

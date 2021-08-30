@@ -43,7 +43,8 @@ export class ExploreEvents extends Component {
         memberId: '',
         openSnackbar: false,
         error: '',
-        name: ''
+        name: '',
+        teamLeader:{}
     }
 
 
@@ -60,9 +61,9 @@ export class ExploreEvents extends Component {
                         this.setState({ completeUser: data, })
                         let userInfo = {
                             name: data.name,
-                            id: data.userId
+                            userId: data.userId
                         }
-                        this.updatemyTeam(userInfo)
+                        this.setState({teamLeader:userInfo})
                         if (data.workshopsEnrolled.length > 0) {
                             data.workshopsEnrolled.map(item => {
                                 if (this.props.id === item._id) {
@@ -188,7 +189,7 @@ export class ExploreEvents extends Component {
         }
 
     }
-    handleOpenTeamDialog = (obj,update=true) => {
+    handleOpenTeamDialog = (obj,update=true,teamLeader) => {
         if(update){
             this.updatemyTeam(obj)
         }else{
@@ -208,7 +209,8 @@ export class ExploreEvents extends Component {
                 data: {
                     domainName: this.props.heading,
                     event: this.props.content,
-                    myTeam: this.state.myTeam
+                    myTeam: this.state.myTeam,
+                    teamLeader:this.state.teamLeader
                 },
 
             },
@@ -266,18 +268,19 @@ export class ExploreEvents extends Component {
         teamList(token,eventId,userId)
         .then(response=>{
             
+            console.log(response)
             let team=[]
             response.usersId.map(item=>{
                 
                 let obj={
                     name: item.userId.name,
-                    id: item.userId.userId
+                    id: item.userId.userId,
                 }
                 team.push(obj)
             })
             
-            this.setState({myTeam:team})
-            this.handleOpenTeamDialog(this.state.myTeam,false)
+            this.setState({myTeam:team,teamLeader:response.leaderId})
+            this.handleOpenTeamDialog(this.state.myTeam,false,this.state.teamLeader)
 
         })
     }
@@ -285,7 +288,9 @@ export class ExploreEvents extends Component {
     updateTeamMembers=()=>{
         let team=[]
         this.state.myTeam.map(item => item.id != this.state.completeUser.userId? team.push(item.id):null)
-        
+        if(this.props.content.participantCountMin<team.length+1){
+            this.setState({openSnackbar:true,error:"Team limit exceeded"})
+        }else{
         updateTeam(this.state.token,team,this.props.content.participantCountMax,this.props.content._id)
         .then(response=>{
             if(response.statusCode != 400){
@@ -294,6 +299,7 @@ export class ExploreEvents extends Component {
                 this.setState({openSnackbar:true,error:response.error})
             }
         })
+        }
     }
 
     removeTeamMember=(usertoRemove,eventId,token)=>{
@@ -303,7 +309,17 @@ export class ExploreEvents extends Component {
         .then(response=>{
             this.handleCloseTeamDialog()    
             if(response.statusCode == 400){
+                if(response.error=='User Not Found'){
+                    console.log("Remove from array")
+                    let arr=this.state.myTeam
+                    console.log(arr)
+                    console.log("user to remove"+usertoRemove)
+                    arr=arr.filter(x=>x.id != usertoRemove)
+                    this.setState({openSnackbar:true,error:"Deleted Member"})    
+                }else
                 this.setState({openSnackbar:true,error:response.error})
+            }else{
+                this.setState({openSnackbar:true,error:"Deleted Member"})
             }
             
         })
@@ -314,8 +330,8 @@ export class ExploreEvents extends Component {
             .then(response => {
                 if (response.statusCode != 400) {
                     const obj = {
-                        name: response.data.name,
-                        id: response.data.userId
+                        name: response.data?.name,
+                        id: response.data?.userId
                     }
                     this.handleCloseTeam()
                     this.handleOpenTeamDialog(obj)
@@ -329,7 +345,9 @@ export class ExploreEvents extends Component {
     confirmTeamRegistration = () => {
         let teamId = []
         this.state.myTeam.map(item => item.id != this.state.completeUser.userId? teamId.push(item.id):null)
-
+        if(this.props.content.participantCountMin<teamId.length+1){
+            this.setState({openSnackbar:true,error:"Team specification not fulfilled"})
+        }else{
         createTeam(this.state.token, teamId, this.props.content._id, this.props.content.participantCountMax, this.state.completeUser.userId)
             .then(response => {
                 
@@ -342,6 +360,7 @@ export class ExploreEvents extends Component {
             }).catch(err => {
                 this.setState({ openSnackbar: true, error: err })
             })
+        }
     }
 
 
@@ -375,8 +394,6 @@ export class ExploreEvents extends Component {
         // this.handleClickOpen();
         if (!this.state.user) {
             this.setState({ error: 'You are not Logged in. Please Log in first', openSnackbar: true })
-        }else if(!this.state.completeUser.hasPaidEntry){
-            this.setState({error:'Entry Fees not paid',openSnackbar:true})
         }
         else {
             registerInWorkshop(this.state.user._id, this.state.token, workshopId).then(
@@ -407,16 +424,13 @@ export class ExploreEvents extends Component {
 
     registerEvent = (eventId) => {
         
-
-        
-
         if (!this.state.user) {
             this.setState({ error: 'You are not Logged in. Please Log in first', openSnackbar: true })
         }else if(!this.state.completeUser.hasPaidEntry){
             this.setState({error:'Entry Fees not paid',openSnackbar:true})
         }else if(this.state.completeUser.designation == 'Student'){
-            {
-                this.props.content.participantCountMax > 1 ? this.handleOpenTeamDialog(this.state.myTeam[0])
+            {console.log(this.state.myTeam)
+                this.props.content.participantCountMax > 1 ? this.handleOpenTeamDialog([],true,this.state.teamLeader)
                     :
                     registerInEvent(this.state.user._id, this.state.token, eventId).then(
                         data => {
@@ -443,7 +457,7 @@ export class ExploreEvents extends Component {
             this.setState({openSnackbar:true,error:'Available only for Students'})
         }
     }
-    componentDidMount(prevState,prevProps){
+    componentDidMount(){
         this.getUserData()
         let d = new Date()
         
