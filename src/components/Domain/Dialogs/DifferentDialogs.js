@@ -90,7 +90,9 @@ export const Team=(props)=>{
                                         <sub>{props.data.teamLeader.userId}</sub>
                                         <sub>Leader</sub>
                 </DialogContentText>
-                {console.log(props.data)}
+                
+                
+                {console.log(props.data.myTeam)}
                 {
                     
                     
@@ -101,7 +103,13 @@ export const Team=(props)=>{
                                         <strong>{item.name}</strong>
                                         <sub>{item.id}</sub>
                                         {
-                                            props.data.myTeam.length+1>props.data.participantCountMin?
+                                            item.isAccepted?
+                                            <sub style={{color:'green'}}>Accepted</sub>
+                                            :
+                                            <sub style={{color:'red'}}>Not Accepted</sub>
+                                        }
+                                        {
+                                            props.data.myTeam.length+1>props.data.event.participantCountMin?
                                             <TrashFill color='darkRed' size={18} cursor={'pointer'} onClick={()=>props.close('RemoveUser',item.id)}/>
                                             :
                                             null
