@@ -157,7 +157,7 @@ Reusable Elements
 .passwordChange {
   margin-top: 2rem;
   margin-bottom: 2rem;
-  /* display: none; */
+  display: none;
 }
 
 .dashboard-dash-main-content {

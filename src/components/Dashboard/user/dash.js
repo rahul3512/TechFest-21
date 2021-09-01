@@ -127,7 +127,7 @@ function Dash() {
             ? data?.workshopsEnrolled
             : "",
           loading: false,
-          hasPaidEntry: data?.hasPaidEntry ? data?.hasPaidEntry : false,
+          hasPaidEntry: data.hasPaidEntry,
         });
         // if (values.lastName == undefined) {
 
@@ -320,10 +320,10 @@ function Dash() {
             Change Password
           </Link>
           {console.log(values.hasPaidEntry)}
-          {values.designation === "Student" && values.hasPaidEntry == false ? (
+          {values.designation != "Others" && values.hasPaidEntry == false ? (
             <div>
               <form
-              target="_blank"
+                target="_blank"
                 className="dashboard-dash-dlink dashboard-dash-cursor"
                 style={{ marginTop: "2rem" }}
                 action="https://api.techfestsliet.com/api/create-checkout-session"
@@ -440,13 +440,15 @@ function Dash() {
         </div>
         {console.log(values)}
         <div className="passwordChange">
-          {values.designation === "Student" && values.hasPaidEntry == false ? (
+          {values.designation != "Others" && values.hasPaidEntry == false ? (
             <div>
               <form
-              target="_blank"
+                target="_blank"
                 className="dashboard-dash-dlink dashboard-dash-cursor"
-                style={{ marginTop: "2rem", border:'1px white solid',borderRadius:'15px',padding: '10px',     display: 'flex',
-                justifyContent: 'center' }}
+                style={{
+                  marginTop: "2rem", border: '1px white solid', borderRadius: '15px', padding: '10px', display: 'flex',
+                  justifyContent: 'center'
+                }}
                 action="https://api.techfestsliet.com/api/create-checkout-session"
                 method="POST"
               >
@@ -578,7 +580,7 @@ function Dash() {
             <Link
               to={{
                 pathname:
-                'https://www.youtube.com/channel/UCTSrKfF90hZq7reWgd2oyZg',
+                  'https://www.youtube.com/channel/UCTSrKfF90hZq7reWgd2oyZg',
               }}
               className="dashboard-dash-Link-a"
               target="_blank"
