@@ -22,7 +22,7 @@ export class ExploreEvents extends Component {
         user: isAuthenticated().user,
         token: isAuthenticated().token,
         isWorkshopRegistered: false,
-        disable:false,
+        disable: false,
         currentWorkshop: {
             sessions: []
         },
@@ -35,7 +35,7 @@ export class ExploreEvents extends Component {
             data: {},
             popUpMessage: '',
             positiveAction: '',
-            update:false,
+            update: false,
         },
         myTeam: [],
         completeUser: null,
@@ -44,13 +44,13 @@ export class ExploreEvents extends Component {
         openSnackbar: false,
         error: '',
         name: '',
-        teamLeader:{}
+        teamLeader: {}
     }
 
 
     getUserData = () => {
-        
-        if(this.state.completeUser === null){
+
+        if (this.state.completeUser === null) {
             if (this.state.user) {
                 getUser(this.state.user._id, this.state.token).then((data) => {
                     if (data.error) {
@@ -63,7 +63,7 @@ export class ExploreEvents extends Component {
                             name: data.name,
                             userId: data.userId
                         }
-                        this.setState({teamLeader:userInfo})
+                        this.setState({ teamLeader: userInfo })
                         if (data.workshopsEnrolled.length > 0) {
                             data.workshopsEnrolled.map(item => {
                                 if (this.props.id === item._id) {
@@ -72,24 +72,24 @@ export class ExploreEvents extends Component {
                             })
                             // this.setState({isWorkshopRegistered:true})
                         }
-                        
-                        
-                        if(data.eventRegIn.length>0){
-                            data.eventRegIn.map(item=>{
-                                
-                                if(this.props.content._id == item._id){
-                                    this.setState({isEventRegistered:true})
+
+
+                        if (data.eventRegIn.length > 0) {
+                            data.eventRegIn.map(item => {
+
+                                if (this.props.content._id == item._id) {
+                                    this.setState({ isEventRegistered: true })
                                 }
                             })
                         }
 
-                    
+
 
                     }
                 });
             }
 
-            
+
         }
 
     }
@@ -101,7 +101,7 @@ export class ExploreEvents extends Component {
             Object.entries(obj).every(([key, value]) => value === el[key])
         );
 
-    
+
 
     // HANDLERS
     handleClickOpen = (dialogType) => {
@@ -142,7 +142,7 @@ export class ExploreEvents extends Component {
                 this.confirmTeamRegistration()
                 break;
             case 'RemoveUser':
-                this.removeTeamMember(memberId,this.props.content._id,this.state.token)
+                this.removeTeamMember(memberId, this.props.content._id, this.state.token)
                 break;
             case 'updateTeam':
                 this.updateTeamMembers();
@@ -169,7 +169,7 @@ export class ExploreEvents extends Component {
                 ...prevState.dialog,
                 openTeamDialog: false,
                 register: true,
-                open:true,
+                open: true,
             }
         }))
     }
@@ -190,18 +190,18 @@ export class ExploreEvents extends Component {
         }
 
     }
-    handleOpenTeamDialog = (obj,update=true,teamLeader) => {
-        if(update){
+    handleOpenTeamDialog = (obj, update = true, teamLeader) => {
+        if (update) {
             this.updatemyTeam(obj)
-        }else{
-            this.setState(prevState=>({
-                dialog:{
+        } else {
+            this.setState(prevState => ({
+                dialog: {
                     ...prevState.dialog,
-                    update:true
+                    update: true
                 }
             }))
         }
-        
+
         this.setState(prevState => ({
             dialog: {
                 ...prevState.dialog,
@@ -211,7 +211,7 @@ export class ExploreEvents extends Component {
                     domainName: this.props.heading,
                     event: this.props.content,
                     myTeam: this.state.myTeam,
-                    teamLeader:this.state.teamLeader
+                    teamLeader: this.state.teamLeader
                 },
 
             },
@@ -252,12 +252,12 @@ export class ExploreEvents extends Component {
         // this.setState({ memberId: e.target.value })
     }
     handleCloseTeamDialog = () => {
-        this.setState(prevState=>({
-            dialog:{
+        this.setState(prevState => ({
+            dialog: {
                 ...prevState.dialog,
-                open:false,
-                openTeamDialog:false,
-                update:false
+                open: false,
+                openTeamDialog: false,
+                update: false
             }
         }))
     }
@@ -265,64 +265,64 @@ export class ExploreEvents extends Component {
         this.setState({ openSnackbar: false })
     }
 
-    getTeam=(eventId,userId,token)=>{
-        teamList(token,eventId,userId)
-        .then(response=>{
-            
-            console.log(response)
-            let team=[]
-            response.usersId.map(item=>{
-                
-                let obj={
-                    name: item.userId.name,
-                    id: item.userId.userId,
-                    isAccepted:item.isAccepted
-                }
-                team.push(obj)
+    getTeam = (eventId, userId, token) => {
+        teamList(token, eventId, userId)
+            .then(response => {
+
+                console.log(response)
+                let team = []
+                response.usersId.map(item => {
+
+                    let obj = {
+                        name: item.userId.name,
+                        id: item.userId.userId,
+                        isAccepted: item.isAccepted
+                    }
+                    team.push(obj)
+                })
+
+                this.setState({ myTeam: team, teamLeader: response.leaderId })
+                this.handleOpenTeamDialog(this.state.myTeam, false, this.state.teamLeader)
+
             })
-            
-            this.setState({myTeam:team,teamLeader:response.leaderId})
-            this.handleOpenTeamDialog(this.state.myTeam,false,this.state.teamLeader)
-
-        })
     }
 
-    updateTeamMembers=()=>{
-        let team=[]
-        this.state.myTeam.map(item => item.id != this.state.completeUser.userId? team.push(item.id):null)
-        
-        updateTeam(this.state.token,team,this.props.content.participantCountMax,this.props.content._id)
-        .then(response=>{
-            if(response.statusCode != 400){
-                this.handleRegisterOpen()
-            }else{
-                this.setState({openSnackbar:true,error:response.error})
-            }
-        })
-        
+    updateTeamMembers = () => {
+        let team = []
+        this.state.myTeam.map(item => item.id != this.state.completeUser.userId ? team.push(item.id) : null)
+
+        updateTeam(this.state.token, team, this.props.content.participantCountMax, this.props.content._id)
+            .then(response => {
+                if (response.statusCode != 400) {
+                    this.handleRegisterOpen()
+                } else {
+                    this.setState({ openSnackbar: true, error: response.error })
+                }
+            })
+
     }
 
-    removeTeamMember=(usertoRemove,eventId,token)=>{
-        
-        
-        removeTeam(token,usertoRemove,eventId)
-        .then(response=>{
-            this.handleCloseTeamDialog()    
-            if(response.statusCode == 400){
-                if(response.error=='User Not Found'){
-                    console.log("Remove from array")
-                    let arr=this.state.myTeam
-                    console.log(arr)
-                    console.log("user to remove"+usertoRemove)
-                    arr=arr.filter(x=>x.id != usertoRemove)
-                    this.setState({openSnackbar:true,error:"Deleted Member"})    
-                }else
-                this.setState({openSnackbar:true,error:response.error})
-            }else{
-                this.setState({openSnackbar:true,error:"Deleted Member"})
-            }
-            
-        })
+    removeTeamMember = (usertoRemove, eventId, token) => {
+
+
+        removeTeam(token, usertoRemove, eventId)
+            .then(response => {
+                this.handleCloseTeamDialog()
+                if (response.statusCode == 400) {
+                    if (response.error == 'User Not Found') {
+                        console.log("Remove from array")
+                        let arr = this.state.myTeam
+                        console.log(arr)
+                        console.log("user to remove" + usertoRemove)
+                        arr = arr.filter(x => x.id != usertoRemove)
+                        this.setState({ openSnackbar: true, error: "Deleted Member" })
+                    } else
+                        this.setState({ openSnackbar: true, error: response.error })
+                } else {
+                    this.setState({ openSnackbar: true, error: "Deleted Member" })
+                }
+
+            })
     }
 
     getMemberId = (emailId, token, eventId) => {
@@ -344,25 +344,25 @@ export class ExploreEvents extends Component {
     }
     confirmTeamRegistration = () => {
         let teamId = []
-        this.state.myTeam.map(item => item.id != this.state.completeUser.userId? teamId.push(item.id):null)
-        if(this.props.content.participantCountMin>teamId.length){
-            this.setState({openSnackbar:true,error:"Add More members"})
+        this.state.myTeam.map(item => item.id != this.state.completeUser.userId ? teamId.push(item.id) : null)
+        if (this.props.content.participantCountMin > teamId.length) {
+            this.setState({ openSnackbar: true, error: "Add More members" })
         }
-        else if(this.props.content.participantCountMax<teamId.length){
-            this.setState({openSnackbar:true,error:"Team Limit exceeded"})
-        }else{
-        createTeam(this.state.token, teamId, this.props.content._id, this.props.content.participantCountMax, this.state.completeUser.userId)
-            .then(response => {
-                
-                this.handleCloseTeamDialog()
-                if (response.statusCode == 400) {
-                    this.setState({ openSnackbar: true, error: response.error })
-                } else {
-                    this.handleRegisterOpen()
-                }
-            }).catch(err => {
-                this.setState({ openSnackbar: true, error: err })
-            })
+        else if (this.props.content.participantCountMax < teamId.length) {
+            this.setState({ openSnackbar: true, error: "Team Limit exceeded" })
+        } else {
+            createTeam(this.state.token, teamId, this.props.content._id, this.props.content.participantCountMax, this.state.completeUser.userId)
+                .then(response => {
+
+                    this.handleCloseTeamDialog()
+                    if (response.statusCode == 400) {
+                        this.setState({ openSnackbar: true, error: response.error })
+                    } else {
+                        this.handleRegisterOpen()
+                    }
+                }).catch(err => {
+                    this.setState({ openSnackbar: true, error: err })
+                })
         }
     }
 
@@ -393,7 +393,7 @@ export class ExploreEvents extends Component {
 
 
     registerWorkshop = (workshopId) => {
-        
+
         // this.handleClickOpen();
         if (!this.state.user) {
             this.setState({ error: 'You are not Logged in. Please Log in first', openSnackbar: true })
@@ -426,14 +426,15 @@ export class ExploreEvents extends Component {
 
 
     registerEvent = (eventId) => {
-        
+
         if (!this.state.user) {
             this.setState({ error: 'You are not Logged in. Please Log in first', openSnackbar: true })
-        }else if(!this.state.completeUser.hasPaidEntry){
-            this.setState({error:'Entry Fees not paid',openSnackbar:true})
-        }else if(this.state.completeUser.designation == 'Student'){
-            {console.log(this.state.myTeam)
-                this.props.content.participantCountMax > 1 ? this.handleOpenTeamDialog([],true,this.state.teamLeader)
+        } else if (!this.state.completeUser.hasPaidEntry) {
+            this.setState({ error: 'Entry Fees not paid', openSnackbar: true })
+        } else if (this.state.completeUser.designation == 'Student') {
+            {
+                console.log(this.state.myTeam)
+                this.props.content.participantCountMax > 1 ? this.handleOpenTeamDialog([], true, this.state.teamLeader)
                     :
                     registerInEvent(this.state.user._id, this.state.token, eventId).then(
                         data => {
@@ -456,46 +457,46 @@ export class ExploreEvents extends Component {
                         this.setState({ isEventRegistered: false, error: err, openSnackbar: true })
                     })
             }
-        }else{
-            this.setState({openSnackbar:true,error:'Available only for Students'})
+        } else {
+            this.setState({ openSnackbar: true, error: 'Available only for Students' })
         }
     }
-    componentDidMount(){
+    componentDidMount() {
         this.getUserData()
         let d = new Date()
-        
-        if(d.getTime()>Date.parse("2021-08-31 23:59:00")){
-            
-                this.setState({disable:true})
-            
+
+        if (d.getTime() > Date.parse("2021-08-31 23:59:00")) {
+
+            this.setState({ disable: true })
+
         }
     }
 
-    componentDidUpdate(prevProps,prevState){
-        if(this.props.content._id != prevProps.content._id){
-            if(this.state.completeUser != null){
-                let eventRegIn=this.state.completeUser.eventRegIn
-                eventRegIn.map(item=>{
-                    if(this.props.content._id == item._id){
-                        if(!prevState.isEventRegistered){
-                            this.setState({isEventRegistered:true})
+    componentDidUpdate(prevProps, prevState) {
+        if (this.props.content._id != prevProps.content._id) {
+            if (this.state.completeUser != null) {
+                let eventRegIn = this.state.completeUser.eventRegIn
+                eventRegIn.map(item => {
+                    if (this.props.content._id == item._id) {
+                        if (!prevState.isEventRegistered) {
+                            this.setState({ isEventRegistered: true })
                         }
-                    }else{
-                        if(prevState.isEventRegistered){
-                            this.setState({isEventRegistered:false})
+                    } else {
+                        if (prevState.isEventRegistered) {
+                            this.setState({ isEventRegistered: false })
                         }
                     }
                 })
             }
-            
+
             let d = new Date()
-        if(d.getTime>Date.parse("2021-08-31 23:59:00")){
-                if(prevState.disable != true){
-                    this.setState({disable:true})
+            if (d.getTime > Date.parse("2021-08-31 23:59:00")) {
+                if (prevState.disable != true) {
+                    this.setState({ disable: true })
                 }
-            }    
+            }
         }
-        
+
     }
     render() {
         return (
@@ -535,7 +536,7 @@ export class ExploreEvents extends Component {
                                     <strong>{`End Date : ${this.props.content.endDate ? this.props.content.endDate.split('T')[0] : null}`}   </strong>
                                 </section>
                                 {
-                                    
+
                                     this.state.isWorkshopRegistered ?
                                         <div className={classes.buttonContainer}>
                                             <button disabled={true} className={classes.btnRegister} style={{ backgroundColor: 'rgba(255,255,255,0.5)' }}>Registered!</button>
@@ -543,7 +544,7 @@ export class ExploreEvents extends Component {
                                         </div>
                                         :
                                         <div className={classes.buttonContainer}>
-                                            <button className={classes.btnRegister}  name={'registerForWorkshop'} ref={this.dialog} onClick={() => { this.registerWorkshop(this.props.content._id) }}>Register Now</button>
+                                            <button className={classes.btnRegister} name={'registerForWorkshop'} ref={this.dialog} onClick={() => { this.registerWorkshop(this.props.content._id) }}>Register Now</button>
                                         </div>
                                 }
                             </div>
@@ -555,12 +556,12 @@ export class ExploreEvents extends Component {
                                 </section>
                                 {
                                     this.state.isEventRegistered ?
-                                        this.props.content.participantCountMax > 1?
-                                            
+                                        this.props.content.participantCountMax > 1 ?
+
                                             <div className={classes.buttonContainer}>
-                                                <button className={classes.btnRegister} onClick={()=>{
-                                                    this.getTeam(this.props.content._id,this.state.completeUser._id,this.state.token)
-                                                    
+                                                <button className={classes.btnRegister} onClick={() => {
+                                                    this.getTeam(this.props.content._id, this.state.completeUser._id, this.state.token)
+
                                                 }}>View Team</button>
                                                 <button className={classes.btnStatement} onClick={() => { window.open(this.props.content.eventLink, '_blank') }}>Problem Statement</button>
                                             </div>
@@ -571,7 +572,7 @@ export class ExploreEvents extends Component {
                                             </div>
                                         :
                                         <div className={classes.buttonContainer}>
-                                            <button className={classes.btnRegister} disabled={this.state.disable} style={this.state.disable?{ backgroundColor: 'rgba(255,255,255,0.5)' }:null} name={'registerForEvent'} ref={this.dialog} onClick={() => { this.registerEvent(this.props.content._id) }}>{this.state.disable?"Registration Closed":"Register Now"}</button>                   
+                                            <button className={classes.btnRegister} disabled={this.state.disable} style={this.state.disable ? { backgroundColor: 'rgba(255,255,255,0.5)' } : null} name={'registerForEvent'} ref={this.dialog} onClick={() => { this.registerEvent(this.props.content._id) }}>{this.state.disable ? "Registration Closed" : "Register Now"}</button>
                                             <button className={classes.btnStatement} onClick={() => { window.open(this.props.content.eventLink, '_blank') }}>Problem Statement</button>
                                         </div>
                                 }
