@@ -465,7 +465,7 @@ export class ExploreEvents extends Component {
         this.getUserData()
         let d = new Date()
 
-        if (d.getTime() > Date.parse("2021-08-31 23:59:00")) {
+        if (d.getTime() > Date.parse("2021-09-01 23:59:00")) {
 
             this.setState({ disable: true })
 
@@ -490,7 +490,7 @@ export class ExploreEvents extends Component {
             }
 
             let d = new Date()
-            if (d.getTime > Date.parse("2021-08-31 23:59:00")) {
+            if (d.getTime > Date.parse("2021-09-01 23:59:00")) {
                 if (prevState.disable != true) {
                     this.setState({ disable: true })
                 }
