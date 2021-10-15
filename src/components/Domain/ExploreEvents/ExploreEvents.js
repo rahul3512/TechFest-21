@@ -76,9 +76,11 @@ export class ExploreEvents extends Component {
 
                         if (data.eventRegIn.length > 0) {
                             data.eventRegIn.map(item => {
-
+                                console.log(`${this.props.content.eventName}:${this.props.content._id == item._id}`)
                                 if (this.props.content._id == item._id) {
                                     this.setState({ isEventRegistered: true })
+                                } else {
+                                    this.setState({ isEventRegistered: false })
                                 }
                             })
                         }
@@ -424,14 +426,6 @@ export class ExploreEvents extends Component {
 
     }
 
-
-<<<<<<< HEAD
-=======
-
-
-
-
->>>>>>> 27dce3bbdffa28ea3aeabaac57708d6afddf9d83
     registerEvent = (eventId) => {
 
         if (!this.state.user) {
@@ -478,10 +472,7 @@ export class ExploreEvents extends Component {
 
         }
     }
-<<<<<<< HEAD
 
-=======
->>>>>>> 27dce3bbdffa28ea3aeabaac57708d6afddf9d83
     componentDidUpdate(prevProps, prevState) {
         if (this.props.content._id != prevProps.content._id) {
             if (this.state.completeUser != null) {
