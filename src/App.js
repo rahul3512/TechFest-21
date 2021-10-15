@@ -26,8 +26,8 @@ import SuperAdminDashboard from './components/Dashboard/superadmin/SuperAdminDas
 import Coordinator from './components/Dashboard/superadmin/Coordinator'
 import AddDomain from './components/Dashboard/superadmin/AddDomain'
 import AddEvent from './components/Dashboard/superadmin/AddEvent'
-import AddWorkshop from './components/Dashboard/superadmin/AddWorkshop'
-import AddWorkshopSession from './components/Dashboard/superadmin/AddWorkshopSession'
+import AddWorkshop from './components/Dashboard/superadmin/AddWorkshop';
+import AddWorkshopSession from './components/Dashboard/superadmin/AddWorkshopSession';
 import UpdateDomain from './components/Dashboard/superadmin/UpdateDomain';
 import AdminDomains from './components/Dashboard/superadmin/AdminDomains';
 import AdminCoordinators from './components/Dashboard/superadmin/AdminCoodinators';
@@ -39,8 +39,7 @@ import AdminWorkshops from './components/Dashboard/superadmin/AdminWorkshops';
 import AdminEvents from './components/Dashboard/superadmin/AdminEvents';
 import AdminWorkshopSessions from './components/Dashboard/superadmin/AdminWorkshopSessions';
 import NotFound from './pages/NotFound';
-
-
+import Team from './pages/Team';
 
 function App() {
 
@@ -52,13 +51,13 @@ function App() {
       <AlertProvider template={AlertTemplate}>
         <Navbar />
 
-
         <Switch>
           <Route exact path='/pr-intern' component={PrIntern} />
           <Route exact path='/register' component={Register} />
 
 
           <Route exact path='/signin' component={SignIn} />
+          <Route exact path='/our-team' component={Team} />
 
 
           <Route path='/domain' component={Domain} />
@@ -127,7 +126,6 @@ function App() {
             exact
             component={AdminCoordinators}
           />
-
 
           <PrivateRoute path="/user/dashboard" exact component={UserDashboard} />
 

@@ -27,7 +27,7 @@ export const DialogComponent=(props)=>{
             }
             {
                 props.openTeamDialog?
-                <Team data={props.data} close={props.close}/>:null
+                <Team data={props.data} close={props.close} update={props.update}/>:null
             }
             {
                 props.addTeam?

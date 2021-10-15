@@ -1,8 +1,9 @@
 import React, { useRef } from 'react'
 import { DialogContent,Dialog, DialogTitle, DialogActions, Button, Slide, TextField, DialogContentText } from '@material-ui/core'
 import classes from './Dialogs.module.css'
-import { PersonPlus } from 'react-bootstrap-icons'
+import { Calendar, PersonPlus,TrashFill } from 'react-bootstrap-icons'
 import { Link } from 'react-router-dom'
+import moment from 'moment'
 
 export const Register=(props)=>{
     return(
@@ -56,6 +57,7 @@ export const AddTeam=(props)=>{
 export const Team=(props)=>{
     return(
         <div>
+            {console.log(props.data)}
             <DialogContent>
                 <div className={classes.scheduleName}>
                     <div>
@@ -83,13 +85,37 @@ export const Team=(props)=>{
                     <PersonPlus size={24} cursor={'pointer'} onClick={()=>props.close('openAddTeam')}/>
                 </div>
                 <div>
+                <DialogContentText className={classes.sessions}>
+                                        <strong>{props.data.teamLeader.name}</strong>
+                                        <sub>{props.data.teamLeader.userId}</sub>
+                                        <sub>Leader</sub>
+                </DialogContentText>
+                
+                
+                {console.log(props.data.myTeam)}
                 {
+                    
+                    
                         props.data.myTeam.map((item,pos) => {
                             return (
+                                item.name !=null?
                                 <DialogContentText key={pos} className={classes.sessions}>
                                         <strong>{item.name}</strong>
                                         <sub>{item.id}</sub>
-                                </DialogContentText>
+                                        {
+                                            item.isAccepted?
+                                            <sub style={{color:'green'}}>Accepted</sub>
+                                            :
+                                            <sub style={{color:'red'}}>Not Accepted</sub>
+                                        }
+                                        {
+                                            props.data.myTeam.length+1>props.data.event.participantCountMin?
+                                            <TrashFill color='darkRed' size={18} cursor={'pointer'} onClick={()=>props.close('RemoveUser',item.id)}/>
+                                            :
+                                            null
+                                        }
+                                        
+                                </DialogContentText>:null
 
                             )
                         })
@@ -98,7 +124,13 @@ export const Team=(props)=>{
                 </div>
             </DialogContent>
             <DialogActions>
-                    <Button color='primary' onClick={()=>{props.close('confirmTeam')}}>Confirm Registration</Button>
+                    {
+                        props.update?
+                        <Button color='primary' onClick={()=>{props.close('updateTeam')}}>Update</Button>
+                        :
+                        <Button color='primary' onClick={()=>{props.close('confirmTeam')}}>Confirm Registration</Button>
+                    }
+                    
             </DialogActions>                
         </div>
         
@@ -137,7 +169,7 @@ export const ViewSchedule=(props)=>{
                                         }
                                     </sub>
                                     :
-                                    <sub>15/07 to 20/07 (5 DAYS)</sub>
+                                    <sub> </sub>
                                 }
                                 
                             
@@ -156,7 +188,7 @@ export const ViewSchedule=(props)=>{
                                     <div className={classes.sessions}>
                                         <strong>{item.workshopSessionName}</strong>
                                         <Button color='primary' onClick={()=>{window.open(item.scheduledLink,'_blank')}}>View</Button>
-                                        <sub>{item.dateTime.split('T')[0]}</sub>
+                                        <sub>{moment.utc(item.dateTime).format('DD-MM-YYYY HH:mm')}</sub>
                                     </div>
                                 </DialogContentText>
 
@@ -168,7 +200,7 @@ export const ViewSchedule=(props)=>{
                 </div>
             </DialogContent>
             <DialogActions>
-                    <Link to={props.data.content.whatsappGroupLink?props.data.content.whatsappGroupLink:'/'} target='_blank' rel='noopener' component={Button} style={{color:'darkBlue'}} onClick={()=>{props.close('schedule')}}>Join Telegram Group</Link>
+            <Link to={{ pathname: props.data.content.whatsappGroupLink?props.data.content.whatsappGroupLink:'/'}} target='_blank' rel='noopener' component={Button} style={{color:'darkBlue'}} onClick={()=>{props.close('schedule')}}>Join Telegram Group</Link>
             </DialogActions>                
         </div>
     )

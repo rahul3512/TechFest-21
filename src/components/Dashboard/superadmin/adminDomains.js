@@ -17,6 +17,7 @@ function AdminDomains() {
             } else {
                 setDomains(data);
             }
+            
         });
     };
 

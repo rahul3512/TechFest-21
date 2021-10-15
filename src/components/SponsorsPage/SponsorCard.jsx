@@ -5,7 +5,7 @@ function SponsorCard() {
       <div className="sponsordesc row flex flex-row">
         <div className="col-sm-12 text-center d-flex justify-content-center align-items-center flex-column text-justify">
           <h1 className="heading">Grow with us</h1>
-          <p className="text-justify w-50">
+          <p className="col text-center">
             Wish to engage with our audience and be a part of an amazing technical festival? Sponsor techFEST - SLIET and expand your outreach by reaching out to over 5000 students from across the country. Due to the restrictions imposed by the pandemic we are offering virtual benefactions in exchange for your kind sponsorship. Join our community today. Drop your details and we will get in touch with you immediately. Don't forget to check out our sponsorship brochure!
           </p>
         </div>

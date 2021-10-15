@@ -6,7 +6,8 @@
   <link rel="icon" href="%PUBLIC_URL%/favicon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#000000" />
-  <meta name="description" content="Web site created using create-react-app" />
+  <meta name="description" content="Become a part of largest digital techFest'21 of SLIET and explore Workshops and 
+  Events under domain Plexus, Kermis, Genesis, ChemFOR, Electrica, Mechanica, Robozar, KaryaRachna etc. From 1st September 2021 to 4th September 2121" />
   <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
   <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Exo:ital@1&display=swap" rel="stylesheet">
@@ -21,7 +22,6 @@
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
       Only files inside the `public` folder can be referenced from the HTML.
-
       Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
@@ -73,17 +73,17 @@
     $(document).ready(function () {
       var screenWidth = $(window).width();
       if (screenWidth < 700) {
-        $('video').attr('autoplay','true');
-        $('video').attr('src', '/blue-phone.webm');
+        $('video').attr('src', '/blue-phone.mp4');
       } else {
-        $('video').attr('autoplay','true');
-        $('video').attr('src', '/blue.webm');
+        $('video').attr('src', '/blue.mp4');
       }
     });
   </script>
 
   <div class="preloader">
-    <video playsInline muted width="100%" class="videoBg">
+    <!-- <video playsInline muted autoplay type="video/webm" width="100%" class="videoBg">
+    </video> -->
+    <video height="100%" type="video/mp4" width="100%" class="videoBg" autoplay loop muted playsInline>
     </video>
   </div>
 
@@ -94,10 +94,8 @@
   <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
-
       You can add webfonts, meta tags, or analytics to this file.
       The build step will place the bundled scripts into the <body> tag.
-
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
