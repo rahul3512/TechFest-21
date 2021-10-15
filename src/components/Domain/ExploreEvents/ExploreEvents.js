@@ -426,11 +426,6 @@ export class ExploreEvents extends Component {
 
     }
 
-
-
-
-
-
     registerEvent = (eventId) => {
 
         if (!this.state.user) {
@@ -477,6 +472,7 @@ export class ExploreEvents extends Component {
 
         }
     }
+
     componentDidUpdate(prevProps, prevState) {
         if (this.props.content._id != prevProps.content._id) {
             if (this.state.completeUser != null) {
