@@ -15,7 +15,7 @@ import Virat from "../assets/team/virat.jpg";
 import Shrawan from "../assets/team/shrawan.jpg";
 import Om from "../assets/team/om.jpeg";
 import Tomar from "../assets/team/Tomar.jpeg";
-import Shiva from "../assets/team/shiva.jpg";
+import Shiva from "../assets/team/shiva.JPG";
 import Footer from "../components/HomePage/Footer/Footer";
 
 function Team() {

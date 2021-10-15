@@ -20,6 +20,7 @@ import sponsor13 from '../../../assets/images/sponsor13.jpg';
 import sponsor14 from '../../../assets/images/sponsor14.jpg';
 import sponsor15 from '../../../assets/images/sponsor15.jpg';
 import sponsor16 from '../../../assets/images/sponsor16.jpg';
+import sponsor17 from '../../../assets/sponsor/sponsor8.jpeg';
 
 
 import { fontSize } from "@material-ui/system";
@@ -59,6 +60,7 @@ function HomeSponsor() {
                     <Item><img src={sponsor14} alt='sponsor' className='sponsor-img' /></Item>
                     <Item><img src={sponsor15} alt='sponsor' className='sponsor-img' /></Item>
                     <Item><img src={sponsor16} alt='sponsor' className='sponsor-img' /></Item>
+                    <Item><img src={sponsor17} alt='sponsor' className='sponsor-img' /></Item>
 
 
                 </Carousel>
