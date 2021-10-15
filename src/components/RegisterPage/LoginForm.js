@@ -80,6 +80,7 @@ function LoginForm() {
 
     signin({ email, password })
       .then((data) => {
+        // console.log(data);
         if (data.error) {
           setValues({ ...values, error: data.error, loading: false });
         } else {
