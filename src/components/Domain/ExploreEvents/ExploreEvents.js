@@ -46,6 +46,7 @@ export class ExploreEvents extends Component {
 
 
     getUserData = () => {
+
         if (this.state.completeUser === null) {
             if (this.state.user) {
                 getUser(this.state.user._id, this.state.token).then((data) => {
@@ -68,20 +69,36 @@ export class ExploreEvents extends Component {
                             })
                             // this.setState({isWorkshopRegistered:true})
                         }
+
+
                         if (data.eventRegIn.length > 0) {
                             data.eventRegIn.map(item => {
-
-                                if (this.props.id === item._id) {
+                                console.log(`${this.props.content.eventName}:${this.props.content._id == item._id}`)
+                                if (this.props.content._id == item._id) {
                                     this.setState({ isEventRegistered: true })
+                                } else {
+                                    this.setState({ isEventRegistered: false })
                                 }
                             })
-                            // this.setState({isWorkshopRegistered:true})
                         }
+
+                        // if (data.eventRegIn.length > 0) {
+                        //     data.eventRegIn.map(item => {
+                        //         {console.log(item._id)}
+                        //         if (this.props.content._id == item._id) {
+                        //             this.setState({ isEventRegistered: true })
+                        //         }else{
+                        //             this.setState({isEventRegistered:false})
+                        //         }
+                        //     })
+                        //     // this.setState({isWorkshopRegistered:true})
+                        // }
                         // setCompleteUser(data)
 
                     }
                 });
             }
+
 
         }
 
@@ -257,8 +274,8 @@ export class ExploreEvents extends Component {
 
         createTeam(this.state.token, teamId, this.props.content._id, this.props.content.participantCountMax, this.state.completeUser.userId)
             .then(response => {
+                console.log(response);
                 this.handleCloseTeamDialog()
-
                 if (response.statusCode == 400) {
                     this.setState({ openSnackbar: true, error: response.error })
                 } else {
@@ -303,7 +320,6 @@ export class ExploreEvents extends Component {
         } else {
             registerInWorkshop(this.state.user._id, this.state.token, workshopId).then(
                 data => {
-
                     if (data.error) {
 
                         this.setState({ error: data.error, openSnackbar: true })
@@ -327,9 +343,6 @@ export class ExploreEvents extends Component {
 
     }
 
-    componentDidMount = () => {
-        this.getUserData()
-    }
 
 
 
@@ -366,6 +379,27 @@ export class ExploreEvents extends Component {
             }
         }
     }
+    componentDidMount() {
+        this.getUserData()
+    }
+    componentDidUpdate(prevProps, prevState) {
+        if (this.props.content._id != prevProps.content._id) {
+            if (this.state.completeUser != null) {
+                let eventRegIn = this.state.completeUser.eventRegIn
+                eventRegIn.map(item => {
+                    if (this.props.content._id == item._id) {
+                        if (!prevState.isEventRegistered) {
+                            this.setState({ isEventRegistered: true })
+                        }
+                    } else {
+                        if (prevState.isEventRegistered) {
+                            this.setState({ isEventRegistered: false })
+                        }
+                    }
+                })
+            }
+        }
+    }
     render() {
         return (
             <div id={this.props.id} className={classes.eventContainer}>
@@ -374,7 +408,7 @@ export class ExploreEvents extends Component {
                     <div className={classes.eventImage}>
                         <img src={`${BASE_API}${this.props.content.photo}`} alt='' className={classes.image} />
                         {
-                            this.props.heading === 'Precuela' ?
+                            this.props.heading === 'Precula' ?
                                 null
                                 // <div className={classes.eventDeadline}>
                                 //     {console.log(this.props)}
@@ -394,7 +428,7 @@ export class ExploreEvents extends Component {
                     </div>
                     {/* SECTION 2 */}
                     {
-                        this.props.heading === 'Precuela' ?
+                        this.props.heading === 'Precula' ?
                             <div className={classes.eventInfo}>
                                 <section className={classes.eventInfoData}>
                                     <h1>{this.props.content.workshoptName}</h1>
@@ -438,7 +472,7 @@ export class ExploreEvents extends Component {
 
                     <div className={classes.eventPrize}>
                         <section className={classes.eventAmount}>
-                            {this.props.heading === 'Precuela' ?
+                            {this.props.heading === 'Precula' ?
                                 <div className={classes.prizeMoney}>
                                     <p>Registration Fees</p>
                                     <p>Free</p>
@@ -452,7 +486,7 @@ export class ExploreEvents extends Component {
                         </section>
                         <section className={classes.eventCoordinators}>
                             {
-                                this.props.heading === 'Precuela' ?
+                                this.props.heading === 'Precula' ?
                                     this.props.content.studentCoordinator.map((item, pos) => {
                                         return (
                                             <section key={pos} className={classes.coordinatorData}>
