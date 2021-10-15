@@ -56,6 +56,7 @@ function Dash() {
     yearOfStudy: 0,
     eventRegIn: [],
     workshopsEnrolled: [],
+    certificate: "",
     loading: false,
     updated: false,
     hasPaidEntry: false,
@@ -97,7 +98,7 @@ function Dash() {
   const preload = (userId, token) => {
     setValues({ ...values, loading: true });
     getUser(userId, token).then((data) => {
-      // console.log(data)
+      console.log(data);
       if (data.error) {
         setValues({ ...values, error: data.error, loading: false });
       } else {
@@ -128,6 +129,7 @@ function Dash() {
             : "",
           loading: false,
           hasPaidEntry: data?.hasPaidEntry ? data?.hasPaidEntry : false,
+          certificate: data?.certificate ? data?.certificate : false,
         });
         // if (values.lastName == undefined) {
 
@@ -331,7 +333,7 @@ function Dash() {
                 <img src={Payments} alt="payment" style={{ fill: "white" }} />
                 <input type="hidden" name="id" value={user._id} />
                 <button className="checkOutBtn" type="submit">
-                  Checkout
+                  Checkoutx
                 </button>
               </form>
             </div>
@@ -479,17 +481,32 @@ function Dash() {
             <div className="dashboard-dash-profile-information_card dashboard-dash-card grid-colum-template-3-1">
               <div className="dashboard-dash-profile-information_info">
                 <div className="dashboard-dash-pi-heading">
-                  Event Certificates
+                  Certificates
                   <hr />
                 </div>
-                <div className="dashboard-dash-pi_personal-info">
+                {values.certificate ? (
                   <div className="dashboard-dash-certificate-download_group">
                     <div className="dashboard-dash-pi_info-group">
-                      Please participate to get certificates
+                      <a
+                        href={`https://techfestsliet.com/certificates/${values.userID.substring(
+                          1
+                        )}.zip`}
+                        className="dashboard-dash-certificate-download_group-button"
+                      >
+                        Download
+                      </a>
                     </div>
                   </div>
-
-                  {/* <div className="dashboard-dash-certificate-download_group">
+                ) : (
+                  <div className="dashboard-dash-pi-contact-information">
+                    <div className="dashboard-dash-certificate-download_group">
+                      <div className="dashboard-dash-pi_info-group">
+                        Please participate to get certificates
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {/* <div className="dashboard-dash-certificate-download_group">
                     <div className="dashboard-dash-pi_info-group">
                       <div className="dashboard-dash-info-group_que">Profession</div>
                       <div className="dashboard-dash-info-group_ans">Student</div>
@@ -497,29 +514,8 @@ function Dash() {
                     <Link to="#" className="dashboard-dash-certificate-download_group-button">
                       Download
                     </Link>
-                  </div> */}
-                </div>
-                <div className="dashboard-dash-pi-heading">
-                  Workshop Certificates
-                  <hr />
-                </div>
-                <div className="dashboard-dash-pi-contact-information">
-                  <div className="dashboard-dash-certificate-download_group">
-                    <div className="dashboard-dash-pi_info-group">
-                      Please participate to get certificates
-                    </div>
-                  </div>
-
-                  {/* <div className="dashboard-dash-certificate-download_group">
-                    <div className="dashboard-dash-pi_info-group">
-                      <div className="dashboard-dash-info-group_que">Profession</div>
-                      <div className="dashboard-dash-info-group_ans">Student</div>
-                    </div>
-                    <Link to="#" className="dashboard-dash-certificate-download_group-button">
-                      Download
-                    </Link>
-                  </div> */}
-                </div>
+                  </div> 
+                </div> */}
               </div>
               <div className="dashboard-dash-profile-information_pic"></div>
             </div>

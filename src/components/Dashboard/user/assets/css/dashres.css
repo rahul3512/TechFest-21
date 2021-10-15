@@ -473,6 +473,7 @@ Reusable Elements
   font-size: calc(var(--length) * 1.8rem);
   line-height: calc(var(--length) * 3.2rem);
   font-weight: 200;
+  z-index: 1;
 }
 
 .dashboard-dash-info-group_que_condition {
