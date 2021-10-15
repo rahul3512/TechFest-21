@@ -23,6 +23,7 @@ import Instagram from "./assets/Icons/instagramicon.svg";
 import Linkedin from "./assets/Icons/linkedinicon.svg";
 import Youtube from "./assets/Icons/youtubeicon.svg";
 import Password from "./assets/Icons/password.svg";
+import Download from "./assets/Icons/download.svg"
 import moment from "moment";
 import { getUser, updateUser } from "./helper/userapicalls";
 import { isAuthenticated } from "../../../auth/helper";
@@ -321,6 +322,23 @@ function Dash() {
             />
             Change Password
           </Link>
+          {values.certificate ?
+            <a
+              className="dashboard-dash-dlink dashboard-dash-cursor"
+
+              href={`https://download.techfestsliet.com/certificates/${values.userID.substring(
+                1
+              )}.zip`}
+            >
+              <img
+                src={Download}
+                alt="certificate downloads"
+                style={{ fill: "white" }}
+              />
+              Download Certificates
+            </a>
+            :
+            null}
           {console.log(values.hasPaidEntry)}
           {values.designation != "Others" && values.hasPaidEntry == false ? (
             <div>
@@ -348,10 +366,19 @@ function Dash() {
         <div className="dashboard-dash-dashboard" id="dashboard">
           <div className="dashboard-dash-user-profile-display">
             <img src={ProfileImage} alt="profile" />
-            <div className="dashboard-dash-user-info">
+            <div className="dashboard-dash-user-info" style={{ zIndex: 10 }}>
               <b className="dashboard-dash-user-name">{`${values?.name}  ${values?.lastName}`}</b>
               <p>{values?.collegeName}</p>
               <p className="dashboard-dash-user-id">{values?.userID}</p>
+              {values.certificate ?
+
+                <a href={`https://download.techfestsliet.com/certificates/${values.userID.substring(
+                  1
+                )}.zip`}
+                  className="btn  btn-outline-primary btn-sm" > Certificates
+                </a>
+
+                : null}
             </div>
           </div>
 
@@ -489,31 +516,39 @@ function Dash() {
             </div>
             <div className="dashboard-dash-profile-information_card dashboard-dash-card grid-colum-template-3-1">
               <div className="dashboard-dash-profile-information_info">
-                <div className="dashboard-dash-pi-heading">
-                  Certificates
-                  <hr />
-                </div>
+
                 {values.certificate ? (
-                  <div className="dashboard-dash-certificate-download_group">
-                    <div className="dashboard-dash-pi_info-group">
-                      <a
-                        href={`https://techfestsliet.com/certificates/${values.userID.substring(
-                          1
-                        )}.zip`}
-                        className="dashboard-dash-certificate-download_group-button"
-                      >
-                        Download
-                      </a>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="dashboard-dash-pi-contact-information">
+                  <div className="dashboard-dash-pi-heading">
+                    Certificates
+
                     <div className="dashboard-dash-certificate-download_group">
-                      <div className="dashboard-dash-pi_info-group">
-                        Please participate to get certificates
+                      <div className="">
+                        <a
+                          href={`https://download.techfestsliet.com/certificates/${values.userID.substring(
+                            1
+                          )}.zip`}
+                          className="btn  btn-outline-primary btn-sm"
+                        >
+                          Download Now
+                        </a>
                       </div>
                     </div>
                   </div>
+                ) : (
+                  <>
+                    <div className="dashboard-dash-pi-heading">
+                      Certificates
+                      <hr />
+                    </div>
+                    <div className="dashboard-dash-pi-contact-information">
+                      <div className="dashboard-dash-certificate-download_group">
+                        <div className="dashboard-dash-pi_info-group">
+                          Please participate to get certificates
+                        </div>
+                      </div>
+                    </div>
+
+                  </>
                 )}
                 {/* <div className="dashboard-dash-certificate-download_group">
                     <div className="dashboard-dash-pi_info-group">
